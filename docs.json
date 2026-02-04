@@ -1,13 +1,17 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "maple",
   "name": "AdsGateway",
   "colors": {
-    "primary": "#6366F1",
-    "light": "#818CF8",
-    "dark": "#4F46E5"
+    "primary": "#171717",
+    "light": "#FAFAFA",
+    "dark": "#0A0A0A"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/logo/favicon.png",
+  "description": "Connect your AI assistant to advertising platforms. Query your ad data using natural language.",
+  "thumbnails": {
+    "appearance": "dark"
+  },
   "navigation": {
     "tabs": [
       {
@@ -83,8 +87,8 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
   },
   "navbar": {
     "links": [

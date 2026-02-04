@@ -1,153 +1,31 @@
 ---
 title: "Windsurf"
 description: "Connect AdsGateway to Windsurf IDE"
+icon: "wind"
 ---
 
-<img src="/images/windsurf-logo.png" alt="Windsurf" width="60" />
+<Info>
+  Windsurf integration is coming soon. Currently, AdsGateway is available for [Cursor](/ai-integrations/cursor).
+</Info>
 
-# Windsurf
+## What to Expect
 
-Windsurf is a modern AI-powered development environment with MCP support.
+Windsurf is a modern AI-powered development environment with MCP support. Once available, you'll be able to:
 
-## Prerequisites
+- Query your ad data while coding
+- Get performance insights without context switching
+- Access all 11 Meta tools directly from Windsurf
 
-- [Windsurf](https://windsurf.ai) installed
-- An [AdsGateway account](https://adsgateway.io)
+## Get Notified
 
-## Setup
+Want to know when Windsurf integration is ready?
 
-<Steps>
-  <Step title="Open Windsurf Settings">
-    Open Windsurf and access the settings:
-    
-    - **macOS**: Cmd + ,
-    - **Windows/Linux**: Ctrl + ,
-    
-    Or use the menu: **Windsurf > Settings**
-  </Step>
-  
-  <Step title="Navigate to MCP Configuration">
-    In the settings, find the **MCP** or **Extensions** section for Model Context Protocol servers.
-  </Step>
-  
-  <Step title="Add AdsGateway Server">
-    Add a new MCP server with the following configuration:
-    
-    ```json
-    {
-      "mcpServers": {
-        "ads-gateway": {
-          "url": "https://ads-gateway.onrender.com/mcp"
-        }
-      }
-    }
-    ```
-    
-    <Tip>
-      The configuration file location may vary by platform. Check Windsurf's documentation for the exact path.
-    </Tip>
-  </Step>
-  
-  <Step title="Enable the Server">
-    Make sure the AdsGateway server is enabled in your MCP settings.
-  </Step>
-  
-  <Step title="Authenticate">
-    When prompted, complete the authentication flow:
-    
-    1. Click the login link that appears
-    2. Sign in to your AdsGateway account
-    3. Authorize the connection
-    4. Return to Windsurf
-    
-    <Check>
-      You should see AdsGateway tools available in Windsurf's AI assistant
-    </Check>
-  </Step>
-</Steps>
+<Card title="Join the Waitlist" icon="bell" href="https://adsgateway.io">
+  Sign up at adsgateway.io to be notified when new integrations launch
+</Card>
 
-## Verify the Connection
+## Available Now
 
-Test the connection by asking Windsurf's AI:
-
-```
-List my Meta ad accounts
-```
-
-You should see a list of your connected advertising accounts.
-
-## Available Commands
-
-Once connected, you can query your ad data while coding:
-
-<AccordionGroup>
-  <Accordion title="Quick Status Check">
-    ```
-    What's my ad spend today?
-    ```
-    
-    Get a quick overview without leaving your code.
-  </Accordion>
-  
-  <Accordion title="Campaign Performance">
-    ```
-    How are my active campaigns performing this week?
-    ```
-    
-    See performance metrics for all running campaigns.
-  </Accordion>
-  
-  <Accordion title="Issue Detection">
-    ```
-    Are there any problems with my ads?
-    ```
-    
-    Let AdsGateway's anomaly detection find potential issues.
-  </Accordion>
-</AccordionGroup>
-
-## Use Cases for Developers
-
-Windsurf + AdsGateway is particularly useful for:
-
-<CardGroup cols={2}>
-  <Card title="Marketing Engineers" icon="code">
-    Check ad performance without context switching while building marketing tools
-  </Card>
-  <Card title="Analytics Development" icon="chart-bar">
-    Verify data pipelines by comparing with live ad platform data
-  </Card>
-  <Card title="Campaign Automation" icon="robot">
-    Test automation scripts against real campaign data
-  </Card>
-  <Card title="Debugging Integrations" icon="bug">
-    Query ad data to debug tracking or attribution issues
-  </Card>
-</CardGroup>
-
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion title="Server not connecting">
-    1. Verify your internet connection
-    2. Check that the server URL is correct
-    3. Restart Windsurf
-  </Accordion>
-  
-  <Accordion title="Authentication loop">
-    If you keep being asked to authenticate:
-    1. Clear Windsurf's cache
-    2. Log in at [adsgateway.io](https://adsgateway.io) directly
-    3. Then retry in Windsurf
-  </Accordion>
-  
-  <Accordion title="Tools not appearing">
-    1. Make sure the MCP server is enabled
-    2. Check the configuration syntax
-    3. Restart Windsurf after configuration changes
-  </Accordion>
-</AccordionGroup>
-
-<Card title="Full Troubleshooting Guide" icon="life-ring" href="/guides/troubleshooting">
-  See more solutions for common issues
+<Card title="Cursor" icon="code" href="/ai-integrations/cursor">
+  AdsGateway is fully available for Cursor IDE. Get started in minutes.
 </Card>

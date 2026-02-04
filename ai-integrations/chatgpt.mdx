@@ -1,157 +1,31 @@
 ---
 title: "ChatGPT"
-description: "Use AdsGateway with ChatGPT via the custom widget"
+description: "Use AdsGateway with ChatGPT via custom widget"
+icon: "openai"
 ---
 
-# ChatGPT
-
-AdsGateway works with ChatGPT through a custom widget that provides rich data visualization.
-
 <Info>
-  The ChatGPT integration uses a widget rather than native MCP, which allows for richer data display including charts and formatted tables.
+  ChatGPT integration is coming soon. Currently, AdsGateway is available for [Cursor](/ai-integrations/cursor).
 </Info>
 
-## How It Works
+## What to Expect
 
-Unlike Cursor and Claude which use native MCP connections, ChatGPT uses:
+The ChatGPT integration will feature:
 
-1. **Custom GPT**: A specialized GPT configured to work with AdsGateway
-2. **Widget UI**: Rich data visualization for ad metrics and insights
-3. **OAuth Authentication**: Secure connection to your ad accounts
+- **Custom GPT**: A specialized GPT configured to work with AdsGateway
+- **Widget UI**: Rich data visualization for ad metrics and insights
+- **Charts & Graphs**: Visual representations of your ad performance
 
-## Setup
+## Get Notified
 
-<Steps>
-  <Step title="Access the AdsGateway GPT">
-    Visit the AdsGateway GPT in the ChatGPT store:
-    
-    <Card title="AdsGateway GPT" icon="openai" href="https://chatgpt.com/g/adsgateway">
-      Open in ChatGPT
-    </Card>
-    
-    Or search for "AdsGateway" in ChatGPT's GPT store.
-  </Step>
-  
-  <Step title="Start a Conversation">
-    Click "Start Chat" to begin using AdsGateway.
-  </Step>
-  
-  <Step title="Authenticate">
-    When you first ask about your ads, ChatGPT will prompt you to connect:
-    
-    1. Click the authentication link
-    2. Log in to your AdsGateway account
-    3. Connect your Meta account if not already connected
-    4. Return to ChatGPT
-    
-    <Check>
-      Once authenticated, you'll see your ad data displayed in the widget
-    </Check>
-  </Step>
-</Steps>
+Want to know when ChatGPT integration is ready?
 
-## Widget Features
+<Card title="Join the Waitlist" icon="bell" href="https://adsgateway.io">
+  Sign up at adsgateway.io to be notified when new integrations launch
+</Card>
 
-The ChatGPT widget provides rich visualizations for your ad data:
+## Available Now
 
-<CardGroup cols={2}>
-  <Card title="Campaign Lists" icon="list">
-    See all your campaigns with status indicators and key metrics
-  </Card>
-  <Card title="Performance Charts" icon="chart-line">
-    Visual graphs showing trends over time
-  </Card>
-  <Card title="Metric Cards" icon="gauge">
-    Quick-view cards for spend, impressions, clicks, and more
-  </Card>
-  <Card title="Anomaly Alerts" icon="triangle-exclamation">
-    Visual alerts when something unusual is detected
-  </Card>
-</CardGroup>
-
-## Example Prompts
-
-Try these prompts to see the widget in action:
-
-<AccordionGroup>
-  <Accordion title="Get Account Overview">
-    ```
-    Show me a summary of my Meta ad account performance
-    ```
-    
-    The widget displays a dashboard with key metrics, trends, and highlights.
-  </Accordion>
-  
-  <Accordion title="List Campaigns">
-    ```
-    List all my active campaigns
-    ```
-    
-    See a formatted list with status, budget, and performance for each campaign.
-  </Accordion>
-  
-  <Accordion title="Check Anomalies">
-    ```
-    Are there any anomalies in my ad performance?
-    ```
-    
-    The widget shows alert cards for any detected issues.
-  </Accordion>
-  
-  <Accordion title="Top Performers">
-    ```
-    Which campaigns improved the most this week?
-    ```
-    
-    View top movers with percentage changes and visual indicators.
-  </Accordion>
-</AccordionGroup>
-
-## Requirements
-
-<Warning>
-  ChatGPT Plus or Pro subscription is required to use custom GPTs with actions.
-</Warning>
-
-| Requirement | Details |
-|-------------|---------|
-| ChatGPT Plan | Plus or Pro |
-| Browser | Any modern browser |
-| Ad Platform | Meta account |
-
-## Comparison with MCP
-
-| Feature | ChatGPT Widget | MCP (Cursor/Claude) |
-|---------|----------------|---------------------|
-| Rich Visualizations | Yes | No |
-| Charts & Graphs | Yes | No |
-| Conversational | Yes | Yes |
-| Real-time Data | Yes | Yes |
-| Setup Difficulty | Easy | Easy |
-| Requires Subscription | Yes (ChatGPT Plus) | No |
-
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion title="Widget not loading">
-    1. Make sure you're using the official AdsGateway GPT
-    2. Refresh the page
-    3. Try starting a new conversation
-  </Accordion>
-  
-  <Accordion title="Authentication issues">
-    1. Clear your browser cookies for chatgpt.com
-    2. Try logging in at [adsgateway.io](https://adsgateway.io) first
-    3. Return to ChatGPT and retry
-  </Accordion>
-  
-  <Accordion title="Data not updating">
-    The widget fetches fresh data each time. If data seems stale:
-    1. Ask ChatGPT to refresh the data
-    2. Or start a new conversation
-  </Accordion>
-</AccordionGroup>
-
-<Card title="Full Troubleshooting Guide" icon="life-ring" href="/guides/troubleshooting">
-  See more solutions for common issues
+<Card title="Cursor" icon="code" href="/ai-integrations/cursor">
+  AdsGateway is fully available for Cursor IDE. Get started in minutes.
 </Card>
