@@ -1,18 +1,20 @@
 ---
-title: "Claude Desktop Setup"
-description: "Connect AdsGateway to Claude Desktop"
+title: "Claude"
+description: "Connect AdsGateway to Claude Desktop or Claude Code"
 ---
 
-# Claude Desktop Setup
+<img src="/images/Claude_logo.png" alt="Claude" width="60" />
 
-Claude Desktop is Anthropic's AI assistant application with full MCP support. This guide shows you how to add AdsGateway.
+# Claude
+
+Claude is Anthropic's AI assistant with full MCP support. This guide covers setup for both **Claude Desktop** and **Claude Code**.
 
 ## Prerequisites
 
-- [Claude Desktop](https://claude.ai/download) installed
+- [Claude Desktop](https://claude.ai/download) or Claude Code installed
 - An [AdsGateway account](https://adsgateway.io)
 
-## Setup Steps
+## Setup for Claude Desktop
 
 <Steps>
   <Step title="Locate the Configuration File">
@@ -83,6 +85,10 @@ Claude Desktop is Anthropic's AI assistant application with full MCP support. Th
   </Step>
 </Steps>
 
+## Setup for Claude Code
+
+Claude Code uses a similar configuration approach. Add the AdsGateway server to your MCP settings following the same JSON format as above.
+
 ## Verify the Connection
 
 Start a new conversation and try:
@@ -93,11 +99,7 @@ Can you list my Meta ad accounts using AdsGateway?
 
 Claude should call the AdsGateway tool and display your accounts.
 
-## Using AdsGateway in Claude
-
-Claude Desktop provides a conversational interface for your ad data:
-
-### Example Conversations
+## Example Conversations
 
 <AccordionGroup>
   <Accordion title="Daily Performance Check">

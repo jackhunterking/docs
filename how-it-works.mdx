@@ -1,38 +1,11 @@
 ---
 title: "How It Works"
-description: "Understand the architecture and data flow of AdsGateway"
+description: "Understand how AdsGateway connects your AI assistants to ad platforms"
 ---
 
 # How AdsGateway Works
 
 AdsGateway acts as a secure bridge between your AI assistants and advertising platforms. Here's how the pieces fit together.
-
-## Architecture Overview
-
-```mermaid
-flowchart LR
-    subgraph ai [AI Assistants]
-        Cursor[Cursor]
-        Claude[Claude Desktop]
-        ChatGPT[ChatGPT]
-        Windsurf[Windsurf]
-    end
-    
-    subgraph gateway [AdsGateway]
-        MCP[MCP Server]
-        Auth[OAuth Handler]
-        Tools[Ad Tools]
-    end
-    
-    subgraph platforms [Ad Platforms]
-        Meta[Meta Ads]
-        Google[Google Ads]
-        TikTok[TikTok Ads]
-    end
-    
-    ai --> gateway
-    gateway --> platforms
-```
 
 ## The Connection Flow
 
@@ -94,31 +67,12 @@ MCP (Model Context Protocol) is an open standard developed by Anthropic that all
   - **Secure authentication**: OAuth-based auth ensures only authorized users can access data
   - **Structured responses**: Data is returned in formats that AI can easily interpret and present
   
-  AdsGateway implements MCP to ensure compatibility with a wide range of AI assistants including Cursor, Claude Desktop, and more.
+  AdsGateway implements MCP to ensure compatibility with a wide range of AI assistants including Cursor, Claude, and more.
 </Accordion>
-
-## Data Flow Example
-
-Here's what happens when you ask "Show me my campaign performance":
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant AI as AI Assistant
-    participant AG as AdsGateway
-    participant Meta as Meta Ads API
-    
-    User->>AI: "Show me my campaign performance"
-    AI->>AG: Call meta_campaigns_list tool
-    AG->>Meta: GET /campaigns with OAuth token
-    Meta->>AG: Return campaign data
-    AG->>AI: Formatted campaign list
-    AI->>User: "Here are your 5 active campaigns..."
-```
 
 ## Available Tools
 
-AdsGateway provides 11 tools for Meta Ads:
+AdsGateway provides 11 tools for Meta:
 
 | Category | Tools | Description |
 |----------|-------|-------------|
