@@ -1,0 +1,225 @@
+---
+title: "Account Management"
+description: "Tools for managing your ad accounts"
+---
+
+# Account Management Tools
+
+These tools help you list, select, and check the status of your advertising accounts.
+
+## meta_accounts_list
+
+List all accessible Meta ad accounts for the authenticated user.
+
+### Description
+
+Returns all ad accounts you have access to, including their names, status, currency, and timezone. Use this when you first connect to see your available accounts.
+
+### Parameters
+
+This tool takes no parameters.
+
+### Example Prompts
+
+```
+List my Meta ad accounts
+```
+
+```
+Show me all my Facebook ad accounts
+```
+
+```
+What ad accounts do I have access to?
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "total": 3,
+  "accounts": [
+    {
+      "id": "act_123456789",
+      "name": "My Business Account",
+      "status": "ACTIVE",
+      "currency": "USD",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "act_987654321",
+      "name": "Client Account",
+      "status": "ACTIVE",
+      "currency": "EUR",
+      "timezone": "Europe/London"
+    }
+  ]
+}
+```
+
+### Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `total` | number | Total number of accounts |
+| `accounts` | array | List of account objects |
+| `accounts[].id` | string | Account ID (format: act_XXXXX) |
+| `accounts[].name` | string | Account display name |
+| `accounts[].status` | string | Account status (ACTIVE, DISABLED, etc.) |
+| `accounts[].currency` | string | Account currency code |
+| `accounts[].timezone` | string | Account timezone |
+
+---
+
+## meta_accounts_select
+
+Select a Meta ad account to work with.
+
+### Description
+
+Sets the active ad account for subsequent operations. You must select an account before using most other tools.
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `ad_account_id` | string | Yes | The ad account ID to set as active (format: act_XXXXX) |
+
+### Example Prompts
+
+```
+Select the account act_123456789
+```
+
+```
+Use my "My Business Account" account
+```
+
+```
+Switch to the Client Account
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "selected_account": {
+    "id": "act_123456789",
+    "name": "My Business Account",
+    "currency": "USD",
+    "timezone": "America/New_York"
+  }
+}
+```
+
+### Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `selected_account.id` | string | The selected account ID |
+| `selected_account.name` | string | Account display name |
+| `selected_account.currency` | string | Account currency |
+| `selected_account.timezone` | string | Account timezone |
+
+<Tip>
+  After selecting an account, all subsequent queries will use this account until you select a different one.
+</Tip>
+
+---
+
+## meta_context_get
+
+Check which ad account is currently active.
+
+### Description
+
+Returns information about the currently selected ad account. Use this to verify which account you're working with.
+
+### Parameters
+
+This tool takes no parameters.
+
+### Example Prompts
+
+```
+Which account am I using?
+```
+
+```
+What's my current ad account?
+```
+
+```
+Check my active account
+```
+
+### Response (Account Selected)
+
+```json
+{
+  "success": true,
+  "has_active_account": true,
+  "active_account": {
+    "id": "act_123456789",
+    "name": "My Business Account",
+    "currency": "USD",
+    "timezone": "America/New_York",
+    "selected_at": "2024-01-15T10:30:00Z"
+  }
+}
+```
+
+### Response (No Account Selected)
+
+```json
+{
+  "success": true,
+  "has_active_account": false
+}
+```
+
+### Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `has_active_account` | boolean | Whether an account is currently selected |
+| `active_account` | object | Account details (only present if selected) |
+| `active_account.selected_at` | string | When this account was selected |
+
+---
+
+## Typical Workflow
+
+Here's a typical flow when starting a session:
+
+<Steps>
+  <Step title="List available accounts">
+    ```
+    List my Meta ad accounts
+    ```
+  </Step>
+  
+  <Step title="Select an account">
+    ```
+    Select the account "My Business Account"
+    ```
+  </Step>
+  
+  <Step title="Verify selection">
+    ```
+    Which account am I using?
+    ```
+  </Step>
+  
+  <Step title="Start querying">
+    ```
+    Show me my campaign performance
+    ```
+  </Step>
+</Steps>
+
+<Info>
+  Your account selection persists across conversations. You only need to select an account once until you want to switch.
+</Info>

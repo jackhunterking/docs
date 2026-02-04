@@ -1,0 +1,237 @@
+---
+title: "Meta Ads"
+description: "Connect your Facebook and Instagram advertising accounts"
+---
+
+# Meta Ads Integration
+
+Connect your Meta (Facebook & Instagram) advertising accounts to query performance data through your AI assistant.
+
+<Info>
+  Meta Ads is fully supported with 11 tools for account management, campaign data, and AI-powered analysis.
+</Info>
+
+## What You Can Access
+
+<CardGroup cols={2}>
+  <Card title="Campaigns" icon="bullhorn">
+    View all your campaigns with objectives, budgets, and status
+  </Card>
+  <Card title="Ad Sets" icon="layer-group">
+    See targeting, placements, and scheduling for each ad set
+  </Card>
+  <Card title="Ads" icon="ad">
+    Access individual ads with creative content and performance
+  </Card>
+  <Card title="Insights" icon="chart-line">
+    Get metrics like spend, impressions, clicks, conversions, and ROAS
+  </Card>
+</CardGroup>
+
+## Connecting Your Account
+
+<Steps>
+  <Step title="Set Up Your AI Assistant">
+    First, connect AdsGateway to your AI assistant:
+    - [Cursor Setup](/ai-integrations/cursor)
+    - [Claude Desktop Setup](/ai-integrations/claude-desktop)
+    - [ChatGPT Setup](/ai-integrations/chatgpt)
+    - [Windsurf Setup](/ai-integrations/windsurf)
+  </Step>
+  
+  <Step title="Request Meta Connection">
+    In your AI assistant, type:
+    
+    ```
+    List my Meta ad accounts
+    ```
+    
+    If you haven't connected Meta yet, you'll be prompted to authenticate.
+  </Step>
+  
+  <Step title="Authorize with Facebook">
+    Click the authorization link to connect:
+    
+    1. Log in to Facebook (if not already logged in)
+    2. Review the permissions AdsGateway is requesting
+    3. Select which ad accounts to connect
+    4. Click "Continue" to authorize
+    
+    <Warning>
+      Make sure you have admin access to the ad accounts you want to connect.
+    </Warning>
+  </Step>
+  
+  <Step title="Select Your Account">
+    Once connected, select which account to use:
+    
+    ```
+    Select the account "My Business Account"
+    ```
+    
+    <Check>
+      You're now ready to query your Meta Ads data!
+    </Check>
+  </Step>
+</Steps>
+
+## Available Tools
+
+AdsGateway provides 11 tools for Meta Ads:
+
+### Account Management
+
+| Tool | Description | Example Prompt |
+|------|-------------|----------------|
+| `meta_accounts_list` | List all connected ad accounts | "List my Meta ad accounts" |
+| `meta_accounts_select` | Set the active account | "Select account act_123456789" |
+| `meta_context_get` | Check which account is active | "Which account am I using?" |
+
+### Campaign Data
+
+| Tool | Description | Example Prompt |
+|------|-------------|----------------|
+| `meta_campaigns_list` | List campaigns with filters | "Show me active campaigns" |
+| `meta_adsets_list` | List ad sets in a campaign | "List ad sets in my Summer Sale campaign" |
+| `meta_ads_list` | List ads in an ad set | "Show me all ads" |
+| `meta_ad_get` | Get detailed ad info with creative | "Get details for ad 123456" |
+| `meta_insights_get` | Get performance metrics | "What was my spend last week?" |
+
+### AI Analysis
+
+| Tool | Description | Example Prompt |
+|------|-------------|----------------|
+| `meta_analysis_summary` | Account performance overview | "Give me an account summary" |
+| `meta_analysis_top_movers` | Campaigns with biggest changes | "Which campaigns improved most?" |
+| `meta_analysis_anomalies` | Detect unusual patterns | "Are there any anomalies?" |
+
+## Common Queries
+
+<AccordionGroup>
+  <Accordion title="Performance Overview">
+    ```
+    Give me a summary of my ad account performance for the last 7 days
+    ```
+    
+    Returns key metrics like total spend, impressions, clicks, and highlights notable campaigns.
+  </Accordion>
+  
+  <Accordion title="Campaign Performance">
+    ```
+    What's the ROAS for my active campaigns this month?
+    ```
+    
+    Returns Return on Ad Spend for each campaign.
+  </Accordion>
+  
+  <Accordion title="Daily Spend Check">
+    ```
+    How much did I spend on ads yesterday?
+    ```
+    
+    Quick check on daily advertising costs.
+  </Accordion>
+  
+  <Accordion title="Issue Detection">
+    ```
+    Are there any problems with my campaigns?
+    ```
+    
+    Uses anomaly detection to find unusual patterns that might indicate issues.
+  </Accordion>
+  
+  <Accordion title="Top Performers">
+    ```
+    Which ads are performing best in my Brand campaign?
+    ```
+    
+    Lists ads sorted by performance metrics.
+  </Accordion>
+</AccordionGroup>
+
+## Metrics Available
+
+AdsGateway can retrieve these Meta Ads metrics:
+
+### Core Metrics
+- **Spend** - Total amount spent
+- **Impressions** - Number of times ads were shown
+- **Reach** - Unique users who saw your ads
+- **Clicks** - Link clicks and all clicks
+- **CTR** - Click-through rate
+- **CPC** - Cost per click
+- **CPM** - Cost per 1,000 impressions
+
+### Conversion Metrics
+- **Conversions** - Total conversions
+- **Cost per Conversion** - Efficiency metric
+- **Purchase ROAS** - Return on ad spend
+- **Add to Cart** - Shopping conversions
+- **Leads** - Lead generation conversions
+
+### Video Metrics
+- **Video Views** - 3-second and ThruPlay views
+- **Video Watch Time** - Average watch duration
+- **Video Completion Rate** - Percentage who watched to end
+
+### Engagement Metrics
+- **Reactions** - Likes, loves, etc.
+- **Comments** - Post comments
+- **Shares** - Content shares
+- **Page Engagement** - Total engagement
+
+## Permissions Required
+
+When you authorize AdsGateway, we request these Facebook permissions:
+
+| Permission | Purpose |
+|------------|---------|
+| `ads_read` | Read ad account data and performance metrics |
+| `business_management` | Access Business Manager accounts |
+| `pages_read_engagement` | Read page insights for ad performance |
+
+<Info>
+  AdsGateway only requests read permissions. We cannot create, edit, pause, or delete any of your ads or campaigns.
+</Info>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="'Meta not connected' error">
+    You need to authorize AdsGateway to access your Meta accounts:
+    
+    1. Visit [adsgateway.io/connect](https://adsgateway.io/connect)
+    2. Click "Connect Meta"
+    3. Complete the Facebook authorization flow
+    4. Return to your AI assistant and try again
+  </Accordion>
+  
+  <Accordion title="Can't see all my ad accounts">
+    AdsGateway can only access accounts you have admin permissions for:
+    
+    1. Check your Facebook Business Manager
+    2. Ensure you have admin access to the desired accounts
+    3. Reconnect Meta to refresh your account list
+  </Accordion>
+  
+  <Accordion title="Data seems outdated">
+    Meta Ads data has a reporting delay:
+    
+    - Most metrics are available within 15 minutes
+    - Some metrics (like conversions) may take up to 48 hours
+    - This is a Meta limitation, not AdsGateway
+  </Accordion>
+  
+  <Accordion title="'No account selected' error">
+    You need to select an active account first:
+    
+    ```
+    List my Meta ad accounts
+    Select the account "Account Name"
+    ```
+  </Accordion>
+</AccordionGroup>
+
+<Card title="Full Troubleshooting Guide" icon="life-ring" href="/guides/troubleshooting">
+  See more solutions for common issues
+</Card>

@@ -1,0 +1,144 @@
+---
+title: "Claude Desktop Setup"
+description: "Connect AdsGateway to Claude Desktop"
+---
+
+# Claude Desktop Setup
+
+Claude Desktop is Anthropic's AI assistant application with full MCP support. This guide shows you how to add AdsGateway.
+
+## Prerequisites
+
+- [Claude Desktop](https://claude.ai/download) installed
+- An [AdsGateway account](https://adsgateway.io)
+
+## Setup Steps
+
+<Steps>
+  <Step title="Locate the Configuration File">
+    Claude Desktop stores MCP configuration in a JSON file:
+    
+    <Tabs>
+      <Tab title="macOS">
+        ```bash
+        ~/Library/Application Support/Claude/claude_desktop_config.json
+        ```
+      </Tab>
+      <Tab title="Windows">
+        ```bash
+        %APPDATA%\Claude\claude_desktop_config.json
+        ```
+      </Tab>
+    </Tabs>
+    
+    <Tip>
+      If the file doesn't exist, create it.
+    </Tip>
+  </Step>
+  
+  <Step title="Add AdsGateway Configuration">
+    Open the configuration file and add the AdsGateway server:
+    
+    ```json
+    {
+      "mcpServers": {
+        "ads-gateway": {
+          "url": "https://ads-gateway.onrender.com/mcp"
+        }
+      }
+    }
+    ```
+    
+    If you already have other MCP servers configured, add `ads-gateway` to the existing `mcpServers` object:
+    
+    ```json
+    {
+      "mcpServers": {
+        "existing-server": {
+          "url": "https://example.com/mcp"
+        },
+        "ads-gateway": {
+          "url": "https://ads-gateway.onrender.com/mcp"
+        }
+      }
+    }
+    ```
+  </Step>
+  
+  <Step title="Restart Claude Desktop">
+    Close and reopen Claude Desktop for the changes to take effect.
+  </Step>
+  
+  <Step title="Authenticate">
+    When you first use an AdsGateway tool, Claude will prompt you to authenticate:
+    
+    1. Click the authentication link
+    2. Log in to your AdsGateway account
+    3. Authorize the connection
+    4. Return to Claude Desktop
+    
+    <Check>
+      You should see AdsGateway tools available in Claude's tool list
+    </Check>
+  </Step>
+</Steps>
+
+## Verify the Connection
+
+Start a new conversation and try:
+
+```
+Can you list my Meta ad accounts using AdsGateway?
+```
+
+Claude should call the AdsGateway tool and display your accounts.
+
+## Using AdsGateway in Claude
+
+Claude Desktop provides a conversational interface for your ad data:
+
+### Example Conversations
+
+<AccordionGroup>
+  <Accordion title="Daily Performance Check">
+    **You:** "What's my ad spend looking like today?"
+    
+    **Claude:** *Calls meta_insights_get* "Your Meta ads spent $342.50 today across 3 active campaigns. That's 12% higher than yesterday. Would you like me to break this down by campaign?"
+  </Accordion>
+  
+  <Accordion title="Campaign Analysis">
+    **You:** "Which of my campaigns is performing best this week?"
+    
+    **Claude:** *Calls meta_analysis_top_movers* "Your 'Summer Sale' campaign is the top performer this week with a 45% increase in ROAS. It generated $1,250 in revenue from $280 in spend."
+  </Accordion>
+  
+  <Accordion title="Anomaly Detection">
+    **You:** "Is anything unusual happening with my ads?"
+    
+    **Claude:** *Calls meta_analysis_anomalies* "I found one anomaly: Your 'Brand Awareness' campaign had a 67% drop in impressions yesterday. This is 2.3 standard deviations below normal. You might want to check if there's a budget or targeting issue."
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Tools not appearing">
+    1. Make sure the config file is saved correctly
+    2. Restart Claude Desktop completely
+    3. Check that the JSON syntax is valid
+  </Accordion>
+  
+  <Accordion title="Configuration file location">
+    Use Finder (macOS) or Explorer (Windows) to navigate to the config location. On macOS, press Cmd+Shift+G and paste the path.
+  </Accordion>
+  
+  <Accordion title="Authentication issues">
+    If authentication fails:
+    1. Try logging in at [adsgateway.io](https://adsgateway.io) first
+    2. Then retry the tool in Claude
+  </Accordion>
+</AccordionGroup>
+
+<Card title="Full Troubleshooting Guide" icon="life-ring" href="/guides/troubleshooting">
+  See more solutions for common issues
+</Card>

@@ -1,0 +1,257 @@
+---
+title: "Troubleshooting"
+description: "Solutions for common issues with AdsGateway"
+---
+
+# Troubleshooting
+
+Having issues with AdsGateway? Find solutions to common problems below.
+
+## Authentication Issues
+
+### "Authentication required" error
+
+Your session has expired or you haven't logged in yet.
+
+<Steps>
+  <Step title="Check your connection">
+    Ensure your AI assistant shows AdsGateway as connected.
+  </Step>
+  
+  <Step title="Re-authenticate">
+    Try toggling the AdsGateway server off and on in your AI assistant settings.
+  </Step>
+  
+  <Step title="Manual login">
+    Visit [adsgateway.io](https://adsgateway.io) and log in directly.
+  </Step>
+</Steps>
+
+---
+
+### Authentication window doesn't open
+
+The login popup may be blocked.
+
+**Solutions**:
+1. Check for blocked popups in your browser
+2. Try a different browser
+3. Manually visit [adsgateway.io](https://adsgateway.io) and log in
+
+---
+
+### "Invalid token" error
+
+Your authentication token is invalid or expired.
+
+**Solutions**:
+1. Log out of AdsGateway completely
+2. Clear your browser cookies for adsgateway.io
+3. Log in again
+
+---
+
+## Ad Account Issues
+
+### "No ad account selected" error
+
+You need to select an active ad account before querying data.
+
+**Solution**:
+```
+List my Meta ad accounts
+Select the account "Your Account Name"
+```
+
+---
+
+### "Account not found" error
+
+The specified account ID doesn't exist or you don't have access.
+
+**Possible causes**:
+- Typo in the account ID
+- Account was removed from your Business Manager
+- Permissions were revoked
+
+**Solution**:
+1. List your available accounts to see what you have access to
+2. Verify the account ID is correct
+3. Check your Facebook Business Manager permissions
+
+---
+
+### Can't see all my ad accounts
+
+AdsGateway can only access accounts you have admin permissions for.
+
+<Steps>
+  <Step title="Check Business Manager">
+    Go to Facebook Business Manager and verify your role on each account.
+  </Step>
+  
+  <Step title="Request access">
+    Ask an admin to grant you the necessary permissions.
+  </Step>
+  
+  <Step title="Reconnect">
+    After permissions are updated, reconnect Meta in AdsGateway to refresh your account list.
+  </Step>
+</Steps>
+
+---
+
+## Data Issues
+
+### "No data available" response
+
+The query returned empty results.
+
+**Possible causes**:
+- No ads ran during the specified period
+- Account is new with no historical data
+- Filters are too restrictive
+
+**Solutions**:
+1. Try a broader date range
+2. Remove status filters
+3. Verify the account has active or historical campaigns
+
+---
+
+### Data seems outdated
+
+Meta Ads data has inherent reporting delays.
+
+| Data Type | Typical Delay |
+|-----------|---------------|
+| Impressions, clicks | ~15 minutes |
+| Spend | ~15 minutes |
+| Conversions | Up to 24-48 hours |
+| Attribution data | Up to 7 days |
+
+<Info>
+  This is a limitation of Meta's reporting system, not AdsGateway. Always check the date range of your data.
+</Info>
+
+---
+
+### Numbers don't match Facebook Ads Manager
+
+Minor discrepancies are normal due to:
+- **Timing differences**: Data was fetched at different times
+- **Attribution windows**: Different attribution settings
+- **Timezone differences**: Account vs. query timezone
+
+<Tip>
+  For exact comparisons, use the same date range and check that timezones match.
+</Tip>
+
+---
+
+## Connection Issues
+
+### Server not connecting
+
+The AdsGateway server isn't responding.
+
+**Solutions**:
+1. Check your internet connection
+2. Try restarting your AI assistant
+3. Check [status.adsgateway.io](https://status.adsgateway.io) for service status
+4. Wait a few minutes and try again
+
+---
+
+### "Timeout" errors
+
+Requests are taking too long.
+
+**Possible causes**:
+- Large data requests
+- Network issues
+- Server under heavy load
+
+**Solutions**:
+1. Try a smaller date range
+2. Request fewer metrics at once
+3. Use pagination for large result sets
+4. Wait and retry
+
+---
+
+### Tools not appearing
+
+Your AI assistant doesn't show AdsGateway tools.
+
+**For Cursor**:
+1. Open Settings → MCP
+2. Verify AdsGateway server is added
+3. Toggle it off and on
+4. Restart Cursor
+
+**For Claude Desktop**:
+1. Check your `claude_desktop_config.json` file
+2. Verify the JSON syntax is valid
+3. Restart Claude Desktop
+
+---
+
+## Platform-Specific Issues
+
+### Meta: "Permission denied" error
+
+Your Meta connection lacks the required permissions.
+
+**Solution**:
+1. Go to Facebook Settings → Business Integrations
+2. Find AdsGateway and click "View and edit"
+3. Ensure all required permissions are granted
+4. Reconnect Meta in AdsGateway if needed
+
+---
+
+### Meta: "Rate limit exceeded" error
+
+Too many requests in a short time.
+
+**Solutions**:
+1. Wait 5-10 minutes before trying again
+2. Reduce the frequency of your queries
+3. Use broader date ranges to reduce API calls
+
+---
+
+## Error Reference
+
+| Error Code | Meaning | Solution |
+|------------|---------|----------|
+| `AUTH_REQUIRED` | Not logged in | Log in at adsgateway.io |
+| `ACCOUNT_NOT_SELECTED` | No active account | Select an account first |
+| `ACCOUNT_NOT_FOUND` | Invalid account ID | Check account ID |
+| `PLATFORM_NOT_CONNECTED` | Platform not authorized | Connect the platform |
+| `PERMISSION_DENIED` | Missing permissions | Check platform permissions |
+| `RATE_LIMITED` | Too many requests | Wait and retry |
+| `TIMEOUT` | Request took too long | Retry with smaller request |
+| `SERVER_ERROR` | Server issue | Wait and retry |
+
+---
+
+## Getting Help
+
+<CardGroup cols={2}>
+  <Card title="Contact Support" icon="envelope" href="mailto:support@adsgateway.io">
+    Email us for help with complex issues
+  </Card>
+  <Card title="Community" icon="users" href="https://discord.gg/adsgateway">
+    Join our Discord for community support
+  </Card>
+</CardGroup>
+
+### When Contacting Support
+
+Please include:
+- Your AI assistant (Cursor, Claude, ChatGPT, etc.)
+- The exact error message
+- What you were trying to do
+- Steps you've already tried

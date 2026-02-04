@@ -1,0 +1,337 @@
+---
+title: "AI Analysis"
+description: "AI-powered tools for account summaries, top movers, and anomaly detection"
+---
+
+# AI Analysis Tools
+
+These tools provide intelligent analysis of your advertising data, including summaries, trend detection, and anomaly alerts.
+
+## meta_analysis_summary
+
+Generate a comprehensive account performance overview with key metrics and trends.
+
+### Description
+
+Provides an executive-level summary of your ad account performance, including headline numbers, comparisons to previous periods, and key highlights. Perfect for daily check-ins or reporting.
+
+### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `date_preset` | string | No | last_7d | Time period for the summary |
+
+### Date Presets
+
+| Preset | Description |
+|--------|-------------|
+| `today` | Today only |
+| `yesterday` | Yesterday only |
+| `this_week` | Current week |
+| `last_week` | Previous week |
+| `this_month` | Current month |
+| `last_month` | Previous month |
+| `last_7d` | Last 7 days |
+| `last_14d` | Last 14 days |
+| `last_30d` | Last 30 days |
+
+### Example Prompts
+
+```
+Give me an account summary
+```
+
+```
+How are my ads performing this week?
+```
+
+```
+Summarize my ad performance for the last 30 days
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "account_name": "My Business Account",
+  "period": "last_7d",
+  "summary": {
+    "spend": 2450.75,
+    "impressions": 245000,
+    "reach": 98000,
+    "clicks": 5635,
+    "ctr": 2.30,
+    "cpc": 0.43,
+    "conversions": 142,
+    "cost_per_conversion": 17.26,
+    "roas": 3.2
+  },
+  "highlights": [
+    "Spend increased 12% vs previous period",
+    "CTR improved from 2.1% to 2.3%",
+    "Top performing campaign: Summer Sale with 4.1 ROAS",
+    "3 campaigns are currently underperforming their benchmarks"
+  ]
+}
+```
+
+### Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `period` | string | The time period analyzed |
+| `summary` | object | Key performance metrics |
+| `highlights` | array | AI-generated insights and observations |
+
+<Tip>
+  Use the summary tool for daily standups or weekly reports. The highlights automatically surface the most important changes.
+</Tip>
+
+---
+
+## meta_analysis_top_movers
+
+Identify campaigns with significant performance changes - gainers and losers.
+
+### Description
+
+Compares performance between two periods to identify campaigns that have improved or declined the most. Great for understanding what's changing in your account.
+
+### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `metric` | string | No | spend | Metric to analyze |
+| `comparison_period` | string | No | week | Compare vs: day, week |
+| `limit` | number | No | 5 | Number of movers per category |
+
+### Available Metrics
+
+| Metric | Description |
+|--------|-------------|
+| `spend` | Total spend |
+| `impressions` | Total impressions |
+| `clicks` | Total clicks |
+| `cpc` | Cost per click |
+| `cpm` | Cost per 1,000 impressions |
+| `ctr` | Click-through rate |
+| `reach` | Unique users reached |
+| `frequency` | Average times seen per user |
+| `conversions` | Total conversions |
+| `cost_per_conversion` | Cost per conversion |
+| `purchase_roas` | Return on ad spend |
+
+### Example Prompts
+
+```
+Which campaigns improved the most this week?
+```
+
+```
+Show me top movers by ROAS
+```
+
+```
+What campaigns had the biggest spend changes?
+```
+
+```
+Which campaigns are declining?
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "metric": "spend",
+  "comparison_period": "week",
+  "current_period": "Jan 8 - Jan 14",
+  "previous_period": "Jan 1 - Jan 7",
+  "top_gainers": [
+    {
+      "campaign_id": "123456789",
+      "campaign_name": "Summer Sale",
+      "current_value": 850.00,
+      "previous_value": 520.00,
+      "change_percent": 63.5,
+      "change_absolute": 330.00
+    }
+  ],
+  "top_losers": [
+    {
+      "campaign_id": "987654321",
+      "campaign_name": "Brand Awareness",
+      "current_value": 200.00,
+      "previous_value": 450.00,
+      "change_percent": -55.6,
+      "change_absolute": -250.00
+    }
+  ]
+}
+```
+
+### Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `metric` | string | The metric analyzed |
+| `current_period` | string | The current time range |
+| `previous_period` | string | The comparison time range |
+| `top_gainers` | array | Campaigns that improved most |
+| `top_losers` | array | Campaigns that declined most |
+| `change_percent` | number | Percentage change |
+| `change_absolute` | number | Absolute change in value |
+
+---
+
+## meta_analysis_anomalies
+
+Detect unusual patterns, spikes, or drops in performance using statistical analysis.
+
+### Description
+
+Uses statistical methods to identify metrics that are significantly different from their historical norms. Helps you catch issues early, like sudden spend spikes or performance drops.
+
+### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `lookback_days` | number | No | 14 | Days to analyze (max: 90) |
+| `threshold` | number | No | 2.0 | Sensitivity in std deviations (lower = more sensitive) |
+| `metrics` | array | No | default set | Specific metrics to analyze |
+
+### Default Metrics Analyzed
+
+- spend
+- impressions
+- clicks
+- cpc
+- ctr
+
+### Example Prompts
+
+```
+Are there any anomalies in my ad performance?
+```
+
+```
+Check for unusual patterns in my campaigns
+```
+
+```
+Is anything weird happening with my ads?
+```
+
+```
+Detect any issues in the last 30 days
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "lookback_days": 14,
+  "threshold": 2.0,
+  "metrics_analyzed": ["spend", "impressions", "clicks", "cpc", "ctr"],
+  "summary": {
+    "total_anomalies": 2,
+    "critical": 1,
+    "warning": 1,
+    "healthy_metrics": 3
+  },
+  "anomalies": [
+    {
+      "metric": "impressions",
+      "date": "2024-01-12",
+      "value": 45000,
+      "expected_value": 28000,
+      "deviation": 2.8,
+      "direction": "spike",
+      "severity": "critical",
+      "is_concerning": true,
+      "message": "Impressions were 60% higher than normal. Check if budget was increased or targeting expanded."
+    },
+    {
+      "metric": "ctr",
+      "date": "2024-01-13",
+      "value": 1.2,
+      "expected_value": 2.1,
+      "deviation": 2.1,
+      "direction": "drop",
+      "severity": "warning",
+      "is_concerning": true,
+      "message": "CTR dropped 43% below normal. Review recent creative changes or audience fatigue."
+    }
+  ]
+}
+```
+
+### Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `lookback_days` | number | Days analyzed |
+| `threshold` | number | Sensitivity used |
+| `summary` | object | Overview of findings |
+| `anomalies` | array | List of detected anomalies |
+| `anomalies[].deviation` | number | How many std deviations from mean |
+| `anomalies[].direction` | string | "spike" or "drop" |
+| `anomalies[].severity` | string | "critical" or "warning" |
+| `anomalies[].is_concerning` | boolean | Whether this needs attention |
+| `anomalies[].message` | string | Human-readable explanation |
+
+### Interpreting Severity
+
+| Severity | Deviation | Meaning |
+|----------|-----------|---------|
+| Critical | > 2.5σ | Highly unusual, needs immediate attention |
+| Warning | 2.0-2.5σ | Notable deviation, worth investigating |
+
+<Warning>
+  Anomaly detection works best with at least 14 days of data. New accounts or campaigns may not have enough history for accurate detection.
+</Warning>
+
+---
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Daily Health Check" icon="heart-pulse">
+    Start each day with anomaly detection to catch issues early
+    
+    ```
+    Are there any problems with my ads today?
+    ```
+  </Card>
+  
+  <Card title="Weekly Review" icon="calendar-week">
+    Use top movers for your weekly performance review
+    
+    ```
+    Which campaigns improved most this week?
+    ```
+  </Card>
+  
+  <Card title="Executive Reporting" icon="chart-pie">
+    Generate summaries for stakeholder updates
+    
+    ```
+    Give me an executive summary for last month
+    ```
+  </Card>
+  
+  <Card title="Budget Monitoring" icon="dollar-sign">
+    Watch for unexpected spend changes
+    
+    ```
+    Check for any spend anomalies in the last week
+    ```
+  </Card>
+</CardGroup>
+
+<Card title="Common Workflows" icon="route" href="/guides/common-workflows">
+  See how to combine these tools for powerful workflows
+</Card>

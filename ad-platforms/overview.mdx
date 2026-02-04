@@ -1,0 +1,118 @@
+---
+title: "Ad Platforms Overview"
+description: "Connect your advertising accounts to AdsGateway"
+---
+
+# Ad Platforms
+
+AdsGateway connects to your advertising platforms to fetch performance data. Currently, we support Meta Ads with more platforms coming soon.
+
+## Supported Platforms
+
+<CardGroup cols={2}>
+  <Card title="Meta Ads" icon="meta" href="/ad-platforms/meta">
+    **Available Now**
+    
+    Facebook and Instagram advertising. Full support for campaigns, ad sets, ads, and performance insights.
+  </Card>
+  
+  <Card title="Google Ads" icon="google" href="/ad-platforms/google">
+    **Coming Soon**
+    
+    Search, Display, YouTube, and Shopping campaigns.
+  </Card>
+  
+  <Card title="TikTok Ads" icon="tiktok" href="/ad-platforms/tiktok">
+    **Coming Soon**
+    
+    TikTok advertising platform for video-first campaigns.
+  </Card>
+  
+  <Card title="LinkedIn Ads" icon="linkedin" href="/ad-platforms/linkedin">
+    **Coming Soon**
+    
+    B2B advertising on the world's largest professional network.
+  </Card>
+  
+  <Card title="Snapchat Ads" icon="snapchat" href="/ad-platforms/snapchat">
+    **Coming Soon**
+    
+    Reach younger audiences with Snap ads.
+  </Card>
+  
+  <Card title="X/Twitter Ads" icon="x-twitter" href="/ad-platforms/x-twitter">
+    **Coming Soon**
+    
+    Promote on X (formerly Twitter).
+  </Card>
+</CardGroup>
+
+## How Connections Work
+
+<Steps>
+  <Step title="Choose a Platform">
+    Select the advertising platform you want to connect from the list above.
+  </Step>
+  
+  <Step title="Authorize Access">
+    You'll be redirected to the platform's login page to authorize AdsGateway. This uses OAuth, the industry standard for secure authorization.
+    
+    <Info>
+      AdsGateway only requests **read access** to your ad accounts. We cannot create, modify, or delete your ads.
+    </Info>
+  </Step>
+  
+  <Step title="Select Accounts">
+    After authorization, you'll see all ad accounts you have access to. Select which accounts you want to use with AdsGateway.
+  </Step>
+  
+  <Step title="Start Querying">
+    Once connected, you can query your ad data through any supported AI assistant.
+  </Step>
+</Steps>
+
+## Data Access
+
+AdsGateway can access the following data from connected platforms:
+
+| Data Type | Description | Example |
+|-----------|-------------|---------|
+| **Accounts** | Ad account names, IDs, settings | "My Business Account" |
+| **Campaigns** | Campaign names, objectives, budgets | "Summer Sale Campaign" |
+| **Ad Sets** | Targeting, placements, schedules | "US 25-44 Interest-based" |
+| **Ads** | Creative content, status | "Product Video Ad" |
+| **Insights** | Performance metrics | Spend, impressions, clicks, conversions |
+
+## Security & Privacy
+
+<CardGroup cols={2}>
+  <Card title="OAuth 2.1" icon="shield-check">
+    We use the latest OAuth standard for secure authorization
+  </Card>
+  <Card title="Read-Only" icon="eye">
+    AdsGateway cannot modify your campaigns or settings
+  </Card>
+  <Card title="No Storage" icon="database">
+    We don't store your ad data - it's fetched fresh each time
+  </Card>
+  <Card title="Revocable" icon="ban">
+    You can disconnect platforms anytime from your account settings
+  </Card>
+</CardGroup>
+
+## Platform Roadmap
+
+We're actively working on adding more platforms. Here's our roadmap:
+
+| Platform | Status | Expected |
+|----------|--------|----------|
+| Meta Ads | Available | Now |
+| Google Ads | In Development | Q1 2026 |
+| TikTok Ads | Planned | Q2 2026 |
+| LinkedIn Ads | Planned | Q2 2026 |
+| Snapchat Ads | Planned | Q3 2026 |
+| X/Twitter Ads | Planned | Q3 2026 |
+
+<Card title="Request a Platform" icon="plus" href="mailto:support@adsgateway.io">
+  Want us to prioritize a specific platform? Let us know!
+</Card>

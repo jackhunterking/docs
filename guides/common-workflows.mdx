@@ -1,0 +1,286 @@
+---
+title: "Common Workflows"
+description: "Real-world examples of how to use AdsGateway effectively"
+---
+
+# Common Workflows
+
+These workflows show you how to combine AdsGateway tools for practical, everyday tasks.
+
+## Daily Performance Check
+
+Start each day by reviewing your account health and catching any issues early.
+
+<Steps>
+  <Step title="Check for anomalies">
+    ```
+    Are there any anomalies in my ad performance?
+    ```
+    
+    This runs anomaly detection to flag any unusual patterns.
+  </Step>
+  
+  <Step title="Get yesterday's summary">
+    ```
+    Summarize my ad performance for yesterday
+    ```
+    
+    Get a quick overview of what happened.
+  </Step>
+  
+  <Step title="Review top movers">
+    ```
+    Which campaigns had the biggest changes yesterday?
+    ```
+    
+    Understand what's driving performance shifts.
+  </Step>
+</Steps>
+
+**Time required**: ~2 minutes
+
+---
+
+## Weekly Performance Review
+
+A comprehensive review for weekly meetings or reports.
+
+<Steps>
+  <Step title="Get weekly summary">
+    ```
+    Give me an account summary for last week
+    ```
+    
+    Get the big picture with key metrics.
+  </Step>
+  
+  <Step title="Identify top performers">
+    ```
+    Which campaigns improved the most in ROAS this week?
+    ```
+    
+    Find what's working well.
+  </Step>
+  
+  <Step title="Find underperformers">
+    ```
+    Which campaigns had the biggest drops in performance?
+    ```
+    
+    Identify areas needing attention.
+  </Step>
+  
+  <Step title="Analyze trends">
+    ```
+    Show me daily spend for the last 14 days
+    ```
+    
+    Look for patterns over time.
+  </Step>
+</Steps>
+
+**Time required**: ~5 minutes
+
+---
+
+## Budget Monitoring
+
+Keep track of your advertising spend.
+
+### Check Today's Spend
+
+```
+How much have I spent on ads today?
+```
+
+### Compare to Budget
+
+```
+What's my spend for this month so far?
+```
+
+### Daily Spend Trend
+
+```
+Show me my daily spend for the last 7 days
+```
+
+### Campaign-Level Spend
+
+```
+Break down my spend by campaign for this week
+```
+
+<Tip>
+  Set a reminder to check your spend at the same time each day to build a habit.
+</Tip>
+
+---
+
+## Troubleshooting Poor Performance
+
+When campaigns aren't performing as expected, follow this diagnostic workflow.
+
+<Steps>
+  <Step title="Identify the problem scope">
+    ```
+    Is it just one campaign or my whole account that's underperforming?
+    ```
+    
+    Start by understanding if this is isolated or systemic.
+  </Step>
+  
+  <Step title="Check for anomalies">
+    ```
+    Are there any anomalies in the last 14 days?
+    ```
+    
+    Look for sudden changes that might indicate issues.
+  </Step>
+  
+  <Step title="Compare periods">
+    ```
+    Compare my CTR this week to last week by campaign
+    ```
+    
+    Find which specific campaigns changed.
+  </Step>
+  
+  <Step title="Drill into the problem campaign">
+    ```
+    Show me ad set performance for the [Problem Campaign]
+    ```
+    
+    Narrow down to specific ad sets.
+  </Step>
+  
+  <Step title="Check creative performance">
+    ```
+    List ads in [Problem Ad Set] with their performance
+    ```
+    
+    See if certain creatives are the issue.
+  </Step>
+</Steps>
+
+---
+
+## Preparing Reports
+
+Generate data for stakeholder reports quickly.
+
+### Executive Summary
+
+```
+Generate an executive summary of my ad account for last month. Include spend, ROAS, and key highlights.
+```
+
+### Campaign Performance Table
+
+```
+List all campaigns with their spend, ROAS, and conversions for last month
+```
+
+### Demographic Breakdown
+
+```
+Break down my conversions by age and gender for the last 30 days
+```
+
+### Geographic Performance
+
+```
+Show me performance by country for my international campaigns
+```
+
+---
+
+## Finding Winning Ads
+
+Identify your best-performing creatives.
+
+<Steps>
+  <Step title="Get top campaigns">
+    ```
+    Which campaigns have the best ROAS?
+    ```
+  </Step>
+  
+  <Step title="Drill into ad sets">
+    ```
+    Show me ad sets in [Top Campaign]
+    ```
+  </Step>
+  
+  <Step title="Find top ads">
+    ```
+    Which ads in [Top Ad Set] have the best CTR?
+    ```
+  </Step>
+  
+  <Step title="Review creative">
+    ```
+    Show me the creative details for ad [Top Ad ID]
+    ```
+  </Step>
+</Steps>
+
+---
+
+## Quick Reference Prompts
+
+### Account Health
+- "Give me an account summary"
+- "Are there any anomalies?"
+- "Which campaigns need attention?"
+
+### Spend & Budget
+- "What's my spend today/this week/this month?"
+- "Show me daily spend for the last 7 days"
+- "Which campaign is spending the most?"
+
+### Performance Metrics
+- "What's my CTR?"
+- "Show me my ROAS for this month"
+- "What's my cost per conversion?"
+
+### Campaign Analysis
+- "List my active campaigns"
+- "Which campaigns improved this week?"
+- "Compare campaign performance"
+
+### Demographic Insights
+- "Break down by age group"
+- "Show performance by gender"
+- "Which country performs best?"
+
+---
+
+## Pro Tips
+
+<CardGroup cols={2}>
+  <Card title="Be Specific" icon="bullseye">
+    Include time periods in your questions for clearer answers
+    
+    Good: "Spend last week"
+    Better: "Daily spend for Jan 1-7"
+  </Card>
+  
+  <Card title="Compare Periods" icon="arrows-left-right">
+    Ask for comparisons to spot trends
+    
+    "Compare this week to last week"
+  </Card>
+  
+  <Card title="Start Broad" icon="arrows-maximize">
+    Begin with account-level data, then drill down
+    
+    Account → Campaign → Ad Set → Ad
+  </Card>
+  
+  <Card title="Use Natural Language" icon="comments">
+    You don't need to use exact tool names
+    
+    Just describe what you want to know
+  </Card>
+</CardGroup>

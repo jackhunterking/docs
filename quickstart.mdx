@@ -1,80 +1,108 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+description: "Get up and running with AdsGateway in 5 minutes"
 ---
 
-## Get started in three steps
+# 5-Minute Quickstart
 
-Get your documentation site running locally and make your first customization.
+Follow these steps to connect your advertising accounts to your favorite AI assistant.
 
-### Step 1: Set up your local environment
-
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
+<Steps>
+  <Step title="Create an AdsGateway Account">
+    Go to [adsgateway.io](https://adsgateway.io) and sign up for a free account.
     
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
+    <Tip>
+      You can sign up with Google or create an account with your email.
+    </Tip>
+  </Step>
+  
+  <Step title="Connect Your AI Assistant">
+    Choose your AI tool and follow the setup guide:
     
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
+    <CardGroup cols={2}>
+      <Card title="Cursor" icon="code" href="/ai-integrations/cursor">
+        Most popular choice for developers
+      </Card>
+      <Card title="Claude Desktop" icon="message-bot" href="/ai-integrations/claude-desktop">
+        Anthropic's desktop app
+      </Card>
+      <Card title="ChatGPT" icon="openai" href="/ai-integrations/chatgpt">
+        Via the ChatGPT widget
+      </Card>
+      <Card title="Windsurf" icon="wind" href="/ai-integrations/windsurf">
+        AI development environment
+      </Card>
+    </CardGroup>
+  </Step>
+  
+  <Step title="Connect Your Ad Platform">
+    After setting up your AI assistant, connect your advertising account:
     
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+    1. Open your AI assistant
+    2. It will prompt you to authenticate with AdsGateway
+    3. Click the link to authorize access
+    4. Connect your Meta Ads account (more platforms coming soon)
+    
+    <Info>
+      AdsGateway uses OAuth for secure authentication. We never store your ad platform credentials.
+    </Info>
+  </Step>
+  
+  <Step title="Select Your Ad Account">
+    Once connected, ask your AI assistant:
+    
+    ```
+    List my Meta ad accounts
+    ```
+    
+    Then select the account you want to work with:
+    
+    ```
+    Select the account "My Business Account"
+    ```
+  </Step>
+  
+  <Step title="Start Asking Questions">
+    You're all set! Try these example prompts:
+    
+    <AccordionGroup>
+      <Accordion title="Performance Overview">
+        ```
+        Give me a summary of my ad account performance for the last 7 days
+        ```
+      </Accordion>
+      <Accordion title="Campaign List">
+        ```
+        Show me all my active campaigns
+        ```
+      </Accordion>
+      <Accordion title="Anomaly Detection">
+        ```
+        Are there any anomalies in my ad performance?
+        ```
+      </Accordion>
+      <Accordion title="Top Performers">
+        ```
+        Which campaigns had the biggest changes this week?
+        ```
+      </Accordion>
+    </AccordionGroup>
+  </Step>
+</Steps>
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
-
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 3: Go live
-
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
-
-## Next steps
-
-Now that you have your docs running, explore these key features:
+## What's Next?
 
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="Explore All Tools" icon="wrench" href="/tools/account-management">
+    See all available tools and their capabilities
+  </Card>
+  <Card title="Common Workflows" icon="route" href="/guides/common-workflows">
+    Learn the most useful ways to use AdsGateway
+  </Card>
 </CardGroup>
 
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>
+## Need Help?
+
+<Card title="Troubleshooting Guide" icon="life-ring" href="/guides/troubleshooting">
+  Having issues? Check our troubleshooting guide for common solutions.
+</Card>

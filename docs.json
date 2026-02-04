@@ -1,68 +1,72 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "AdsGateway",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#6366F1",
+    "light": "#818CF8",
+    "dark": "#4F46E5"
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Getting Started",
             "pages": [
-              "index",
+              "introduction",
               "quickstart",
-              "development"
+              "how-it-works"
             ]
           },
           {
-            "group": "Customization",
+            "group": "AI Integrations",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "ai-integrations/overview",
+              "ai-integrations/cursor",
+              "ai-integrations/claude-desktop",
+              "ai-integrations/chatgpt",
+              "ai-integrations/windsurf"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Ad Platforms",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "ad-platforms/overview",
+              "ad-platforms/meta",
+              "ad-platforms/google",
+              "ad-platforms/tiktok",
+              "ad-platforms/linkedin",
+              "ad-platforms/snapchat",
+              "ad-platforms/x-twitter"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "Tools Reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Meta Ads Tools",
             "pages": [
-              "api-reference/introduction"
+              "tools/account-management",
+              "tools/campaign-insights",
+              "tools/ai-analysis"
             ]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "Guides",
+        "groups": [
           {
-            "group": "Endpoint examples",
+            "group": "Learn",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "guides/common-workflows",
+              "guides/understanding-data",
+              "guides/troubleshooting"
             ]
           }
         ]
@@ -71,14 +75,14 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Website",
+          "href": "https://adsgateway.io",
+          "icon": "globe"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "GitHub",
+          "href": "https://github.com/jackhunterking",
+          "icon": "github"
         }
       ]
     }
@@ -91,32 +95,28 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@adsgateway.io"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Get Started",
+      "href": "https://adsgateway.io"
     }
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "cursor"
+    ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/adsgateway",
+      "github": "https://github.com/jackhunterking"
     }
   }
 }

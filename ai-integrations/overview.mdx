@@ -1,0 +1,83 @@
+---
+title: "AI Integrations Overview"
+description: "Connect AdsGateway to your favorite AI assistant"
+---
+
+# AI Integrations
+
+AdsGateway works with multiple AI assistants. Choose the one you use most and follow the setup guide.
+
+## Supported AI Assistants
+
+<CardGroup cols={2}>
+  <Card title="Cursor" icon="code" href="/ai-integrations/cursor">
+    **Recommended for developers**
+    
+    AI-powered code editor with built-in MCP support. Perfect for teams who want to query ad data while coding.
+  </Card>
+  
+  <Card title="Claude Desktop" icon="message-bot" href="/ai-integrations/claude-desktop">
+    **Best for power users**
+    
+    Anthropic's desktop application with full MCP integration. Great for detailed analysis and conversations.
+  </Card>
+  
+  <Card title="ChatGPT" icon="openai" href="/ai-integrations/chatgpt">
+    **Most familiar interface**
+    
+    Works via a custom widget in ChatGPT. Ideal if you're already using ChatGPT daily.
+  </Card>
+  
+  <Card title="Windsurf" icon="wind" href="/ai-integrations/windsurf">
+    **Modern AI IDE**
+    
+    Full-featured AI development environment with MCP support.
+  </Card>
+</CardGroup>
+
+## Comparison Table
+
+| Feature | Cursor | Claude Desktop | ChatGPT | Windsurf |
+|---------|--------|----------------|---------|----------|
+| Native MCP Support | Yes | Yes | Via Widget | Yes |
+| Best For | Developers | Power Users | General Use | Developers |
+| Setup Difficulty | Easy | Easy | Medium | Easy |
+| Rich Data Display | Basic | Basic | Yes (Widget) | Basic |
+| Free Tier | Yes | Yes | Yes | Yes |
+
+## What is MCP?
+
+MCP (Model Context Protocol) is an open standard that allows AI assistants to securely connect to external tools like AdsGateway.
+
+<Info>
+  All AI integrations use the same AdsGateway server. Your ad account connections work across any AI assistant you set up.
+</Info>
+
+## Quick Setup Links
+
+<Steps>
+  <Step title="Choose your AI assistant">
+    Click on your preferred AI assistant above to see the setup guide
+  </Step>
+  <Step title="Add the AdsGateway server">
+    Each guide shows you exactly how to configure the MCP server
+  </Step>
+  <Step title="Authenticate">
+    Log in when prompted to connect your AdsGateway account
+  </Step>
+  <Step title="Start using">
+    Once connected, you can query your ad data immediately
+  </Step>
+</Steps>
+
+## Server URL
+
+All AI integrations use the same server URL:
+
+```
+https://ads-gateway.onrender.com/mcp
+```
+
+<Note>
+  You don't need to remember this URL - each integration guide includes the complete configuration.
+</Note>

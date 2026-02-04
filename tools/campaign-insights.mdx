@@ -1,0 +1,345 @@
+---
+title: "Campaign Insights"
+description: "Tools for viewing campaigns, ad sets, ads, and performance metrics"
+---
+
+# Campaign Insights Tools
+
+These tools help you explore your campaign structure and get performance metrics.
+
+## meta_campaigns_list
+
+List campaigns in the active ad account.
+
+### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `status` | string | No | ALL | Filter by status: ACTIVE, PAUSED, ARCHIVED, ALL |
+| `limit` | number | No | 25 | Maximum campaigns to return (1-100) |
+| `after` | string | No | - | Cursor for pagination |
+
+### Example Prompts
+
+```
+Show me all my campaigns
+```
+
+```
+List active campaigns only
+```
+
+```
+What campaigns are currently paused?
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "account_name": "My Business Account",
+  "total": 5,
+  "campaigns": [
+    {
+      "id": "123456789",
+      "name": "Summer Sale 2024",
+      "status": "ACTIVE",
+      "objective": "OUTCOME_SALES",
+      "daily_budget": 100.00,
+      "daily_budget_dollars": 100.00
+    }
+  ],
+  "has_more": false,
+  "next_cursor": null
+}
+```
+
+---
+
+## meta_adsets_list
+
+List ad sets in the active ad account.
+
+### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `campaign_id` | string | No | - | Filter by specific campaign ID |
+| `status` | string | No | ALL | Filter by status: ACTIVE, PAUSED, ARCHIVED, ALL |
+| `limit` | number | No | 25 | Maximum ad sets to return (1-100) |
+| `after` | string | No | - | Cursor for pagination |
+
+### Example Prompts
+
+```
+List ad sets in my Summer Sale campaign
+```
+
+```
+Show me all active ad sets
+```
+
+```
+What ad sets are in campaign 123456789?
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "total": 3,
+  "adsets": [
+    {
+      "id": "456789123",
+      "name": "US 25-44 Interests",
+      "status": "ACTIVE",
+      "campaign_id": "123456789",
+      "daily_budget": 50.00,
+      "targeting_summary": "US, 25-44, Interests: Fashion, Shopping"
+    }
+  ],
+  "has_more": false,
+  "next_cursor": null
+}
+```
+
+---
+
+## meta_ads_list
+
+List ads in the active ad account.
+
+### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `adset_id` | string | No | - | Filter by specific ad set ID |
+| `status` | string | No | ALL | Filter by status: ACTIVE, PAUSED, ARCHIVED, ALL |
+| `limit` | number | No | 25 | Maximum ads to return (1-100) |
+| `after` | string | No | - | Cursor for pagination |
+
+### Example Prompts
+
+```
+List all my ads
+```
+
+```
+Show ads in ad set 456789123
+```
+
+```
+What ads are currently running?
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "total": 10,
+  "ads": [
+    {
+      "id": "789123456",
+      "name": "Product Video - Summer",
+      "status": "ACTIVE",
+      "adset_id": "456789123",
+      "creative_id": "111222333"
+    }
+  ],
+  "has_more": false,
+  "next_cursor": null
+}
+```
+
+---
+
+## meta_ad_get
+
+Get detailed info about a specific ad including creative content and metrics.
+
+### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `ad_id` | string | Yes | - | The ID of the ad to retrieve |
+| `include_metrics` | boolean | No | true | Whether to include performance metrics |
+
+### Example Prompts
+
+```
+Get details for ad 789123456
+```
+
+```
+Show me the creative for ad 789123456
+```
+
+```
+What does ad 789123456 look like?
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "ad": {
+    "id": "789123456",
+    "name": "Product Video - Summer",
+    "status": "ACTIVE",
+    "adset_id": "456789123"
+  },
+  "creative": {
+    "headline": "Summer Sale - 50% Off",
+    "body": "Shop our biggest sale of the year. Limited time only.",
+    "call_to_action": "SHOP_NOW",
+    "link_url": "https://example.com/summer-sale",
+    "image_url": "https://...",
+    "video_url": null
+  },
+  "metrics": {
+    "impressions": 15420,
+    "clicks": 312,
+    "spend": 145.50,
+    "ctr": 2.02,
+    "cpc": 0.47
+  }
+}
+```
+
+---
+
+## meta_insights_get
+
+Get performance metrics - the primary tool for spend, impressions, clicks, conversions, and ROAS.
+
+### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `level` | string | Yes | - | Level: account, campaign, adset, ad |
+| `entity_id` | string | Conditional | - | Required for campaign/adset/ad levels |
+| `date_preset` | string | No | - | Predefined range: today, yesterday, last_7d, last_30d, etc. |
+| `since` | string | No | - | Start date (YYYY-MM-DD) |
+| `until` | string | No | - | End date (YYYY-MM-DD) |
+| `field_preset` | string | No | basic | Metric set: basic, conversions, video, engagement, ecommerce, quality, full |
+| `fields` | array | No | - | Specific fields (overrides preset) |
+| `time_increment` | string | No | - | Time breakdown: 1 (daily), 7 (weekly), 28, monthly, all_days |
+| `breakdowns` | array | No | - | Segment by: age, gender, country, etc. |
+
+### Date Presets
+
+| Preset | Description |
+|--------|-------------|
+| `today` | Today only |
+| `yesterday` | Yesterday only |
+| `this_week` | Current week |
+| `last_week` | Previous week |
+| `this_month` | Current month |
+| `last_month` | Previous month |
+| `last_7d` | Last 7 days |
+| `last_14d` | Last 14 days |
+| `last_30d` | Last 30 days |
+| `last_90d` | Last 90 days |
+
+### Field Presets
+
+| Preset | Fields Included |
+|--------|-----------------|
+| `basic` | spend, impressions, reach, clicks, ctr, cpc, cpm |
+| `conversions` | Basic + conversions, cost_per_conversion, actions, action_values |
+| `video` | Basic + video_views, video_p25, video_p50, video_p75, video_p100 |
+| `engagement` | Basic + reactions, comments, shares, page_engagement |
+| `ecommerce` | Basic + purchases, purchase_roas, add_to_cart, checkouts |
+| `quality` | Basic + quality_ranking, engagement_rate_ranking, conversion_rate_ranking |
+| `full` | All available fields |
+
+### Example Prompts
+
+```
+What was my spend last week?
+```
+
+```
+Show me daily impressions for the last 7 days
+```
+
+```
+Get ROAS for my Summer Sale campaign this month
+```
+
+```
+Break down my clicks by age group
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "level": "account",
+  "entity_id": "act_123456789",
+  "preset_used": "basic",
+  "fields_requested": ["spend", "impressions", "clicks", "ctr", "cpc"],
+  "record_count": 1,
+  "insights": [
+    {
+      "date_start": "2024-01-08",
+      "date_stop": "2024-01-14",
+      "spend": 1250.50,
+      "impressions": 125000,
+      "clicks": 2875,
+      "ctr": 2.30,
+      "cpc": 0.43
+    }
+  ]
+}
+```
+
+---
+
+## Common Query Patterns
+
+<AccordionGroup>
+  <Accordion title="Daily spend check">
+    ```
+    What was my ad spend yesterday?
+    ```
+    Uses `meta_insights_get` with `date_preset: yesterday`
+  </Accordion>
+  
+  <Accordion title="Weekly performance">
+    ```
+    How did my campaigns perform last week?
+    ```
+    Uses `meta_insights_get` with `date_preset: last_week`
+  </Accordion>
+  
+  <Accordion title="Campaign comparison">
+    ```
+    Compare performance of my top 5 campaigns this month
+    ```
+    Uses `meta_insights_get` at campaign level
+  </Accordion>
+  
+  <Accordion title="Daily trends">
+    ```
+    Show me daily impressions for the last 14 days
+    ```
+    Uses `meta_insights_get` with `time_increment: 1`
+  </Accordion>
+  
+  <Accordion title="Demographic breakdown">
+    ```
+    Break down my clicks by age and gender
+    ```
+    Uses `meta_insights_get` with `breakdowns: ["age", "gender"]`
+  </Accordion>
+</AccordionGroup>
+
+<Card title="Understanding Metrics" icon="book" href="/guides/understanding-data">
+  Learn what each metric means and how to interpret them
+</Card>
