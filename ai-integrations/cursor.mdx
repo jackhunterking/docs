@@ -15,7 +15,25 @@ Cursor is an AI-powered code editor with built-in MCP support. This guide shows 
 - [Cursor](https://cursor.sh) installed on your computer
 - An [AdsGateway account](https://adsgateway.io)
 
-## Setup
+## One-Click Installation
+
+Click the button below to automatically add AdsGateway to Cursor:
+
+<a href="cursor://anysphere.cursor-deeplink/mcp/install?name=Ads%20Gateway&config=eyJ1cmwiOiJodHRwczovL2Fkcy1nYXRld2F5Lm9ucmVuZGVyLmNvbS9tY3AifQ==">
+  <img 
+    src="https://cursor.com/deeplink/mcp-install-dark.png" 
+    alt="Add AdsGateway MCP server to Cursor"
+    style={{height: '40px', cursor: 'pointer'}}
+  />
+</a>
+
+<Tip>
+  The button above opens Cursor and automatically configures the AdsGateway MCP server for you.
+</Tip>
+
+## Manual Setup
+
+If you prefer to configure manually, follow these steps:
 
 <Steps>
   <Step title="Open Cursor Settings">
@@ -34,7 +52,7 @@ Cursor is an AI-powered code editor with built-in MCP support. This guide shows 
     ```json
     {
       "mcpServers": {
-        "ads-gateway": {
+        "Ads Gateway": {
           "url": "https://ads-gateway.onrender.com/mcp"
         }
       }
