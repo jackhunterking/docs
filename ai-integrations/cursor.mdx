@@ -2,7 +2,12 @@
 title: "Cursor"
 ---
 
-<img src="/images/Cursor.png" alt="Cursor" width="48" style={{display: 'inline', verticalAlign: 'middle', marginRight: '12px'}} />
+<img
+  src="/images/Cursor.png"
+  alt="Cursor"
+  width="48"
+  style={{ display:"inline",verticalAlign:"middle",marginRight:"12px",width:"20%" }}
+/>
 
 Cursor is an AI-powered code editor with built-in MCP support. This guide shows you how to add AdsGateway to Cursor.
 
@@ -38,17 +43,15 @@ If you prefer to configure manually, follow these steps:
 <Steps>
   <Step title="Open Cursor Settings">
     Open Cursor and go to **Settings** (Cmd/Ctrl + ,)
-    
+
     Or click the gear icon in the bottom left corner.
   </Step>
-  
   <Step title="Navigate to MCP Settings">
     In the settings sidebar, find and click on **MCP** (Model Context Protocol).
   </Step>
-  
   <Step title="Add AdsGateway Server">
     Click **Add MCP Server** and enter the following configuration:
-    
+
     ```json
     {
       "mcpServers": {
@@ -58,23 +61,21 @@ If you prefer to configure manually, follow these steps:
       }
     }
     ```
-    
+
     <Tip>
       You can also edit the MCP configuration file directly at `~/.cursor/mcp.json`
     </Tip>
   </Step>
-  
   <Step title="Enable the Server">
     Toggle the AdsGateway server to **ON** in the MCP settings panel.
   </Step>
-  
   <Step title="Authenticate">
     When you first enable the server, Cursor will open your browser for authentication.
-    
+
     1. Log in to your AdsGateway account (or create one)
     2. Authorize the connection
     3. You'll be redirected back to Cursor
-    
+
     <Check>
       Look for the green "Connected" status in Cursor's MCP panel
     </Check>
@@ -101,19 +102,16 @@ After setup, you can ask Cursor questions like:
     - "Select the account called 'My Business'"
     - "Which account am I currently using?"
   </Accordion>
-  
   <Accordion title="Campaign Data">
     - "Show me all active campaigns"
     - "List ad sets in my Brand Awareness campaign"
     - "Get details for ad ID 123456789"
   </Accordion>
-  
   <Accordion title="Performance Insights">
     - "What was my spend in the last 7 days?"
     - "Show me impressions and clicks for yesterday"
     - "Get my ROAS for this month"
   </Accordion>
-  
   <Accordion title="AI Analysis">
     - "Give me an account summary"
     - "Which campaigns improved the most this week?"
@@ -129,17 +127,14 @@ After setup, you can ask Cursor questions like:
     2. Try toggling the server OFF and ON again
     3. If the issue persists, restart Cursor
   </Accordion>
-  
   <Accordion title="Authentication window doesn't open">
     1. Check if pop-ups are blocked in your browser
     2. Try manually visiting [adsgateway.io](https://adsgateway.io) and logging in
     3. Then toggle the MCP server off and on again
   </Accordion>
-  
   <Accordion title="'Authentication required' error">
     Your session may have expired. Toggle the server off and on to re-authenticate.
   </Accordion>
-  
   <Accordion title="No tools available">
     1. Make sure the server is toggled ON
     2. Check that authentication completed successfully
