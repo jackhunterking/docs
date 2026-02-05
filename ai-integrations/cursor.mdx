@@ -20,9 +20,9 @@ Cursor is an AI-powered code editor with built-in MCP support. This guide shows 
 - [Cursor](https://cursor.sh) installed on your computer
 - An [AdsGateway account](https://adsgateway.io)
 
-## One-Click Installation
+## One-Click Installation (Recommended)
 
-Click the button below to automatically add AdsGateway to Cursor:
+The fastest way to get started — just click the button below:
 
 <a href="cursor://anysphere.cursor-deeplink/mcp/install?name=Ads%20Gateway&config=eyJ1cmwiOiJodHRwczovL2Fkcy1nYXRld2F5Lm9ucmVuZGVyLmNvbS9tY3AifQ==">
   <img 
@@ -33,12 +33,14 @@ Click the button below to automatically add AdsGateway to Cursor:
 </a>
 
 <Tip>
-  The button above opens Cursor and automatically configures the AdsGateway MCP server for you.
+  The button above opens Cursor and automatically configures the AdsGateway MCP server for you. No manual editing needed.
 </Tip>
 
 ## Manual Setup
 
-If you prefer to configure manually, follow these steps:
+If the one-click button doesn't work, you can configure it manually. Choose **one** of the two options below:
+
+### Option A: Use the "Add MCP Server" Button in Cursor
 
 <Steps>
   <Step title="Open Cursor Settings">
@@ -47,10 +49,12 @@ If you prefer to configure manually, follow these steps:
     Or click the gear icon in the bottom left corner.
   </Step>
   <Step title="Navigate to MCP Settings">
-    In the settings sidebar, find and click on **MCP** (Model Context Protocol).
+    In the settings sidebar, find and click on **Tools & MCP**.
   </Step>
-  <Step title="Add AdsGateway Server">
-    Click **Add MCP Server** and enter the following configuration:
+  <Step title="Click 'Add MCP Server'">
+    Click the **+ Add new MCP server** button. A JSON editor will open.
+
+    **Replace the entire contents** with the following:
 
     ```json
     {
@@ -62,29 +66,119 @@ If you prefer to configure manually, follow these steps:
     }
     ```
 
-    <Tip>
-      You can also edit the MCP configuration file directly at `~/.cursor/mcp.json`
-    </Tip>
+    Then click **Save**.
   </Step>
   <Step title="Enable the Server">
     Toggle the AdsGateway server to **ON** in the MCP settings panel.
   </Step>
-  <Step title="Authenticate">
-    When you first enable the server, Cursor will open your browser for authentication.
+</Steps>
 
-    1. Log in to your AdsGateway account (or create one)
-    2. Authorize the connection
-    3. You'll be redirected back to Cursor
+### Option B: Edit the MCP Config File Directly
 
-    <Check>
-      Look for the green "Connected" status in Cursor's MCP panel
-    </Check>
+If you already have other MCP servers configured, this is the safest approach.
+
+<Steps>
+  <Step title="Open the MCP config file">
+    Open the file at `~/.cursor/mcp.json` in any text editor.
+
+    If the file doesn't exist, create it with this content and you're done:
+
+    ```json
+    {
+      "mcpServers": {
+        "Ads Gateway": {
+          "url": "https://ads-gateway.onrender.com/mcp"
+        }
+      }
+    }
+    ```
+  </Step>
+  <Step title="Add AdsGateway to your existing servers">
+    If you already have other MCP servers in the file, **add only this line** inside the existing `"mcpServers"` block:
+
+    ```json
+    "Ads Gateway": {
+      "url": "https://ads-gateway.onrender.com/mcp"
+    }
+    ```
+
+    **Example** — if your file currently looks like this:
+
+    ```json
+    {
+      "mcpServers": {
+        "some-other-server": {
+          "url": "https://example.com/mcp"
+        }
+      }
+    }
+    ```
+
+    It should look like this **after** adding AdsGateway:
+
+    ```json
+    {
+      "mcpServers": {
+        "some-other-server": {
+          "url": "https://example.com/mcp"
+        },
+        "Ads Gateway": {
+          "url": "https://ads-gateway.onrender.com/mcp"
+        }
+      }
+    }
+    ```
+
+    <Warning>
+      **Don't nest `mcpServers` inside `mcpServers`!** A common mistake is pasting the full JSON block (including the outer `"mcpServers"` wrapper) inside your existing config. This creates an invalid nested structure that causes errors.
+
+      ❌ **Wrong** — nested `mcpServers`:
+      ```json
+      {
+        "mcpServers": {
+          "some-other-server": { ... },
+          "mcpServers": {
+            "Ads Gateway": {
+              "url": "https://ads-gateway.onrender.com/mcp"
+            }
+          }
+        }
+      }
+      ```
+
+      ✅ **Correct** — `Ads Gateway` is a direct entry:
+      ```json
+      {
+        "mcpServers": {
+          "some-other-server": { ... },
+          "Ads Gateway": {
+            "url": "https://ads-gateway.onrender.com/mcp"
+          }
+        }
+      }
+      ```
+    </Warning>
+  </Step>
+  <Step title="Save and restart Cursor">
+    Save the file, then restart Cursor (or toggle the server off and on in MCP settings).
   </Step>
 </Steps>
 
+## Authenticate
+
+When you first enable the server, Cursor will open your browser for authentication.
+
+1. Log in to your AdsGateway account (or create one)
+2. Authorize the connection
+3. You'll be redirected back to Cursor
+
+<Check>
+  Look for the green "Connected" status in Cursor's MCP panel
+</Check>
+
 ## Verify the Connection
 
-Once connected, try these commands in Cursor's AI chat:
+Once connected, try this command in Cursor's AI chat:
 
 ```
 List my Meta ad accounts
@@ -122,6 +216,15 @@ After setup, you can ask Cursor questions like:
 ## Troubleshooting
 
 <AccordionGroup>
+  <Accordion title="'Must have either a command (for stdio) or url (for SSE)' error">
+    This usually means there is a formatting issue in your `~/.cursor/mcp.json` file. The most common cause is **nesting `mcpServers` inside `mcpServers`** — this happens when you paste the full JSON block inside an existing config.
+
+    **How to fix:**
+    1. Open `~/.cursor/mcp.json`
+    2. Make sure there is only **one** `"mcpServers"` key at the top level
+    3. Ensure `"Ads Gateway"` is placed **directly** inside `"mcpServers"`, not inside another nested object
+    4. See the [Manual Setup — Option B](#option-b-edit-the-mcp-config-file-directly) section above for the correct format
+  </Accordion>
   <Accordion title="Server shows as disconnected">
     1. Check your internet connection
     2. Try toggling the server OFF and ON again
@@ -139,6 +242,16 @@ After setup, you can ask Cursor questions like:
     1. Make sure the server is toggled ON
     2. Check that authentication completed successfully
     3. Try restarting Cursor
+  </Accordion>
+  <Accordion title="JSON syntax errors in mcp.json">
+    If Cursor isn't loading any MCP servers, your JSON file may have a syntax error.
+
+    Common issues:
+    - **Missing comma** between server entries
+    - **Trailing comma** after the last entry (not allowed in JSON)
+    - **Duplicate keys** — only one `"mcpServers"` block is allowed
+
+    **Tip:** Paste your `~/.cursor/mcp.json` contents into [jsonlint.com](https://jsonlint.com) to validate the syntax.
   </Accordion>
 </AccordionGroup>
 
