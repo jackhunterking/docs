@@ -4,168 +4,37 @@ title: "Claude"
 
 <img src="/images/Claude_logo.png" alt="Claude" width="48" style={{display: 'inline', verticalAlign: 'middle', marginRight: '12px'}} />
 
-Claude supports MCP (Model Context Protocol) connections in both Claude Code (CLI) and Claude Desktop. This guide shows you how to connect AdsGateway to either version.
+<Warning>
+  **Coming Soon** — Claude integration is currently under development.
+</Warning>
 
-## Prerequisites
+## What is Claude?
 
-- [Claude Code](https://claude.ai/code) or [Claude Desktop](https://claude.ai/download) installed
-- An [AdsGateway account](https://adsgateway.io)
+Claude is Anthropic's AI assistant, available as:
 
-<Tabs>
-  <Tab title="Claude Code">
-    ## One-Command Installation
-    
-    Run this command in your terminal to add AdsGateway to Claude Code:
-    
-    ```bash
-    claude mcp add --scope project --transport http "Ads Gateway" "https://ads-gateway.onrender.com/mcp"
-    ```
-    
-    <Info>
-      This command adds AdsGateway as an MCP server scoped to your current project using HTTP transport.
-    </Info>
-    
-    ### What this command does
-    
-    - Adds `Ads Gateway` as an MCP server
-    - Configures HTTP transport for the connection
-    - Scopes to your current project
-    
-    ### Authentication
-    
-    After adding the server, Claude Code will prompt you to authenticate:
-    
-    1. A browser window opens automatically
-    2. Log in to your AdsGateway account (or create one)
-    3. Authorize the connection
-    4. Return to Claude Code and start using your ad tools!
-    
-    <Check>
-      Your credentials are securely handled via OAuth 2.1 through Supabase Auth.
-    </Check>
-  </Tab>
-  
-  <Tab title="Claude Desktop">
-    ## Step 1: Find your config file
-    
-    Locate the Claude Desktop configuration file on your system:
-    
-    | Platform | Config File Location |
-    |----------|---------------------|
-    | **macOS** | `~/Library/Application Support/Claude/claude_desktop_config.json` |
-    | **Windows** | `%APPDATA%\Claude\claude_desktop_config.json` |
-    
-    <Tip>
-      If the file doesn't exist, create it. Make sure the Claude folder exists first.
-    </Tip>
-    
-    ## Step 2: Add the MCP server
-    
-    Add this configuration to your config file:
-    
-    ```json
-    {
-      "mcpServers": {
-        "Ads Gateway": {
-          "url": "https://ads-gateway.onrender.com/mcp"
-        }
-      }
-    }
-    ```
-    
-    <Warning>
-      If you already have other MCP servers configured, merge the `Ads Gateway` entry into your existing `mcpServers` object.
-    </Warning>
-    
-    ## Step 3: Restart Claude Desktop
-    
-    After saving the configuration file:
-    
-    1. **Completely quit** Claude Desktop (not just close the window)
-    2. Reopen Claude Desktop
-    3. The MCP server will be automatically loaded
-    
-    ### Authentication
-    
-    When you first use AdsGateway tools, Claude Desktop will prompt you to authenticate:
-    
-    1. A browser window opens automatically
-    2. Log in to your AdsGateway account (or create one)
-    3. Authorize the connection
-    4. Return to Claude Desktop and start using your ad tools!
-    
-    <Check>
-      Your credentials are securely handled via OAuth 2.1 through Supabase Auth.
-    </Check>
-  </Tab>
-</Tabs>
+- **Claude Code** — A CLI tool for developers
+- **Claude Desktop** — A desktop application for macOS and Windows
 
-## Verify the Connection
+## What to Expect
 
-Once connected, try asking Claude:
+Once available, AdsGateway will integrate with Claude via MCP (Model Context Protocol), allowing you to:
 
-```
-List my Meta ad accounts
-```
+- Query your ad performance data using natural language
+- Get AI-powered insights on your campaigns
+- Manage multiple ad accounts across platforms
 
-You should see a list of your connected ad accounts.
+## Get Notified
 
-## Available Commands
+Want to know when Claude integration is available?
 
-After setup, you can ask Claude questions like:
+<Card title="Sign Up for Updates" icon="bell" href="https://adsgateway.io">
+  Create an AdsGateway account to be notified when Claude integration launches
+</Card>
 
-<AccordionGroup>
-  <Accordion title="Account Management">
-    - "List my Meta ad accounts"
-    - "Select the account called 'My Business'"
-    - "Which account am I currently using?"
-  </Accordion>
-  
-  <Accordion title="Campaign Data">
-    - "Show me all active campaigns"
-    - "List ad sets in my Brand Awareness campaign"
-    - "Get details for ad ID 123456789"
-  </Accordion>
-  
-  <Accordion title="Performance Insights">
-    - "What was my spend in the last 7 days?"
-    - "Show me impressions and clicks for yesterday"
-    - "Get my ROAS for this month"
-  </Accordion>
-  
-  <Accordion title="AI Analysis">
-    - "Give me an account summary"
-    - "Which campaigns improved the most this week?"
-    - "Are there any anomalies in my ad performance?"
-  </Accordion>
-</AccordionGroup>
+## Available Now
 
-## Troubleshooting
+Don't want to wait? Try our available integration:
 
-<AccordionGroup>
-  <Accordion title="Server not showing in Claude">
-    1. Verify the config file is in the correct location
-    2. Check that the JSON syntax is valid
-    3. Completely quit and restart Claude Desktop
-  </Accordion>
-  
-  <Accordion title="Authentication window doesn't open">
-    1. Check if pop-ups are blocked in your browser
-    2. Try manually visiting [adsgateway.io](https://adsgateway.io) and logging in
-    3. Restart Claude and try again
-  </Accordion>
-  
-  <Accordion title="'Authentication required' error">
-    Your session may have expired. Restart Claude to re-authenticate.
-  </Accordion>
-  
-  <Accordion title="Tools not appearing">
-    1. Make sure the server is properly configured
-    2. Check that authentication completed successfully
-    3. Try restarting Claude
-  </Accordion>
-</AccordionGroup>
-
-<Card title="More Help" icon="life-ring" href="/guides/troubleshooting">
-  See the full troubleshooting guide for additional solutions
+<Card title="Cursor" icon="code" href="/ai-integrations/cursor">
+  One-click installation available now
 </Card>
