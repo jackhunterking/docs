@@ -94,7 +94,7 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:support@adsgateway.io"
+        "href": "mailto:hello@adsgateway.io"
       }
     ],
     "primary": {
@@ -116,5 +116,8 @@
     "socials": {
       "x": "https://x.com/adsgateway"
     }
+  },
+  "seo": {
+    "indexing": "all"
   }
 }
