@@ -1,0 +1,129 @@
+---
+title: "Lovable"
+---
+
+<img
+  src="/images/lovable-logo-icon.svg"
+  alt="Lovable"
+  width="48"
+  style={{ display:"inline",verticalAlign:"middle",marginRight:"12px",width:"20%" }}
+/>
+
+Lovable is an AI-powered app builder that lets you create web applications using natural language. This guide shows you how to connect AdsGateway to Lovable via its Custom MCP connector.
+
+<Info>
+  Lovable supports MCP through its **Connectors** feature. You can add AdsGateway as a custom MCP server to query your ad data directly from the Lovable chat.
+</Info>
+
+## Prerequisites
+
+- A [Lovable](https://lovable.dev) account with an active project
+- An [AdsGateway account](https://adsgateway.io)
+
+## Setup Guide
+
+<Steps>
+  <Step title="Open Connectors">
+    In your Lovable project, click the **+** icon at the bottom of the chat panel. In the menu that appears, find **Connectors** and click **Manage connectors**.
+
+    <img src="/images/step-1.png" alt="Open Connectors menu in Lovable" style={{ borderRadius: '8px', border: '1px solid #333', marginTop: '12px' }} />
+  </Step>
+
+  <Step title="Select Custom Connector">
+    On the **Connectors** page, scroll down to the **Personal connectors** section and click **Custom** — "Connect your own MCP".
+
+    <img src="/images/step-2.png" alt="Select Custom connector under Personal connectors" style={{ borderRadius: '8px', border: '1px solid #333', marginTop: '12px' }} />
+  </Step>
+
+  <Step title="Configure the MCP Server">
+    In the **Add MCP server** dialog, enter the following details:
+
+    | Field | Value |
+    |-------|-------|
+    | **Server name** | `Ads Gateway` |
+    | **Server URL** | `https://ads-gateway.onrender.com/mcp` |
+    | **Authentication** | **OAuth (default)** |
+
+    Then click **Add & authorize**.
+
+    <img src="/images/step-3.png" alt="Add MCP server dialog with Ads Gateway configuration" style={{ borderRadius: '8px', border: '1px solid #333', marginTop: '12px' }} />
+  </Step>
+
+  <Step title="Sign In and Authorize">
+    A browser window will open for authentication:
+
+    1. **Sign in** to your AdsGateway account (or click "Sign up" to create one)
+    2. Once authenticated, you will see **"Authorization successful!"**
+    3. You will be automatically redirected back to Lovable
+
+    <img src="/images/step-4.png" alt="AdsGateway sign in and authorization successful screens" style={{ borderRadius: '8px', border: '1px solid #333', marginTop: '12px' }} />
+  </Step>
+</Steps>
+
+<Check>
+  You are now connected! AdsGateway tools are available in your Lovable chat.
+</Check>
+
+## Verify the Connection
+
+Once connected, try asking this in the Lovable chat:
+
+```
+List my Meta ad accounts
+```
+
+You should see a list of your connected ad accounts.
+
+## Available Commands
+
+After setup, you can ask Lovable questions like:
+
+<AccordionGroup>
+  <Accordion title="Account Management">
+    - "List my Meta ad accounts"
+    - "Select the account called 'My Business'"
+    - "Which account am I currently using?"
+  </Accordion>
+  <Accordion title="Campaign Data">
+    - "Show me all active campaigns"
+    - "List ad sets in my Brand Awareness campaign"
+    - "Get details for ad ID 123456789"
+  </Accordion>
+  <Accordion title="Performance Insights">
+    - "What was my spend in the last 7 days?"
+    - "Show me impressions and clicks for yesterday"
+    - "Get my ROAS for this month"
+  </Accordion>
+  <Accordion title="AI Analysis">
+    - "Give me an account summary"
+    - "Which campaigns improved the most this week?"
+    - "Are there any anomalies in my ad performance?"
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Authentication window doesn't open">
+    1. Check if pop-ups are blocked in your browser
+    2. Try manually visiting [adsgateway.io](https://adsgateway.io) and logging in first
+    3. Then remove the connector and re-add it
+  </Accordion>
+  <Accordion title="'Authorization failed' error">
+    1. Make sure you are using the correct AdsGateway credentials
+    2. Try clearing your browser cookies for adsgateway.io
+    3. Re-add the connector and authorize again
+  </Accordion>
+  <Accordion title="No tools available after connecting">
+    1. Make sure the connector shows as connected in your Connectors page
+    2. Try refreshing the Lovable page
+    3. Remove and re-add the connector if the issue persists
+  </Accordion>
+  <Accordion title="Connection lost or expired">
+    Your OAuth session may have expired. Remove the Ads Gateway connector from Personal connectors and add it again following the setup steps above.
+  </Accordion>
+</AccordionGroup>
+
+<Card title="More Help" icon="life-ring" href="/guides/troubleshooting">
+  See the full troubleshooting guide for additional solutions
+</Card>

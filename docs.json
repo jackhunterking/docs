@@ -32,7 +32,8 @@
               "ai-integrations/cursor",
               "ai-integrations/claude",
               "ai-integrations/chatgpt",
-              "ai-integrations/windsurf"
+              "ai-integrations/windsurf",
+              "ai-integrations/lovable"
             ]
           },
           {
