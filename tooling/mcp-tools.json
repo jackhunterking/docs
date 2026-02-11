@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-02-10T21:51:48.242480+00:00",
-  "tool_count": 28,
+  "generated_at": "2026-02-11T19:04:38.021011+00:00",
+  "tool_count": 29,
   "tools": [
     {
       "name": "ads_ad_report",
@@ -915,6 +915,44 @@
       "output_contract": null
     },
     {
+      "name": "meta_tracking_setup_audit",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Read-only: audit tracking setup health and return AI-ready remediation guidance.",
+      "docstring": "Read-only: audit tracking setup health and return AI-ready remediation guidance.\n\nUse this after setup (or during troubleshooting) to get:\n- configuration + key health checks\n- recent processing logs\n- deterministic next actions and AI prompt text",
+      "inputs": [
+        {
+          "name": "site_id",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "site_url",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "lookback_hours",
+          "type": "int",
+          "required": false,
+          "default": 24,
+          "enum": null
+        },
+        {
+          "name": "logs_limit",
+          "type": "int",
+          "required": false,
+          "default": 20,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
       "name": "meta_tracking_setup_finish",
       "category": "advanced",
       "module": "tools/meta_tracking.py",
@@ -1020,6 +1058,41 @@
         },
         {
           "name": "setup_capi",
+          "type": "bool | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "tracking_objective",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "selected_standard_events",
+          "type": "list[str] | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "selected_custom_events",
+          "type": "list[dict[str, Any]] | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "confirm_event_plan",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "auto_create_custom_conversions",
           "type": "bool | None",
           "required": false,
           "default": null,
@@ -1204,6 +1277,41 @@
         },
         {
           "name": "setup_capi",
+          "type": "bool | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "tracking_objective",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "selected_standard_events",
+          "type": "list[str] | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "selected_custom_events",
+          "type": "list[dict[str, Any]] | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "confirm_event_plan",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "auto_create_custom_conversions",
           "type": "bool | None",
           "required": false,
           "default": null,

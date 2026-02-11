@@ -1,9 +1,9 @@
 ---
 title: "Tracking Events"
-description: "Inspect events received by the Tracking Gateway (no raw PII)."
+description: "Inspect recent Tracking Gateway event processing metadata (no raw PII)."
 ---
 
-These tools help you inspect the gateway’s event ingestion and Meta response metadata.
+Use this tool for event-level debugging after running `meta_tracking_setup_audit`.
 
 ## meta_tracking_events_list
 
@@ -12,14 +12,14 @@ These tools help you inspect the gateway’s event ingestion and Meta response m
 Lists recent Tracking Gateway events received by AdsGateway.
 
 <Info>
-  This view is metadata-only and does not store raw PII fields (email/phone/name). It is intended for debugging delivery and dedupe behavior.
+  This is metadata-only. Raw PII fields are not returned in this view.
 </Info>
 
 ### Inputs
 
 | Parameter | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
-| `site_id` | string | No | - | Filter events by site |
+| `site_id` | string | No | - | Filter by tracking site |
 | `limit` | number | No | 20 | Max 200 |
 
 ### Output (Stable Fields)
@@ -27,8 +27,14 @@ Lists recent Tracking Gateway events received by AdsGateway.
 - `success`
 - `events[]` objects with:
   - `site_id`, `event_name`, `event_id`
-  - `processing_status` (`success`, `failed`, or `deduplicated`)
+  - `processing_status` (`success`, `failed`, `deduplicated`)
   - `meta_events_received`, `fbtrace_id`
   - `error_code`, `error_message`
   - `created_at`
 
+### Recommended Troubleshooting Sequence
+
+1. Run `meta_tracking_setup_audit` to identify failing checks and prioritized issues.
+2. Use `meta_tracking_events_list` to inspect concrete error codes and timing.
+3. Apply fixes using the audit `next_actions` suggestions.
+4. Re-run audit to validate recovery.

@@ -4,7 +4,12 @@ title: "AntiGravity"
 
 # AntiGravity MCP Setup
 
-Use this guide to connect AdsGateway to AntiGravity with Streamable HTTPS transport.
+AntiGravity is supported now via Streamable HTTPS MCP transport.
+
+## Prerequisites
+
+- An [AdsGateway account](https://adsgateway.io)
+- AntiGravity access with MCP server configuration enabled
 
 ## Server Configuration
 
@@ -27,8 +32,8 @@ Open AntiGravity MCP settings and add this entry to your `mcp_config.json`:
 ## Authenticate
 
 1. Enable the `ads-gateway` server in AntiGravity.
-2. Complete the browser login flow.
-3. Return to AntiGravity and wait for the connection status to show as connected.
+2. Complete the browser login flow with your AdsGateway account.
+3. Return to AntiGravity and wait for the connection status to show connected.
 
 ## Verify
 
@@ -40,9 +45,9 @@ List my Meta ad accounts
 
 If accounts are returned, setup is complete.
 
-## Reset Auth (Invalid Token Recovery)
+## Reset Auth (invalid_token or auth loop)
 
-If you see `invalid_token` or repeated auth prompts:
+If you see `invalid_token`, repeated auth prompts, or never reach connected status:
 
 1. Disable `ads-gateway` in AntiGravity.
 2. Remove the `ads-gateway` entry from `mcp_config.json`.
@@ -53,5 +58,24 @@ If you see `invalid_token` or repeated auth prompts:
 5. Re-enable the server and complete login again.
 
 <Tip>
-  Complete login in the same browser profile that AntiGravity opens. Avoid mixing normal/incognito windows in the same auth attempt.
+  Complete login in the same browser profile AntiGravity opens. Avoid mixing normal/incognito windows during the same auth attempt.
 </Tip>
+
+## Tracking Permission Recovery (when setup asks for more permissions)
+
+During tracking setup flows, AdsGateway may return a Meta permission-recovery link for pixel creation permissions.
+
+When this happens:
+
+1. Open the provided `authorization_url`.
+2. Complete Meta permission grant.
+3. Return to AntiGravity and continue the setup step.
+
+## Callback Compatibility
+
+AdsGateway supports AntiGravity web callback patterns used during browser auth completion, including:
+
+- `https://antigravity.google/oauth/callback`
+- `https://www.antigravity.google/oauth/callback`
+
+No custom callback override is needed in client config.

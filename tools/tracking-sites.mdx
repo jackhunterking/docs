@@ -1,19 +1,19 @@
 ---
 title: "Tracking Sites & Snippets"
-description: "List tracking sites, check tracking status, and fetch integration snippets."
+description: "Inspect tracking sites, setup status, and integration snippets with verification guidance."
 ---
 
-These tools help you inspect your tracking configuration and pull safe integration snippets.
+These tools help you inspect tracking configuration and fetch implementation snippets safely.
 
 <Info>
-  `meta_tracking_snippets_get` never returns secret keys. Keys are only shown once at creation/rotation time.
+  `meta_tracking_snippets_get` never returns raw secret keys. Keys are only shown once at creation/rotation time.
 </Info>
 
 ## meta_tracking_status
 
 ### What It Does
 
-Returns whether Meta is connected and a compact list of your existing tracking sites.
+Returns Meta connection state and a compact list of tracking sites for the authenticated user.
 
 ### Output (Stable Fields)
 
@@ -33,7 +33,7 @@ Lists all tracking sites owned by the authenticated user.
 ### Output (Stable Fields)
 
 - `success`
-- `sites[]` (includes `id`, `site_url`, and hostname fields)
+- `sites[]` (includes `id`, `site_url`, hostname fields)
 
 ---
 
@@ -41,10 +41,11 @@ Lists all tracking sites owned by the authenticated user.
 
 ### What It Does
 
-Returns integration snippets for a given `site_id`, including:
+Returns a site's integration bundle, including:
 
-- Browser Pixel example snippet (with dedupe `event_id`)
-- Server-side CAPI curl snippet (points to the Tracking Gateway endpoint)
+- Browser Pixel snippet (dedupe-aware)
+- Server-side CAPI request template
+- Event-plan and verification guidance
 
 ### Inputs
 
@@ -52,18 +53,25 @@ Returns integration snippets for a given `site_id`, including:
 |----------|------|----------|-------------|
 | `site_id` | string | Yes | Tracking site id |
 
-### Output (Stable Fields)
+### Output (Key Fields)
 
 | Field | Type | Description |
 |------|------|-------------|
-| `success` | boolean | Whether the snippet fetch succeeded |
-| `site` | object | Site metadata (`site_url`, hostnames, etc.) |
-| `config` | object | Safe config fields (`pixel_id`, `allowed_origins`, `token_provenance`, `updated_at`) |
-| `gateway.endpoint` | string | Tracking Gateway endpoint URL |
-| `snippets` | object | Snippet bundle (`browser_pixel`, `server_capi`, etc.) |
+| `success` | boolean | Whether snippet fetch succeeded |
+| `site` | object | Site metadata |
+| `config` | object | Safe config (`pixel_id`, `allowed_origins`, `token_provenance`, `tracking_objective`, `selected_event_plan`, `event_catalog_version`, `updated_at`) |
+| `event_catalog` | object | Catalog used for event selection guidance |
+| `website_supported_events` | array/object | Website-executable event references |
+| `event_plan_summary` | object | Event rollups and names |
+| `verification_matrix` | array | Event verification expectations |
+| `custom_conversion_results` | object | Provisioning statuses for custom conversions |
+| `gateway.endpoint` | string | Tracking Gateway endpoint |
+| `snippets` | object | Browser/server snippet bundle |
+| `copy_blocks` | object | Copy-ready install + AI prompt text blocks |
+| `verification_tools` | array | Suggested follow-up verification tools |
 
 ### Notes
 
-- Snippets intentionally contain placeholder key values like `sk_...`.
-- If you lost your secret key, rotate via `meta_tracking_keys_rotate` (keys are shown once).
-
+- Snippets intentionally use placeholders such as `sk_...`.
+- If the key is lost, rotate with `meta_tracking_keys_rotate`.
+- For health/troubleshooting, run `meta_tracking_setup_audit` after implementation.

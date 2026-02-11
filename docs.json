@@ -79,6 +79,7 @@
             "group": "Tracking (Pixel + CAPI)",
             "pages": [
               "tools/tracking-setup",
+              "tools/tracking-audit",
               "tools/tracking-sites",
               "tools/tracking-keys",
               "tools/tracking-events"
@@ -98,6 +99,7 @@
           {
             "group": "Learn",
             "pages": [
+              "guides/changelog",
               "guides/common-workflows",
               "guides/understanding-data",
               "guides/troubleshooting"

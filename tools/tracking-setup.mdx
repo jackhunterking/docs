@@ -1,48 +1,67 @@
 ---
 title: "Tracking Setup Tools"
-description: "Setup wizard tools for Meta Pixel + Conversions API (explicit confirmations required)."
+description: "Setup wizard tools for Meta Pixel + Conversions API with explicit confirmations and event-plan stages."
 ---
 
-These tools power the Tracking setup wizard. They can create/select Pixels, create a tracking site, generate keys, and help you verify end-to-end event delivery.
+These tools power AdsGateway's tracking setup wizard. They can create/select Pixels, create a tracking site, generate keys, and verify end-to-end delivery.
 
 <Warning>
-  Tracking setup includes write actions (e.g., Pixel creation) and requires explicit confirmation parameters. Analytics tools remain read-only.
+  Tracking setup includes write actions. Explicit confirmation parameters are required for creation and verification steps.
 </Warning>
 
 ## setup_meta_tracking (Recommended)
 
 ### What It Does
 
-A step-by-step, **repeat-call** wizard for Meta Pixel + Conversions API setup. Each call returns:
+A step-by-step, repeat-call wizard for Meta Pixel + Conversions API setup.
+
+Each call returns:
 
 - `next_action`: what to do next
-- `message`: how to proceed
-- The minimum data needed for the next step (accounts list, pixel list, etc.)
+- `message`: guidance for the next step
+- only the minimum data needed for that step (accounts, pixels, event catalog, etc.)
 
-### When To Use It
+### Stage Flow (V3)
 
-Use this for the simplest “set up tracking for my site” workflow.
+| `next_action` | Inputs To Continue | Purpose |
+|--------------|--------------------|---------|
+| `require_site_url` | `site_url` | Start setup for a normalized site URL |
+| `connect_meta` | (complete browser auth), then call again with `setup_id` | Connect/reconnect Meta |
+| `select_ad_account` | `ad_account_id` | Choose ad account for setup |
+| `select_pixel` | `pixel_id` or `create_pixel_name` + `confirm_create_pixel` | Select or create Pixel |
+| `confirm_pixel` | `confirm_pixel="CONFIRM_PIXEL"` | Explicitly confirm selected Pixel |
+| `choose_components` | `setup_pixel`, `setup_capi` | Choose Pixel, CAPI, or both |
+| `choose_objective` | `tracking_objective` | Choose objective profile (when event-plan flow is enabled) |
+| `choose_events` | `selected_standard_events`, `selected_custom_events` | Choose website-executable event plan |
+| `confirm_event_plan` | `confirm_event_plan="CONFIRM_EVENT_PLAN"` | Explicitly confirm event plan |
+| `create_site` | `confirm_create_site="CREATE_SITE"` | Create site config and issue keys |
+| `verify` | `site_id`, `secret_key`, `confirm_send_test_event="SEND_TEST_EVENT"` | Send test event |
+| `finished` | - | Setup complete |
 
-### Key Inputs (By Stage)
+### Confirmation Checkpoints
 
-| Stage | Inputs You Provide | Explicit Confirmations |
-|------|---------------------|------------------------|
-| Start | `site_url` | - |
-| Choose account | `ad_account_id` | - |
-| Choose pixel | `pixel_id` | `confirm_pixel="CONFIRM_PIXEL"` |
-| Create pixel (optional) | `create_pixel_name` | `confirm_create_pixel="CREATE_PIXEL"` |
-| Choose components | `setup_pixel`, `setup_capi` | - |
-| Create site + keys | - | `confirm_create_site="CREATE_SITE"` |
-| Verify (optional) | `site_id`, `secret_key`, `test_event_name` | `confirm_send_test_event="SEND_TEST_EVENT"` |
+| Action | Required Confirmation |
+|-------|------------------------|
+| Pixel creation | `confirm_create_pixel="CREATE_PIXEL"` |
+| Pixel selection confirmation | `confirm_pixel="CONFIRM_PIXEL"` |
+| Event-plan confirmation | `confirm_event_plan="CONFIRM_EVENT_PLAN"` |
+| Site creation | `confirm_create_site="CREATE_SITE"` |
+| Test event send | `confirm_send_test_event="SEND_TEST_EVENT"` |
 
-### Output (Stable Fields)
+### Important Outputs
 
 | Field | Type | Description |
 |------|------|-------------|
-| `success` | boolean | Whether the step succeeded |
-| `setup_id` | string | Setup session id (use it on subsequent calls) |
-| `next_action` | string | One of: `connect_meta`, `select_ad_account`, `select_pixel`, `confirm_pixel`, `choose_components`, `create_site`, or `finished` |
-| `message` | string | Human-readable instructions |
+| `setup_id` | string | Setup session identifier |
+| `next_action` | string | Current wizard step |
+| `required_inputs` | array | Deterministic client-side input requirements |
+| `selected_event_plan` | object | Normalized selected event plan |
+| `event_plan_summary` | object | Event-name summary and rollups |
+| `event_catalog` | object | Event catalog for guided event selection |
+| `website_supported_events` | array/object | Website-executable event references |
+| `verification_matrix` | array | Event-level verification expectations |
+| `copy_blocks` | object | Copy-ready setup and prompt text blocks |
+| `verification_tools` | array | Suggested follow-up verification tool calls |
 
 ### Example Flow
 
@@ -53,81 +72,64 @@ Use this for the simplest “set up tracking for my site” workflow.
     ```
   </Step>
   <Step title="Follow next_action">
-    Keep calling `setup_meta_tracking` with the fields requested in the response until you receive `site_id` and a new `sk_...` key.
+    Keep calling `setup_meta_tracking` with only the fields requested by `required_inputs` until site creation succeeds.
   </Step>
-  <Step title="Verify">
-    Use `meta_tracking_verify` (or the verify step inside `setup_meta_tracking`) to send an end-to-end test event.
+  <Step title="Verify and audit">
+    Verify with `confirm_send_test_event="SEND_TEST_EVENT"`, then run `meta_tracking_setup_audit` for post-setup health checks.
   </Step>
 </Steps>
 
----
+### Common Failure Modes
 
-## meta_tracking_setup_start / meta_tracking_setup_step / meta_tracking_setup_finish (Advanced)
-
-These are the lower-level building blocks used by `setup_meta_tracking`.
-
-### meta_tracking_setup_start
-
-Starts a setup session for a `site_url` and returns a `setup_id` plus a `next_action`.
-
-### meta_tracking_setup_step
-
-Updates the in-progress setup session selections (ad account, pixel selection, component toggles) and returns the next action.
-
-### meta_tracking_setup_finish
-
-Finalizes setup and creates:
-
-- the tracking site record
-- tracking keys (returned once)
-- encrypted storage of the Conversions API token
-
-This step requires explicit confirmation: `confirm_create_site="CREATE_SITE"`.
+| Error Pattern | Meaning | Recommended Action |
+|--------------|---------|--------------------|
+| `META_RECONNECT_REQUIRED` | Meta auth is not tracking-ready | Reconnect Meta and resume setup |
+| `META_PIXEL_CREATE_PERMISSIONS_REQUIRED` | Missing Meta pixel create/manage permission | Open returned `authorization_url`, grant permission, continue |
+| `EVENT_SELECTION_REQUIRED` | No valid website-executable events selected | Provide standard/custom event selections |
+| `EVENT_PLAN_NOT_CONFIRMED` | Event plan not explicitly confirmed | Send `confirm_event_plan="CONFIRM_EVENT_PLAN"` |
+| `PIXEL_CONFIRMATION_REQUIRED` | Pixel selection not explicitly confirmed | Send `confirm_pixel="CONFIRM_PIXEL"` |
+| `COMPONENT_REQUIRED` | Neither Pixel nor CAPI was selected | Set at least one of `setup_pixel`/`setup_capi` to `true` |
 
 ---
 
-## meta_tracking_pixel_create
+## Advanced Setup Tools
 
-### What It Does
+These are lower-level tools used by the journey tool.
 
-Creates a new Meta Pixel under the selected ad account for the setup session.
+### meta_tracking_setup_start / meta_tracking_setup_step / meta_tracking_setup_finish
 
-### Confirmation Required
+- `meta_tracking_setup_start`: starts or resumes a setup session for `site_url`.
+- `meta_tracking_setup_step`: updates selections and returns next action.
+- `meta_tracking_setup_finish`: creates tracking site/config/keys after explicit `confirm_create_site="CREATE_SITE"`.
+
+### meta_tracking_pixel_create
+
+Creates a new Pixel in the selected ad account.
+
+Required confirmation:
 
 - `confirm_create="CREATE_PIXEL"`
 
----
+### meta_tracking_site_set_manual_token
 
-## meta_tracking_site_set_manual_token
+Stores or replaces a site's CAPI token (encrypted at rest).
 
-### What It Does
-
-Stores or replaces a site’s Conversions API token (stored encrypted).
-
-### Confirmation Required
+Required confirmation:
 
 - `confirm_store="STORE_TOKEN"`
 
----
+### meta_tracking_verify
 
-## meta_tracking_verify
+Sends a test event through the Tracking Gateway.
 
-### What It Does
-
-Sends a test event through the Tracking Gateway to verify end-to-end delivery.
-
-### Confirmation Required
+Required confirmation:
 
 - `confirm_send="SEND_TEST_EVENT"`
 
-### Output (Stable Fields)
+## Post-Setup Sequence
 
-| Field | Type | Description |
-|------|------|-------------|
-| `success` | boolean | Whether the gateway accepted the test event |
-| `site_id` | string | Site id |
-| `gateway_url` | string | Gateway endpoint used |
-| `event_id` | string | Test event id used |
-| `status` | number | HTTP status from gateway |
-| `response` | object | Gateway response body |
+After setup creation succeeds:
 
+1. Retrieve snippets with `meta_tracking_snippets_get`.
+2. Send test event with `setup_meta_tracking` verify step or `meta_tracking_verify`.
+3. Run `meta_tracking_setup_audit` to detect configuration gaps, event drift, and failures.
