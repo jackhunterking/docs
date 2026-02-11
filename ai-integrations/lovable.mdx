@@ -9,142 +9,145 @@ title: "Lovable"
   style={{ display:"inline",verticalAlign:"middle",marginRight:"12px",width:"20%" }}
 />
 
-Lovable is an AI-powered app builder that lets you create web applications using natural language. This guide shows you how to connect AdsGateway to Lovable via its Custom MCP connector.
-
-<Info>
-  Lovable supports MCP through its **Connectors** feature. You can add AdsGateway as a custom MCP server to query your ad data directly from the Lovable chat.
-</Info>
-
-<Note>
-  AdsGateway analytics is read-only. Editing/updating campaigns/ads and ad-writing features are **Coming Soon**.
-</Note>
+Lovable supports AdsGateway via Custom MCP connectors.
 
 ## Prerequisites
 
 - A [Lovable](https://lovable.dev) account with an active project
 - An [AdsGateway account](https://adsgateway.io)
+- A connected Meta Ads account in AdsGateway for analytics and tracking workflows
 
-## Setup Guide
+## Connect AdsGateway
 
 <Steps>
   <Step title="Open Connectors">
-    In your Lovable project, click the **+** icon at the bottom of the chat panel. In the menu that appears, find **Connectors** and click **Manage connectors**.
-
-    <img src="/images/step-1.png" alt="Open Connectors menu in Lovable" style={{ borderRadius: '8px', border: '1px solid #333', marginTop: '12px' }} />
+    In your project chat, click `+`, open **Connectors**, then **Manage connectors**.
   </Step>
-
-  <Step title="Select Custom Connector">
-    On the **Connectors** page, scroll down to the **Personal connectors** section and click **Custom** — "Connect your own MCP".
-
-    <img src="/images/step-2.png" alt="Select Custom connector under Personal connectors" style={{ borderRadius: '8px', border: '1px solid #333', marginTop: '12px' }} />
+  <Step title="Select Custom connector">
+    In **Personal connectors**, choose **Custom**.
   </Step>
+  <Step title="Add AdsGateway MCP server">
+    Use:
 
-  <Step title="Configure the MCP Server">
-    In the **Add MCP server** dialog, enter the following details:
-
-    | Field | Value |
-    |-------|-------|
-    | **Server name** | `Ads Gateway` |
-    | **Server URL** | `https://ads-gateway.onrender.com/mcp` |
-    | **Authentication** | **OAuth (default)** |
-
-    Then click **Add & authorize**.
-
-    <img src="/images/step-3.png" alt="Add MCP server dialog with Ads Gateway configuration" style={{ borderRadius: '8px', border: '1px solid #333', marginTop: '12px' }} />
+    - Server name: `Ads Gateway`
+    - Server URL: `https://ads-gateway.onrender.com/mcp`
+    - Authentication: OAuth
   </Step>
-
-  <Step title="Sign In and Authorize">
-    A browser window will open for authentication:
-
-    1. **Sign in** to your AdsGateway account (or click "Sign up" to create one)
-    2. Once authenticated, you will see **"Authorization successful!"**
-    3. You will be automatically redirected back to Lovable
-
-    <img src="/images/step-4.png" alt="AdsGateway sign in and authorization successful screens" style={{ borderRadius: '8px', border: '1px solid #333', marginTop: '12px' }} />
+  <Step title="Authorize">
+    Complete AdsGateway login/authorization in browser and return to Lovable.
   </Step>
 </Steps>
 
-<Check>
-  You are now connected! AdsGateway tools are available in your Lovable chat.
-</Check>
+### Copy/Paste Agent Prompt (MCP Install Help)
 
-## Verify the Connection
+Use this in Lovable chat if it can assist with connector setup:
 
-Once connected, try asking this in the Lovable chat:
+```text
+Help me connect Ads Gateway MCP in Lovable with guardrails.
 
+Requirements:
+1) Walk me through Connectors -> Manage connectors -> Custom.
+2) Use exactly:
+   - Name: Ads Gateway
+   - URL: https://ads-gateway.onrender.com/mcp
+   - Auth: OAuth
+3) Do not change or remove existing connectors.
+4) Confirm the connector shows as connected.
+5) Give me a verification prompt after setup.
 ```
+
+### Guardrails
+
+- Use exact MCP URL.
+- Keep existing connectors unchanged.
+- OAuth only; no custom callback configuration.
+
+## Use AdsGateway for Analytics
+
+Use this sequence:
+
+1. Connect AdsGateway MCP in Lovable.
+2. Authenticate and connect Meta.
+3. Select the ad account you want to analyze.
+4. Run analytics/journey prompts.
+
+Prompt categories:
+
+- Account management
+  - `List my Meta ad accounts`
+  - `Which account am I currently using?`
+- Performance insights
+  - `Give me an account summary for the last 7 days`
+  - `Are there any anomalies in my ad performance?`
+- Journey reports
+  - `Generate a campaign report for campaign <id> since 2026-02-01 until 2026-02-07`
+- Creative analysis
+  - `Analyze the creative for ad <id>`
+
+## Use AdsGateway for Tracking (Pixel + CAPI)
+
+Use this sequence:
+
+1. Start: `setup_meta_tracking` with your `site_url`.
+2. Complete each `next_action`.
+3. Confirm required checkpoints:
+   - `confirm_pixel="CONFIRM_PIXEL"`
+   - `confirm_event_plan="CONFIRM_EVENT_PLAN"`
+   - `confirm_create_site="CREATE_SITE"`
+4. Save your one-time `sk_` key.
+5. Implement snippets/server forwarding from `meta_tracking_snippets_get`.
+6. Send test event using `confirm_send_test_event="SEND_TEST_EVENT"`.
+7. Run `meta_tracking_setup_audit` and apply `next_actions`.
+
+<Warning>
+  Never put `sk_` in browser code. Keep it in server/edge environment variables only. Keys are shown once.
+</Warning>
+
+## Verify Analytics
+
+Run:
+
+```text
 List my Meta ad accounts
 ```
 
-You should see a list of your connected ad accounts.
+Then:
 
-## Available Commands
+```text
+Give me my account performance summary for the last 7 days
+```
 
-After setup, you can ask Lovable questions like:
+## Verify Tracking
 
-<AccordionGroup>
-  <Accordion title="Account Management">
-    - "List my Meta ad accounts"
-    - "Select the account called 'My Business'"
-    - "Which account am I currently using?"
-  </Accordion>
-  <Accordion title="Campaign Data">
-    - "Show me all active campaigns"
-    - "List ad sets in my Brand Awareness campaign"
-    - "Get details for ad ID 123456789"
-  </Accordion>
-  <Accordion title="Performance Insights">
-    - "What was my spend in the last 7 days?"
-    - "Show me impressions and clicks for yesterday"
-    - "Get my ROAS for this month"
-  </Accordion>
-  <Accordion title="AI Analysis">
-    - "Give me an account summary"
-    - "Which campaigns improved the most this week?"
-    - "Are there any anomalies in my ad performance?"
-  </Accordion>
-  <Accordion title="Journey Reports">
-    - "Generate an ad report for ad 123 since 2026-02-01 until 2026-02-07"
-    - "Generate a campaign report for campaign 456 since 2026-02-01 until 2026-02-07"
-  </Accordion>
-  <Accordion title="Creative Analysis">
-    - "Analyze the creative for ad 123"
-    - "Extract the on-image text from ad 123"
-  </Accordion>
-</AccordionGroup>
+Run both checks:
 
-## Common Mistakes
+1. Send a test event from setup verify.
+2. Audit setup health:
 
-<Warning>
-  - Pop-ups blocked: OAuth won’t open (enable pop-ups, then re-add the connector).
-  - Wrong URL: use `https://ads-gateway.onrender.com/mcp`.
-  - Meta not connected: connect Meta in your AdsGateway dashboard, then retry in Lovable.
-  - Expecting edits or copywriting: ad editing/updating and ad-writing are **Coming Soon**.
-</Warning>
+```text
+Audit tracking setup for site_id "<site_id>" over the last 24 hours and list next actions
+```
 
 ## Troubleshooting
 
-<AccordionGroup>
-  <Accordion title="Authentication window doesn't open">
-    1. Check if pop-ups are blocked in your browser
-    2. Try manually visiting [adsgateway.io](https://adsgateway.io) and logging in first
-    3. Then remove the connector and re-add it
-  </Accordion>
-  <Accordion title="'Authorization failed' error">
-    1. Make sure you are using the correct AdsGateway credentials
-    2. Try clearing your browser cookies for adsgateway.io
-    3. Re-add the connector and authorize again
-  </Accordion>
-  <Accordion title="No tools available after connecting">
-    1. Make sure the connector shows as connected in your Connectors page
-    2. Try refreshing the Lovable page
-    3. Remove and re-add the connector if the issue persists
-  </Accordion>
-  <Accordion title="Connection lost or expired">
-    Your OAuth session may have expired. Remove the Ads Gateway connector from Personal connectors and add it again following the setup steps above.
-  </Accordion>
-</AccordionGroup>
+- OAuth popup blocked:
+  - enable popups, reconnect connector
+- Authorization failed:
+  - sign in at `adsgateway.io`, reconnect
+- Tracking reconnect required:
+  - reconnect Meta when token is not tracking-ready
+- Pixel permission recovery:
+  - use returned `authorization_url`, grant permission, continue setup
 
-<Card title="More Help" icon="life-ring" href="/guides/troubleshooting">
-  See the full troubleshooting guide for additional solutions
-</Card>
+## Related Docs
+
+- [AI Integrations Overview](/ai-integrations/overview)
+- [Meta Ads Platform](/ad-platforms/meta)
+- [Tracking Guide](/guides/tracking)
+- [Account Management Tools](/tools/account-management)
+- [Journey Reports](/tools/journey-reports)
+- [Creative Analysis](/tools/creative-analysis)
+- [Tracking Setup Tools](/tools/tracking-setup)
+- [Tracking Audit](/tools/tracking-audit)
+- [Tracking Sites & Snippets](/tools/tracking-sites)
+- [Tracking Events](/tools/tracking-events)

@@ -2,85 +2,79 @@
 title: "Overview"
 ---
 
-AdsGateway works with multiple AI assistants. Choose the one you use most and follow the setup guide.
+AdsGateway works with multiple AI assistants. Choose your integration and follow its setup guide.
 
 <Info>
-  AntiGravity and Cursor are available now. Claude, Windsurf, and ChatGPT remain listed as coming soon in this docs set.
+  AntiGravity, Cursor, and Lovable are active in this docs set. Claude, Windsurf, and ChatGPT remain marked as Coming Soon.
 </Info>
+
+## Active Integration Icons
+
+<div style={{ display: "flex", gap: "16px", alignItems: "center", flexWrap: "wrap", marginBottom: "16px" }}>
+  <img src="/images/Google-Antigravity-Icon-Full-Color.png" alt="AntiGravity" width="44" />
+  <img src="/images/Cursor.png" alt="Cursor" width="44" />
+  <img src="/images/lovable-logo-icon.svg" alt="Lovable" width="44" />
+</div>
 
 ## Supported AI Assistants
 
 <CardGroup cols={2}>
   <Card title="AntiGravity" href="/ai-integrations/antigravity">
-    Configure a custom MCP server with `serverUrl` only and authenticate in one flow.
+    Streamable HTTPS MCP setup with full analytics + tracking workflows.
   </Card>
   <Card title="Cursor" href="/ai-integrations/cursor">
-    AI-powered code editor with built-in MCP support. One-click installation available.
+    Built-in MCP with one-click setup and full analytics + tracking workflows.
   </Card>
   <Card title="Claude (Coming Soon)" href="/ai-integrations/claude">
-    Works with both Claude Code (CLI) and Claude Desktop. Tabbed setup guide for both.
+    Planned MCP integration with documented capability model and install prompt.
   </Card>
   <Card title="Lovable" href="/ai-integrations/lovable">
-    AI app builder with Custom MCP connector support. Connect in minutes.
+    Custom MCP connector with full analytics + tracking workflows.
   </Card>
   <Card title="Windsurf (Coming Soon)" href="/ai-integrations/windsurf">
-    Modern AI development environment with one-click MCP installation.
+    Planned MCP integration with documented capability model and install prompt.
   </Card>
   <Card title="ChatGPT (Coming Soon)" href="/ai-integrations/chatgpt">
-    Works via a custom widget in ChatGPT. Pending App Store approval.
+    Pending marketplace availability.
   </Card>
 </CardGroup>
 
-## What is MCP?
+## What Works in Every Active Integration
 
-MCP (Model Context Protocol) is an open standard that allows AI assistants to securely connect to external tools like AdsGateway.
+<CardGroup cols={2}>
+  <Card title="Analytics" icon="chart-line">
+    Connect AdsGateway, authenticate Meta, select an account, and run read-only analytics, reports, and creative analysis.
+  </Card>
+  <Card title="Tracking (Pixel + CAPI)" icon="shield-check">
+    Run `setup_meta_tracking`, complete explicit confirmations, save your one-time key, verify events, and audit setup health.
+  </Card>
+</CardGroup>
 
-<Info>
-  All AI integrations use the same AdsGateway server. Your ad account connections work across any AI assistant you set up.
-</Info>
+## MCP Install Prompts + Guardrails
 
-## Quick Setup (Cursor)
+Each integration guide includes a copy/paste MCP install prompt for agent-assisted setup, plus guardrails to avoid breaking existing MCP configurations.
 
-The fastest way to get started is with Cursor's one-click installation:
+- Active: AntiGravity, Cursor, Lovable
+- Experimental guidance: Claude, Windsurf
 
-<a href="cursor://anysphere.cursor-deeplink/mcp/install?name=Ads%20Gateway&config=eyJ1cmwiOiJodHRwczovL2Fkcy1nYXRld2F5Lm9ucmVuZGVyLmNvbS9tY3AifQ==">
-<img
-  src="https://cursor.com/deeplink/mcp-install-dark.png"
-  alt="Add AdsGateway MCP server to Cursor"
-  style={{ height:"40px",cursor:"pointer" }}
-/>
+## Core Workflow References
 
-</a>
+- [Meta Ads Platform](/ad-platforms/meta)
+- [Account Management Tools](/tools/account-management)
+- [Journey Reports](/tools/journey-reports)
+- [Creative Analysis](/tools/creative-analysis)
+- [Tracking Guide](/guides/tracking)
+- [Tracking Setup Tools](/tools/tracking-setup)
+- [Tracking Audit](/tools/tracking-audit)
 
-Or follow the step-by-step guide:
+## MCP Server URL
 
-<Steps>
-  <Step title="Open Cursor Settings">
-    Go to **Settings** \> **MCP** in Cursor
-  </Step>
-  <Step title="Add AdsGateway Server">
-    Add the server URL: `https://ads-gateway.onrender.com/mcp`
-  </Step>
-  <Step title="Authenticate">
-    Log in when prompted to connect your AdsGateway account
-  </Step>
-  <Step title="Start Using">
-    Ask questions like "What was my ad spend yesterday?"
-  </Step>
-</Steps>
+All integrations use the same server URL:
 
-<Card title="Full Cursor Setup Guide" icon="arrow-right" href="/ai-integrations/cursor">
-  See detailed instructions for Cursor
-</Card>
-
-## Server URL
-
-All AI integrations use the same server URL:
-
-```
+```text
 https://ads-gateway.onrender.com/mcp
 ```
 
 <Note>
-  You don't need to remember this URL - each integration guide includes the complete configuration.
+  Your ad account connections and tracking configuration are tied to your AdsGateway account, so you can use the same setup across supported AI assistants.
 </Note>

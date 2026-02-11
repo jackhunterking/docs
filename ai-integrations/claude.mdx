@@ -10,31 +10,53 @@ title: "Claude"
 
 ## What is Claude?
 
-Claude is Anthropic's AI assistant, available as:
+Claude is Anthropic's AI assistant, available as Claude Code and Claude Desktop.
 
-- **Claude Code** — A CLI tool for developers
-- **Claude Desktop** — A desktop application for macOS and Windows
+## Capability Model
 
-## What to Expect
+When available, this integration supports both AdsGateway workflows:
 
-Once available, AdsGateway will integrate with Claude via MCP (Model Context Protocol), allowing you to:
+- **Analytics**: read-only ad analysis, reports, and creative analysis
+- **Tracking**: Pixel + Conversions API setup, verification, and health audit
 
-- Query your ad performance data using natural language
-- Get AI-powered insights on your campaigns
-- Switch between multiple ad accounts (Meta today; more platforms coming soon)
+## MCP Installation Path (When Enabled)
+
+When Claude MCP support is enabled in your environment, install AdsGateway MCP with:
+
+- Transport URL: `https://ads-gateway.onrender.com/mcp`
+- Server name: `Ads Gateway`
+
+### Copy/Paste Agent Prompt (Experimental)
+
+```text
+Set up Ads Gateway MCP for Claude with guardrails.
+
+Requirements:
+1) Add MCP server "Ads Gateway" using URL https://ads-gateway.onrender.com/mcp.
+2) If project config exists, merge without removing existing MCP servers.
+3) Keep OAuth defaults; do not add custom callback overrides.
+4) Validate config syntax.
+5) Return exact command/config diff used and how to verify connection.
+```
+
+### Guardrails
+
+- Preserve existing MCP entries.
+- Use exact URL.
+- Do not overwrite unrelated agent settings.
+
+## Reference Workflows
+
+- [Meta Ads Platform](/ad-platforms/meta)
+- [Tracking Guide](/guides/tracking)
+- [Account Management Tools](/tools/account-management)
+- [Journey Reports](/tools/journey-reports)
+- [Creative Analysis](/tools/creative-analysis)
+- [Tracking Setup Tools](/tools/tracking-setup)
+- [Tracking Audit](/tools/tracking-audit)
 
 ## Get Notified
 
-Want to know when Claude integration is available?
-
 <Card title="Sign Up for Updates" icon="bell" href="https://adsgateway.io">
   Create an AdsGateway account to be notified when Claude integration launches
-</Card>
-
-## Available Now
-
-Don't want to wait? Try our available integration:
-
-<Card title="Cursor" icon="code" href="/ai-integrations/cursor">
-  One-click installation available now
 </Card>

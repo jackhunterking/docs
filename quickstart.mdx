@@ -2,107 +2,81 @@
 title: "Quickstart"
 ---
 
-Follow these steps to connect your advertising accounts to your favorite AI assistant in just 5 minutes.
+Follow these steps to connect your AI assistant and start with either analytics or tracking.
 
 <Steps>
-  <Step title="Create an AdsGateway Account">
-    Go to [adsgateway.io](https://adsgateway.io) and sign up for an account.
-
-    <Tip>
-      You can sign up with Google or create an account with your email.
-    </Tip>
+  <Step title="Create an AdsGateway account">
+    Go to [adsgateway.io](https://adsgateway.io) and sign up.
   </Step>
-  <Step title="Connect Your AI Assistant">
-    Choose your AI tool and follow the setup guide:
+
+  <Step title="Connect your AI assistant">
+    Pick an integration and complete MCP connection:
 
     <CardGroup cols={2}>
       <Card title="AntiGravity" href="/ai-integrations/antigravity">
-        Streamable HTTPS MCP setup with serverUrl-only config
+        Streamable HTTPS MCP setup
       </Card>
       <Card title="Cursor" href="/ai-integrations/cursor">
-        One-click installation for developers
-      </Card>
-      <Card title="Claude (Coming Soon)" href="/ai-integrations/claude">
-        Claude Code CLI or Claude Desktop support
+        One-click or manual MCP setup
       </Card>
       <Card title="Lovable" href="/ai-integrations/lovable">
-        AI app builder with MCP connector
+        Custom MCP connector setup
       </Card>
-      <Card title="ChatGPT" href="/ai-integrations/chatgpt">
-        Coming soon
+      <Card title="Claude (Coming Soon)" href="/ai-integrations/claude">
+        Planned integration
+      </Card>
+      <Card title="Windsurf (Coming Soon)" href="/ai-integrations/windsurf">
+        Planned integration
+      </Card>
+      <Card title="ChatGPT (Coming Soon)" href="/ai-integrations/chatgpt">
+        Planned integration
       </Card>
     </CardGroup>
   </Step>
-  <Step title="Connect Your Ad Platform">
-    After setting up your AI assistant, connect your advertising account:
 
-    1. Open your AI assistant
-    2. It will prompt you to authenticate with AdsGateway
-    3. Click the link to authorize access
-    4. Connect your Meta Ads account (more platforms coming soon)
-
-    <Info>
-      AdsGateway uses OAuth for secure authentication. We never store your ad platform password. We store encrypted OAuth tokens while you remain connected so your assistant can make API calls on your behalf.
-    </Info>
+  <Step title="Connect Meta in AdsGateway">
+    Authenticate and authorize Meta so your assistant can run analytics and tracking tools.
   </Step>
-  <Step title="Select Your Ad Account">
-    Once connected, ask your AI assistant:
 
-    ```
+  <Step title="Choose your workflow">
+    **Option A — Analytics**
+
+    - List/select account
+    - Run read-only analysis and reports
+
+    **Option B — Tracking (Pixel + CAPI)**
+
+    - Run `setup_meta_tracking` with `site_url`
+    - Complete confirmations and create site + key
+    - Verify with test event and setup audit
+  </Step>
+
+  <Step title="Verify success">
+    Analytics verification:
+
+    ```text
     List my Meta ad accounts
     ```
 
-    Then select the account you want to work with:
+    Tracking verification:
 
+    ```text
+    Audit tracking setup for site_id "<site_id>" over the last 24 hours
     ```
-    Select the account "My Business Account"
-    ```
-  </Step>
-  <Step title="Start Asking Questions">
-    You're all set! Try these example prompts:
-
-    <AccordionGroup>
-      <Accordion title="Performance Overview">
-        ```
-        Give me a summary of my ad account performance for the last 7 days
-        ```
-      </Accordion>
-      <Accordion title="Campaign List">
-        ```
-        Show me all my active campaigns
-        ```
-      </Accordion>
-      <Accordion title="Anomaly Detection">
-        ```
-        Are there any anomalies in my ad performance?
-        ```
-      </Accordion>
-      <Accordion title="Top Performers">
-        ```
-        Which campaigns had the biggest changes this week?
-        ```
-      </Accordion>
-    </AccordionGroup>
   </Step>
 </Steps>
 
 <Note>
-  Editing/updating campaigns/ads and ad-writing features are **Coming Soon**. See <a href="/feature-availability">Feature Availability</a> for the current status.
+  Analytics remains read-only. Editing/updating campaigns/ads and ad-writing are still Coming Soon.
 </Note>
 
-## What's Next?
+## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Explore All Tools" icon="wrench" href="/tools/account-management">
-    See all available tools and their capabilities
+  <Card title="Analytics References" icon="chart-line" href="/tools/account-management">
+    Tools and prompts for analysis workflows.
   </Card>
-  <Card title="Common Workflows" icon="route" href="/guides/common-workflows">
-    Learn the most useful ways to use AdsGateway
+  <Card title="Tracking References" icon="shield-check" href="/guides/tracking">
+    Full setup, snippets, verification, and audit docs.
   </Card>
 </CardGroup>
-
-## Need Help?
-
-<Card title="Troubleshooting Guide" icon="life-ring" href="/guides/troubleshooting">
-  Having issues? Check our troubleshooting guide for common solutions.
-</Card>

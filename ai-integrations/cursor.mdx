@@ -9,252 +9,157 @@ title: "Cursor"
   style={{ display:"inline",verticalAlign:"middle",marginRight:"12px",width:"20%" }}
 />
 
-Cursor is an AI-powered code editor with built-in MCP support. This guide shows you how to add AdsGateway to Cursor.
-
-<Info>
-  Cursor is our recommended AI assistant for developers. It has the smoothest MCP integration.
-</Info>
+Cursor is an AI-powered code editor with built-in MCP support.
 
 ## Prerequisites
 
-- [Cursor](https://cursor.sh) installed on your computer
+- [Cursor](https://cursor.sh) installed
 - An [AdsGateway account](https://adsgateway.io)
+- A connected Meta Ads account in AdsGateway for analytics and tracking workflows
 
-## One-Click Installation (Recommended)
+## Connect AdsGateway
 
-The fastest way to get started — just click the button below:
+### One-click install (recommended)
 
 <a href="cursor://anysphere.cursor-deeplink/mcp/install?name=Ads%20Gateway&config=eyJ1cmwiOiJodHRwczovL2Fkcy1nYXRld2F5Lm9ucmVuZGVyLmNvbS9tY3AifQ==">
-  <img 
-    src="https://cursor.com/deeplink/mcp-install-dark.png" 
+  <img
+    src="https://cursor.com/deeplink/mcp-install-dark.png"
     alt="Add AdsGateway MCP server to Cursor"
     style={{height: '40px', cursor: 'pointer'}}
   />
 </a>
 
-<Tip>
-  The button above opens Cursor and automatically configures the AdsGateway MCP server for you. No manual editing needed.
-</Tip>
+### Manual config
 
-## Manual Setup
+Add this to `~/.cursor/mcp.json`:
 
-If the one-click button doesn't work, you can configure it manually. Choose **one** of the two options below:
-
-### Option A: Use the "Add MCP Server" Button in Cursor
-
-<Steps>
-  <Step title="Open Cursor Settings">
-    Open Cursor and go to **Settings** (Cmd/Ctrl + ,)
-
-    Or click the gear icon in the bottom left corner.
-  </Step>
-  <Step title="Navigate to MCP Settings">
-    In the settings sidebar, find and click on **Tools & MCP**.
-  </Step>
-  <Step title="Click 'Add MCP Server'">
-    Click the **+ Add new MCP server** button. A JSON editor will open.
-
-    **Replace the entire contents** with the following:
-
-    ```json
-    {
-      "mcpServers": {
-        "Ads Gateway": {
-          "url": "https://ads-gateway.onrender.com/mcp"
-        }
-      }
-    }
-    ```
-
-    Then click **Save**.
-  </Step>
-  <Step title="Enable the Server">
-    Toggle the AdsGateway server to **ON** in the MCP settings panel.
-  </Step>
-</Steps>
-
-### Option B: Edit the MCP Config File Directly
-
-If you already have other MCP servers configured, this is the safest approach.
-
-<Steps>
-  <Step title="Open the MCP config file">
-    Open the file at `~/.cursor/mcp.json` in any text editor.
-
-    If the file doesn't exist, create it with this content and you're done:
-
-    ```json
-    {
-      "mcpServers": {
-        "Ads Gateway": {
-          "url": "https://ads-gateway.onrender.com/mcp"
-        }
-      }
-    }
-    ```
-  </Step>
-  <Step title="Add AdsGateway to your existing servers">
-    If you already have other MCP servers in the file, **add only this line** inside the existing `"mcpServers"` block:
-
-    ```json
+```json
+{
+  "mcpServers": {
     "Ads Gateway": {
       "url": "https://ads-gateway.onrender.com/mcp"
     }
-    ```
-
-    **Example** — if your file currently looks like this:
-
-    ```json
-    {
-      "mcpServers": {
-        "some-other-server": {
-          "url": "https://example.com/mcp"
-        }
-      }
-    }
-    ```
-
-    It should look like this **after** adding AdsGateway:
-
-    ```json
-    {
-      "mcpServers": {
-        "some-other-server": {
-          "url": "https://example.com/mcp"
-        },
-        "Ads Gateway": {
-          "url": "https://ads-gateway.onrender.com/mcp"
-        }
-      }
-    }
-    ```
-
-    <Warning>
-      **Don't nest `mcpServers` inside `mcpServers`!** A common mistake is pasting the full JSON block (including the outer `"mcpServers"` wrapper) inside your existing config. This creates an invalid nested structure that causes errors.
-
-      ❌ **Wrong** — nested `mcpServers`:
-      ```json
-      {
-        "mcpServers": {
-          "some-other-server": { ... },
-          "mcpServers": {
-            "Ads Gateway": {
-              "url": "https://ads-gateway.onrender.com/mcp"
-            }
-          }
-        }
-      }
-      ```
-
-      ✅ **Correct** — `Ads Gateway` is a direct entry:
-      ```json
-      {
-        "mcpServers": {
-          "some-other-server": { ... },
-          "Ads Gateway": {
-            "url": "https://ads-gateway.onrender.com/mcp"
-          }
-        }
-      }
-      ```
-    </Warning>
-  </Step>
-  <Step title="Save and restart Cursor">
-    Save the file, then restart Cursor (or toggle the server off and on in MCP settings).
-  </Step>
-</Steps>
-
-## Authenticate
-
-When you first enable the server, Cursor will open your browser for authentication.
-
-1. Log in to your AdsGateway account (or create one)
-2. Authorize the connection
-3. You'll be redirected back to Cursor
-
-<Check>
-  Look for the green "Connected" status in Cursor's MCP panel
-</Check>
-
-## Verify the Connection
-
-Once connected, try this command in Cursor's AI chat:
-
+  }
+}
 ```
+
+Then enable the server and complete browser authentication.
+
+### Copy/Paste Agent Prompt (MCP Install)
+
+Use this in Cursor chat if you want the agent to configure MCP safely:
+
+```text
+Configure Ads Gateway MCP for Cursor.
+
+Requirements:
+1) Edit ~/.cursor/mcp.json and MERGE this server entry:
+{
+  "mcpServers": {
+    "Ads Gateway": {
+      "url": "https://ads-gateway.onrender.com/mcp"
+    }
+  }
+}
+2) Do not remove or overwrite existing MCP servers.
+3) Keep JSON valid and avoid nested mcpServers blocks.
+4) If file does not exist, create it with valid JSON.
+5) Show me the final file diff and tell me to toggle/restart MCP in Cursor.
+```
+
+### Guardrails
+
+- Preserve existing MCP entries.
+- Use exact URL: `https://ads-gateway.onrender.com/mcp`.
+- Do not create nested `mcpServers`.
+- Return final config diff.
+
+## Use AdsGateway for Analytics
+
+Use this sequence:
+
+1. Connect AdsGateway MCP in Cursor.
+2. Authenticate and connect Meta.
+3. Select the ad account you want to analyze.
+4. Run analytics/journey prompts.
+
+Prompt categories:
+
+- Account management
+  - `List my Meta ad accounts`
+  - `Which account am I currently using?`
+- Performance insights
+  - `Give me an account summary for the last 7 days`
+  - `Are there any anomalies in my ad performance?`
+- Journey reports
+  - `Generate an ad report for ad <id> since 2026-02-01 until 2026-02-07`
+- Creative analysis
+  - `Analyze the creative for ad <id>`
+
+## Use AdsGateway for Tracking (Pixel + CAPI)
+
+Use this sequence:
+
+1. Start: `setup_meta_tracking` with your `site_url`.
+2. Complete each `next_action`.
+3. Confirm required checkpoints:
+   - `confirm_pixel="CONFIRM_PIXEL"`
+   - `confirm_event_plan="CONFIRM_EVENT_PLAN"`
+   - `confirm_create_site="CREATE_SITE"`
+4. Save your one-time `sk_` key.
+5. Implement snippets/server forwarding from `meta_tracking_snippets_get`.
+6. Send test event using `confirm_send_test_event="SEND_TEST_EVENT"`.
+7. Run `meta_tracking_setup_audit` and follow `next_actions`.
+
+<Warning>
+  `sk_` keys are server-side only and shown once. If the key is lost, rotate keys and update your server/edge runtime variables.
+</Warning>
+
+## Verify Analytics
+
+Run:
+
+```text
 List my Meta ad accounts
 ```
 
-You should see a list of your connected ad accounts.
+Then:
 
-## Available Commands
+```text
+Give me my account performance summary for the last 7 days
+```
 
-After setup, you can ask Cursor questions like:
+## Verify Tracking
 
-<AccordionGroup>
-  <Accordion title="Account Management">
-    - "List my Meta ad accounts"
-    - "Select the account called 'My Business'"
-    - "Which account am I currently using?"
-  </Accordion>
-  <Accordion title="Campaign Data">
-    - "Show me all active campaigns"
-    - "List ad sets in my Brand Awareness campaign"
-    - "Get details for ad ID 123456789"
-  </Accordion>
-  <Accordion title="Performance Insights">
-    - "What was my spend in the last 7 days?"
-    - "Show me impressions and clicks for yesterday"
-    - "Get my ROAS for this month"
-  </Accordion>
-  <Accordion title="AI Analysis">
-    - "Give me an account summary"
-    - "Which campaigns improved the most this week?"
-    - "Are there any anomalies in my ad performance?"
-  </Accordion>
-</AccordionGroup>
+Run both checks:
+
+1. Send a test event from the setup flow.
+2. Audit setup health:
+
+```text
+Audit tracking setup for site_id "<site_id>" over the last 24 hours and list next actions
+```
 
 ## Troubleshooting
 
-<AccordionGroup>
-  <Accordion title="'Must have either a command (for stdio) or url (for SSE)' error">
-    This usually means there is a formatting issue in your `~/.cursor/mcp.json` file. The most common cause is **nesting `mcpServers` inside `mcpServers`** — this happens when you paste the full JSON block inside an existing config.
+- Cursor config errors (`Must have either a command ... or url ...`):
+  - ensure one top-level `mcpServers` object and valid JSON
+- Auth popup issues:
+  - allow popups and re-toggle server
+- Tracking reconnect required:
+  - reconnect Meta when setup reports non-tracking-ready token
+- Pixel permission recovery:
+  - open returned `authorization_url`, grant permission, continue setup
 
-    **How to fix:**
-    1. Open `~/.cursor/mcp.json`
-    2. Make sure there is only **one** `"mcpServers"` key at the top level
-    3. Ensure `"Ads Gateway"` is placed **directly** inside `"mcpServers"`, not inside another nested object
-    4. See the [Manual Setup — Option B](#option-b-edit-the-mcp-config-file-directly) section above for the correct format
-  </Accordion>
-  <Accordion title="Server shows as disconnected">
-    1. Check your internet connection
-    2. Try toggling the server OFF and ON again
-    3. If the issue persists, restart Cursor
-  </Accordion>
-  <Accordion title="Authentication window doesn't open">
-    1. Check if pop-ups are blocked in your browser
-    2. Try manually visiting [adsgateway.io](https://adsgateway.io) and logging in
-    3. Then toggle the MCP server off and on again
-  </Accordion>
-  <Accordion title="'Authentication required' error">
-    Your session may have expired. Toggle the server off and on to re-authenticate.
-  </Accordion>
-  <Accordion title="No tools available">
-    1. Make sure the server is toggled ON
-    2. Check that authentication completed successfully
-    3. Try restarting Cursor
-  </Accordion>
-  <Accordion title="JSON syntax errors in mcp.json">
-    If Cursor isn't loading any MCP servers, your JSON file may have a syntax error.
+## Related Docs
 
-    Common issues:
-    - **Missing comma** between server entries
-    - **Trailing comma** after the last entry (not allowed in JSON)
-    - **Duplicate keys** — only one `"mcpServers"` block is allowed
-
-    **Tip:** Paste your `~/.cursor/mcp.json` contents into [jsonlint.com](https://jsonlint.com) to validate the syntax.
-  </Accordion>
-</AccordionGroup>
-
-<Card title="More Help" icon="life-ring" href="/guides/troubleshooting">
-  See the full troubleshooting guide for additional solutions
-</Card>
+- [AI Integrations Overview](/ai-integrations/overview)
+- [Meta Ads Platform](/ad-platforms/meta)
+- [Tracking Guide](/guides/tracking)
+- [Account Management Tools](/tools/account-management)
+- [Journey Reports](/tools/journey-reports)
+- [Creative Analysis](/tools/creative-analysis)
+- [Tracking Setup Tools](/tools/tracking-setup)
+- [Tracking Audit](/tools/tracking-audit)
+- [Tracking Sites & Snippets](/tools/tracking-sites)
+- [Tracking Events](/tools/tracking-events)

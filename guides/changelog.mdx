@@ -7,45 +7,59 @@ This page tracks user-facing AdsGateway updates reflected in documentation.
 
 ## February 11, 2026
 
+### AI Integration Documentation Unification
+
+- Standardized active AI integration pages to one shared structure.
+- Added both analytics and tracking workflows to AntiGravity, Cursor, and Lovable pages.
+- Added copy/paste MCP installation prompts with setup guardrails for agent-assisted installation.
+- Aligned overview and quickstart messaging to the dual-workflow model.
+- Updated Coming Soon pages with capability-consistent language.
+- Added AntiGravity full-color icon usage in integration docs where applicable.
+
 ### AntiGravity Support
 
 - Added first-class AntiGravity setup documentation at `/ai-integrations/antigravity`.
-- Clarified the Streamable HTTPS MCP config (`serverUrl` only) and auth recovery flow.
-- Documented practical troubleshooting for repeated auth prompts and `invalid_token` scenarios.
+- Clarified Streamable HTTPS MCP config (`serverUrl` only) and auth recovery flow.
 
 ### Tracking Setup V3 Flow
 
-- Documented the expanded setup journey states:
-  - `choose_objective`
-  - `choose_events`
-  - `confirm_event_plan`
-- Documented new tracking setup inputs:
-  - `tracking_objective`
-  - `selected_standard_events`
-  - `selected_custom_events`
-  - `confirm_event_plan`
-  - `auto_create_custom_conversions`
-- Clarified setup outputs used by clients, including `required_inputs`, event-plan fields, and verification hints.
+- Documented expanded setup journey states (`choose_objective`, `choose_events`, `confirm_event_plan`).
+- Documented new setup inputs and explicit confirmation checkpoints.
 
 ### Tracking Audit Tool
 
-- Added docs for `meta_tracking_setup_audit` (read-only).
-- Covered health checks, issue summaries, event-level drift detection, and AI-ready remediation output.
-- Added recommended troubleshooting sequence starting with setup audit, then targeted follow-up tools.
+- Added docs for `meta_tracking_setup_audit` with remediation guidance and expected outputs.
 
 ### Auth and Permission Hardening
 
-- Clarified tracking setup requirement for tracking-ready Meta auth (system-user style, non-expiring token).
-- Documented permission-recovery behavior when Pixel creation needs additional Meta permissions.
+- Clarified tracking-ready Meta auth requirements and permission-recovery behavior.
 
 ### Docs Routing Updates
 
-- Added docs compatibility routing support for:
+- Added docs compatibility support for:
   - `/docs/setup/antigravity`
   - `/docs/setup/windsurf`
   - `/docs/changelog`
 
+## AI Integration Page Standard (Maintenance Checklist)
+
+Use this checklist for every active AI integration page update:
+
+- Keep section order consistent:
+  1. `Prerequisites`
+  2. `Connect AdsGateway`
+  3. `Use AdsGateway for Analytics`
+  4. `Use AdsGateway for Tracking (Pixel + CAPI)`
+  5. `Verify Analytics`
+  6. `Verify Tracking`
+  7. `Troubleshooting`
+  8. `Related Docs`
+- Ensure analytics and tracking workflows are both present and actionable.
+- Include tracking confirmation tokens where relevant.
+- Include explicit `meta_tracking_setup_audit` guidance in tracking verification/troubleshooting.
+- Keep availability labels intact for Coming Soon integrations unless product status changes.
+
 ## Notes
 
-- This is a living release-notes page (not date-suffixed).
-- For current product scope, see `/feature-availability`.
+- This is a living release-notes page.
+- For product scope and status, see `/feature-availability`.

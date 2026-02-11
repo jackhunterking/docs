@@ -10,28 +10,53 @@ title: "Windsurf"
 
 ## What is Windsurf?
 
-Windsurf is a modern AI-powered development environment by Codeium, designed for developers who want intelligent coding assistance built directly into their IDE.
+Windsurf is a modern AI-powered development environment.
 
-## What to Expect
+## Capability Model
 
-Once available, AdsGateway will integrate with Windsurf via MCP (Model Context Protocol), allowing you to:
+When available, this integration supports both AdsGateway workflows:
 
-- Query your ad performance data using natural language
-- Get AI-powered insights on your campaigns
-- Switch between multiple ad accounts (Meta today; more platforms coming soon)
+- **Analytics**: read-only ad analysis, reports, and creative analysis
+- **Tracking**: Pixel + Conversions API setup, verification, and health audit
+
+## MCP Installation Path (When Enabled)
+
+When Windsurf MCP support is enabled in your environment, install AdsGateway MCP with:
+
+- Transport URL: `https://ads-gateway.onrender.com/mcp`
+- Server name: `Ads Gateway`
+
+### Copy/Paste Agent Prompt (Experimental)
+
+```text
+Set up Ads Gateway MCP for Windsurf with guardrails.
+
+Requirements:
+1) Add MCP server "Ads Gateway" using URL https://ads-gateway.onrender.com/mcp.
+2) Merge with existing MCP config; do not remove other servers.
+3) Keep OAuth defaults; avoid custom callback fields.
+4) Validate final configuration syntax.
+5) Return exact changes and connection verification steps.
+```
+
+### Guardrails
+
+- Preserve existing MCP entries.
+- Use exact URL.
+- Do not overwrite unrelated workspace settings.
+
+## Reference Workflows
+
+- [Meta Ads Platform](/ad-platforms/meta)
+- [Tracking Guide](/guides/tracking)
+- [Account Management Tools](/tools/account-management)
+- [Journey Reports](/tools/journey-reports)
+- [Creative Analysis](/tools/creative-analysis)
+- [Tracking Setup Tools](/tools/tracking-setup)
+- [Tracking Audit](/tools/tracking-audit)
 
 ## Get Notified
 
-Want to know when Windsurf integration is available?
-
 <Card title="Sign Up for Updates" icon="bell" href="https://adsgateway.io">
   Create an AdsGateway account to be notified when Windsurf integration launches
-</Card>
-
-## Available Now
-
-Don't want to wait? Try our available integration:
-
-<Card title="Cursor" icon="code" href="/ai-integrations/cursor">
-  One-click installation available now
 </Card>

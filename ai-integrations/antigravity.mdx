@@ -2,7 +2,12 @@
 title: "AntiGravity"
 ---
 
-# AntiGravity MCP Setup
+<img
+  src="/images/Google-Antigravity-Icon-Full-Color.png"
+  alt="AntiGravity"
+  width="56"
+  style={{ display:"inline",verticalAlign:"middle",marginRight:"12px" }}
+/>
 
 AntiGravity is supported now via Streamable HTTPS MCP transport.
 
@@ -10,8 +15,9 @@ AntiGravity is supported now via Streamable HTTPS MCP transport.
 
 - An [AdsGateway account](https://adsgateway.io)
 - AntiGravity access with MCP server configuration enabled
+- A connected Meta Ads account in AdsGateway for analytics and tracking workflows
 
-## Server Configuration
+## Connect AdsGateway
 
 Open AntiGravity MCP settings and add this entry to your `mcp_config.json`:
 
@@ -29,53 +35,125 @@ Open AntiGravity MCP settings and add this entry to your `mcp_config.json`:
   Keep the config minimal: only `serverUrl` is required. Do not add a custom `oauth` block.
 </Note>
 
-## Authenticate
+Then:
 
-1. Enable the `ads-gateway` server in AntiGravity.
-2. Complete the browser login flow with your AdsGateway account.
-3. Return to AntiGravity and wait for the connection status to show connected.
+1. Enable the `ads-gateway` server.
+2. Complete browser authentication with AdsGateway.
+3. Return to AntiGravity and confirm the server is connected.
 
-## Verify
+### Copy/Paste Agent Prompt (MCP Install)
 
-Try this prompt:
+Use this if AntiGravity (or its assistant) supports in-chat MCP config help:
+
+```text
+Install Ads Gateway MCP in AntiGravity for me.
+
+Requirements:
+1) Edit my AntiGravity MCP config and safely MERGE this server entry:
+{
+  "mcpServers": {
+    "ads-gateway": {
+      "serverUrl": "https://ads-gateway.onrender.com/mcp"
+    }
+  }
+}
+2) Do not remove or overwrite existing MCP servers.
+3) Do not add custom oauth/callback fields.
+4) Validate JSON syntax before saving.
+5) Show me exactly what changed and how to re-enable/restart the MCP server.
+```
+
+### Guardrails
+
+- Preserve existing MCP servers and settings.
+- Use exact URL: `https://ads-gateway.onrender.com/mcp`.
+- Keep OAuth default behavior.
+- Return a diff/summary of changes.
+
+## Use AdsGateway for Analytics
+
+Use this sequence:
+
+1. Connect AdsGateway MCP in AntiGravity.
+2. Authenticate and connect Meta.
+3. Select the ad account you want to analyze.
+4. Run analytics/journey prompts.
+
+Prompt categories:
+
+- Account management
+  - `List my Meta ad accounts`
+  - `Which account am I currently using?`
+- Performance insights
+  - `Give me an account summary for the last 7 days`
+  - `Are there any anomalies in my ad performance?`
+- Journey reports
+  - `Generate a campaign report for campaign <id> since 2026-02-01 until 2026-02-07`
+- Creative analysis
+  - `Analyze the creative for ad <id>`
+
+## Use AdsGateway for Tracking (Pixel + CAPI)
+
+Use this sequence:
+
+1. Start: `setup_meta_tracking` with your `site_url`.
+2. Follow each `next_action`.
+3. Confirm required checkpoints:
+   - `confirm_pixel="CONFIRM_PIXEL"`
+   - `confirm_event_plan="CONFIRM_EVENT_PLAN"`
+   - `confirm_create_site="CREATE_SITE"`
+4. Save your one-time `sk_` key.
+5. Implement snippets/server forwarding from `meta_tracking_snippets_get`.
+6. Send test event with `confirm_send_test_event="SEND_TEST_EVENT"`.
+7. Run `meta_tracking_setup_audit`.
+
+<Warning>
+  Keep `sk_` server-side only. Keys are shown once at creation/rotation. If lost, rotate keys and update your server environment.
+</Warning>
+
+## Verify Analytics
+
+Run:
 
 ```text
 List my Meta ad accounts
 ```
 
-If accounts are returned, setup is complete.
+Then:
 
-## Reset Auth (invalid_token or auth loop)
+```text
+Give me my account performance summary for the last 7 days
+```
 
-If you see `invalid_token`, repeated auth prompts, or never reach connected status:
+## Verify Tracking
 
-1. Disable `ads-gateway` in AntiGravity.
-2. Remove the `ads-gateway` entry from `mcp_config.json`.
-3. Clear browser cookies/session data for:
-   - `ads-gateway.onrender.com`
-   - `adsgateway.io`
-4. Re-add the same `serverUrl` config shown above.
-5. Re-enable the server and complete login again.
+Run both checks:
 
-<Tip>
-  Complete login in the same browser profile AntiGravity opens. Avoid mixing normal/incognito windows during the same auth attempt.
-</Tip>
+1. Send a test event through setup verify.
+2. Run audit:
 
-## Tracking Permission Recovery (when setup asks for more permissions)
+```text
+Audit tracking setup for site_id "<site_id>" over the last 24 hours and list next actions
+```
 
-During tracking setup flows, AdsGateway may return a Meta permission-recovery link for pixel creation permissions.
+## Troubleshooting
 
-When this happens:
+- `invalid_token` or repeated auth prompts:
+  - disable server, remove entry, clear cookies for `ads-gateway.onrender.com` and `adsgateway.io`, re-add config, reconnect
+- Tracking reconnect required:
+  - reconnect Meta when tracking flow reports token is not tracking-ready
+- Pixel permission recovery:
+  - if setup returns `authorization_url`, open it, grant permission, continue setup
 
-1. Open the provided `authorization_url`.
-2. Complete Meta permission grant.
-3. Return to AntiGravity and continue the setup step.
+## Related Docs
 
-## Callback Compatibility
-
-AdsGateway supports AntiGravity web callback patterns used during browser auth completion, including:
-
-- `https://antigravity.google/oauth/callback`
-- `https://www.antigravity.google/oauth/callback`
-
-No custom callback override is needed in client config.
+- [AI Integrations Overview](/ai-integrations/overview)
+- [Meta Ads Platform](/ad-platforms/meta)
+- [Tracking Guide](/guides/tracking)
+- [Account Management Tools](/tools/account-management)
+- [Journey Reports](/tools/journey-reports)
+- [Creative Analysis](/tools/creative-analysis)
+- [Tracking Setup Tools](/tools/tracking-setup)
+- [Tracking Audit](/tools/tracking-audit)
+- [Tracking Sites & Snippets](/tools/tracking-sites)
+- [Tracking Events](/tools/tracking-events)
