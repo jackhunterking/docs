@@ -35,12 +35,15 @@ This enables objective-based event planning, verification matrices, and AI-ready
 
 AdsGateway uses bearer keys for the Tracking Gateway:
 
-- `sk_...` (secret key): default and required for server-side CAPI delivery
-- `pk_...` (publishable key): optional and more restricted
+- `sk_...` (`site_key`): default single user-facing key for server-side CAPI delivery
+- `bt_...` (brokered browser token): short-lived browser token minted from `site_key`
+- `pk_...` (publishable key): legacy optional mode, restricted
 
 Default behavior:
 
-- AdsGateway provisions a single site secret key (`sk_...`) by default.
+- AdsGateway provisions one site key (`site_key`, `sk_...`) by default.
+- Users should manage one key only.
+- Browser-safe credentials are brokered internally through short-lived `bt_...` tokens.
 - Keys are shown only once at creation/rotation time.
 - Use `meta_tracking_keys_rotate` to issue a new key if the original is lost.
 
@@ -54,7 +57,13 @@ For pixel creation permission issues, follow the returned authorization recovery
 
 ## Gateway Endpoint
 
-Your endpoint is returned by snippets/setup outputs and generally looks like:
+Your ingest endpoint is returned by snippets/setup outputs and generally looks like:
+
+```text
+https://<your-supabase-project>.supabase.co/functions/v1/evt-ingest
+```
+
+Compatibility endpoint still works:
 
 ```text
 https://<your-supabase-project>.supabase.co/functions/v1/meta-track/events
@@ -66,6 +75,27 @@ Requests must include:
 Authorization: Bearer sk_...
 Content-Type: application/json
 ```
+
+## Browser Token Broker Endpoint
+
+For browser forwarding, mint short-lived browser tokens:
+
+```text
+POST https://<your-supabase-project>.supabase.co/functions/v1/evt-token
+Authorization: Bearer sk_...
+Content-Type: application/json
+```
+
+Body:
+
+```json
+{
+  "site_id": "<site_id>",
+  "origin": "https://example.com"
+}
+```
+
+This returns a `browser_token` (`bt_...`) plus expiry metadata.
 
 ## Required Event Payload
 
@@ -105,8 +135,8 @@ Typical follow-ups:
 
 ## Security Model (Enforced)
 
-- Authorization header required (`Bearer <pk_/sk_>`)
-- Origin allowlist enforced for `pk_` keys
+- Authorization header required (`Bearer <sk_/bt_/pk_>`)
+- Origin allowlist enforced for browser-safe auth modes (`bt_` and legacy `pk_`)
 - `event_source_url` hostname must match configured hostnames
-- `pk_` keys cannot send raw high-risk PII fields
+- `bt_` and `pk_` cannot send raw high-risk PII fields
 - Tracking logs store metadata and Meta response details, not raw user PII payloads

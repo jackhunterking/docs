@@ -874,6 +874,13 @@
           "enum": null
         },
         {
+          "name": "create_secret",
+          "type": "bool",
+          "required": false,
+          "default": true,
+          "enum": null
+        },
+        {
           "name": "confirm_rotate",
           "type": "str",
           "required": false,
@@ -1190,8 +1197,15 @@
         },
         {
           "name": "secret_key",
-          "type": "str",
-          "required": true,
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "site_key",
+          "type": "str | None",
+          "required": false,
           "default": null,
           "enum": null
         },
@@ -1340,6 +1354,13 @@
         },
         {
           "name": "secret_key",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "site_key",
           "type": "str | None",
           "required": false,
           "default": null,

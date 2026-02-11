@@ -44,14 +44,17 @@ Rotates keys for a site and returns new raw key values once.
 |----------|------|----------|---------|-------------|
 | `site_id` | string | Yes | - | Tracking site id |
 | `revoke_existing` | boolean | No | true | Revoke existing keys |
-| `include_publishable` | boolean | No | false | Also generate a `pk_` key (optional) |
+| `create_secret` | boolean | No | true | Generate a new `site_key` (`sk_...`) |
+| `include_publishable` | boolean | No | false | Also generate legacy `pk_` key (optional) |
 | `confirm_rotate` | string | Yes | - | Must be `ROTATE_KEYS` |
 
 ### Output (Stable Fields)
 
 - `success`
 - `site_id`
-- `keys.secret_key` (new `sk_...`)
-- `keys.publishable_key` (only if requested)
+- `gateway_endpoint`
+- `browser_token_endpoint`
+- `keys.site_key` (new `sk_...` when `create_secret=true`)
 - `keys.warning`
-
+- `legacy_keys.publishable_key` (only if requested)
+- `legacy_keys.secret_key` (compat field)
