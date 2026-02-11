@@ -1,0 +1,57 @@
+---
+title: "AntiGravity"
+---
+
+# AntiGravity MCP Setup
+
+Use this guide to connect AdsGateway to AntiGravity with Streamable HTTPS transport.
+
+## Server Configuration
+
+Open AntiGravity MCP settings and add this entry to your `mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "ads-gateway": {
+      "serverUrl": "https://ads-gateway.onrender.com/mcp"
+    }
+  }
+}
+```
+
+<Note>
+  Keep the config minimal: only `serverUrl` is required. Do not add a custom `oauth` block.
+</Note>
+
+## Authenticate
+
+1. Enable the `ads-gateway` server in AntiGravity.
+2. Complete the browser login flow.
+3. Return to AntiGravity and wait for the connection status to show as connected.
+
+## Verify
+
+Try this prompt:
+
+```text
+List my Meta ad accounts
+```
+
+If accounts are returned, setup is complete.
+
+## Reset Auth (Invalid Token Recovery)
+
+If you see `invalid_token` or repeated auth prompts:
+
+1. Disable `ads-gateway` in AntiGravity.
+2. Remove the `ads-gateway` entry from `mcp_config.json`.
+3. Clear browser cookies/session data for:
+   - `ads-gateway.onrender.com`
+   - `adsgateway.io`
+4. Re-add the same `serverUrl` config shown above.
+5. Re-enable the server and complete login again.
+
+<Tip>
+  Complete login in the same browser profile that AntiGravity opens. Avoid mixing normal/incognito windows in the same auth attempt.
+</Tip>

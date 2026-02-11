@@ -30,6 +30,7 @@
             "group": "AI Integrations",
             "pages": [
               "ai-integrations/overview",
+              "ai-integrations/antigravity",
               "ai-integrations/cursor",
               "ai-integrations/claude",
               "ai-integrations/chatgpt",

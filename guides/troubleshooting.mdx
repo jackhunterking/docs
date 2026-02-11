@@ -42,9 +42,18 @@ The login popup may be blocked.
 Your authentication token is invalid or expired.
 
 **Solutions**:
-1. Log out of AdsGateway completely
-2. Clear your browser cookies for adsgateway.io
-3. Log in again
+1. Disable AdsGateway in your MCP client
+2. Remove the AdsGateway MCP entry from your local config
+3. Clear browser cookies/session data for:
+   - `ads-gateway.onrender.com`
+   - `adsgateway.io`
+4. Re-add AdsGateway with only this config value:
+   - `serverUrl: https://ads-gateway.onrender.com/mcp`
+5. Re-enable the server and complete login again
+
+<Note>
+  You usually do not need a custom `oauth` block in MCP config. AdsGateway uses OAuth discovery from the server metadata.
+</Note>
 
 ---
 
