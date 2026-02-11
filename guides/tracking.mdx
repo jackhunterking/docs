@@ -1,0 +1,121 @@
+---
+title: "Tracking (Pixel + Conversions API)"
+description: "Set up Meta Pixel + Conversions API with AdsGateway's tracking wizard and gateway."
+---
+
+AdsGateway Tracking is optional. It helps you set up Meta Pixel and Conversions API (CAPI) and provides a multi-tenant gateway for sending server-side events.
+
+<Info>
+  Tracking is available now. Ad editing/updating and ad-writing features are <a href="/feature-availability">Coming Soon</a>.
+</Info>
+
+## Recommended Setup Flow
+
+Use the setup wizard tool:
+
+1. Run `setup_meta_tracking` (or `meta_tracking_setup_start`) with your site URL
+2. Select the Meta ad account to use for Pixel/CAPI setup
+3. Select an existing Pixel or explicitly create one
+4. Choose what to set up (Pixel, CAPI, or both)
+5. Create the tracking site and receive your site key(s)
+6. Fetch snippets via `meta_tracking_snippets_get` (snippets never include secret keys)
+7. Verify end-to-end via `meta_tracking_verify`
+
+## Keys (sk_ and pk_)
+
+AdsGateway uses bearer keys for the Tracking Gateway:
+
+- `sk_...` (secret key): server-side only. Required for sending CAPI events with full user data.
+- `pk_...` (publishable key): optional. Intended for limited browser-side use with strict restrictions.
+
+Key rules:
+
+- Keys are shown **only once** at creation/rotation time.
+- Use `meta_tracking_keys_rotate` to rotate keys (and optionally revoke existing keys).
+- Use `meta_tracking_keys_list` to list key metadata (it never returns raw keys).
+
+## Gateway Endpoint
+
+Your gateway endpoint is returned by `meta_tracking_snippets_get` and generally looks like:
+
+```text
+https://<your-supabase-project>.supabase.co/functions/v1/meta-track/events
+```
+
+Requests must include:
+
+```text
+Authorization: Bearer sk_...
+Content-Type: application/json
+```
+
+## Required Event Payload
+
+The gateway accepts both `snake_case` and `camelCase`. These fields are required:
+
+| Field | Type | Notes |
+|------|------|------|
+| `event_name` | string | Example: `PageView`, `Purchase` |
+| `event_time` | number | Unix seconds |
+| `event_id` | string | Stable id used for dedupe (Pixel + CAPI) |
+| `event_source_url` | string | Full URL; hostname must match the configured site |
+
+Recommended fields:
+
+- `action_source`: usually `website`
+- `user_data`: `fbp`, `fbc`, plus optional user identifiers (see below)
+- `custom_data`: event metadata (value, currency, content_ids, etc.)
+
+## Dedupe Rules (Pixel + CAPI)
+
+To deduplicate Pixel (browser) and CAPI (server) events:
+
+1. Generate a single `event_id` per user action
+2. Send the Pixel event with that `event_id`
+3. Send the CAPI event to AdsGateway with the **same** `event_id`
+
+The gateway also performs internal dedupe using `(site_id, event_name, event_id)`. If an event is deduplicated, the gateway responds `200` with `deduplicated: true`.
+
+## Verification
+
+Use `meta_tracking_verify` to send a test event through the gateway end-to-end.
+
+Important:
+
+- Verification requires the raw `sk_...` value (keys are shown once).
+- The tool requires explicit confirmation: `confirm_send="SEND_TEST_EVENT"`.
+
+## Security Model (What’s Enforced)
+
+### Authorization
+
+Every request must include `Authorization: Bearer <pk_... or sk_...>`.
+
+### Origin Allowlist (pk_ keys)
+
+Publishable keys (`pk_...`) are restricted:
+
+- The request **must** include an `Origin` header
+- The origin must be in the site’s allowlist
+
+### Hostname Lock (event_source_url)
+
+The hostname of `event_source_url` must match one of the configured site hostnames. This prevents keys from being used to send events for other domains.
+
+### PII Restrictions (pk_ keys)
+
+Publishable keys cannot send raw high-risk user fields like email, phone, or names. Use a secret key (`sk_...`) from your server for those.
+
+### Hashing and Storage
+
+- If you include user identifiers such as email/phone/name with a secret key, AdsGateway hashes them before sending to Meta (as required by CAPI).
+- AdsGateway does not store raw PII in tracking logs. Tracking logs store event metadata (event name/id/time/source URL) and Meta response metadata (success, fbtrace id, error code/message).
+
+## Troubleshooting Common Errors
+
+- `Missing Authorization bearer token`: add the `Authorization: Bearer ...` header.
+- `Origin not allowed`: using a `pk_` key from an unapproved origin (or missing `Origin` header).
+- `event_source_url hostname not allowed for this site`: the hostname doesn’t match the configured site.
+- `Publishable keys cannot send raw PII fields`: move PII-bearing calls to server-side and use an `sk_` key.
+- `Rate limited`: reduce event volume for `pk_` keys or move to server-side `sk_` usage.
+

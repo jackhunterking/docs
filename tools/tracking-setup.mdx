@@ -1,0 +1,133 @@
+---
+title: "Tracking Setup Tools"
+description: "Setup wizard tools for Meta Pixel + Conversions API (explicit confirmations required)."
+---
+
+These tools power the Tracking setup wizard. They can create/select Pixels, create a tracking site, generate keys, and help you verify end-to-end event delivery.
+
+<Warning>
+  Tracking setup includes write actions (e.g., Pixel creation) and requires explicit confirmation parameters. Analytics tools remain read-only.
+</Warning>
+
+## setup_meta_tracking (Recommended)
+
+### What It Does
+
+A step-by-step, **repeat-call** wizard for Meta Pixel + Conversions API setup. Each call returns:
+
+- `next_action`: what to do next
+- `message`: how to proceed
+- The minimum data needed for the next step (accounts list, pixel list, etc.)
+
+### When To Use It
+
+Use this for the simplest “set up tracking for my site” workflow.
+
+### Key Inputs (By Stage)
+
+| Stage | Inputs You Provide | Explicit Confirmations |
+|------|---------------------|------------------------|
+| Start | `site_url` | - |
+| Choose account | `ad_account_id` | - |
+| Choose pixel | `pixel_id` | `confirm_pixel="CONFIRM_PIXEL"` |
+| Create pixel (optional) | `create_pixel_name` | `confirm_create_pixel="CREATE_PIXEL"` |
+| Choose components | `setup_pixel`, `setup_capi` | - |
+| Create site + keys | - | `confirm_create_site="CREATE_SITE"` |
+| Verify (optional) | `site_id`, `secret_key`, `test_event_name` | `confirm_send_test_event="SEND_TEST_EVENT"` |
+
+### Output (Stable Fields)
+
+| Field | Type | Description |
+|------|------|-------------|
+| `success` | boolean | Whether the step succeeded |
+| `setup_id` | string | Setup session id (use it on subsequent calls) |
+| `next_action` | string | One of: `connect_meta`, `select_ad_account`, `select_pixel`, `confirm_pixel`, `choose_components`, `create_site`, or `finished` |
+| `message` | string | Human-readable instructions |
+
+### Example Flow
+
+<Steps>
+  <Step title="Start">
+    ```text
+    Set up Meta tracking for https://example.com
+    ```
+  </Step>
+  <Step title="Follow next_action">
+    Keep calling `setup_meta_tracking` with the fields requested in the response until you receive `site_id` and a new `sk_...` key.
+  </Step>
+  <Step title="Verify">
+    Use `meta_tracking_verify` (or the verify step inside `setup_meta_tracking`) to send an end-to-end test event.
+  </Step>
+</Steps>
+
+---
+
+## meta_tracking_setup_start / meta_tracking_setup_step / meta_tracking_setup_finish (Advanced)
+
+These are the lower-level building blocks used by `setup_meta_tracking`.
+
+### meta_tracking_setup_start
+
+Starts a setup session for a `site_url` and returns a `setup_id` plus a `next_action`.
+
+### meta_tracking_setup_step
+
+Updates the in-progress setup session selections (ad account, pixel selection, component toggles) and returns the next action.
+
+### meta_tracking_setup_finish
+
+Finalizes setup and creates:
+
+- the tracking site record
+- tracking keys (returned once)
+- encrypted storage of the Conversions API token
+
+This step requires explicit confirmation: `confirm_create_site="CREATE_SITE"`.
+
+---
+
+## meta_tracking_pixel_create
+
+### What It Does
+
+Creates a new Meta Pixel under the selected ad account for the setup session.
+
+### Confirmation Required
+
+- `confirm_create="CREATE_PIXEL"`
+
+---
+
+## meta_tracking_site_set_manual_token
+
+### What It Does
+
+Stores or replaces a site’s Conversions API token (stored encrypted).
+
+### Confirmation Required
+
+- `confirm_store="STORE_TOKEN"`
+
+---
+
+## meta_tracking_verify
+
+### What It Does
+
+Sends a test event through the Tracking Gateway to verify end-to-end delivery.
+
+### Confirmation Required
+
+- `confirm_send="SEND_TEST_EVENT"`
+
+### Output (Stable Fields)
+
+| Field | Type | Description |
+|------|------|-------------|
+| `success` | boolean | Whether the gateway accepted the test event |
+| `site_id` | string | Site id |
+| `gateway_url` | string | Gateway endpoint used |
+| `event_id` | string | Test event id used |
+| `status` | number | HTTP status from gateway |
+| `response` | object | Gateway response body |
+

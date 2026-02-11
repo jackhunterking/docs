@@ -55,7 +55,7 @@ AdsGateway connects to your advertising platforms to fetch performance data. Cur
     You'll be redirected to the platform's login page to authorize AdsGateway. This uses OAuth, the industry standard for secure authorization.
     
     <Info>
-      AdsGateway only requests **read access** to your ad accounts. We cannot create, modify, or delete your ads.
+      AdsGateway analytics tools are **read-only**. We cannot create, modify, pause, or delete campaigns/ads. Optional tracking features (Pixel + Conversions API) require explicit enablement and confirmations.
     </Info>
   </Step>
   
@@ -87,10 +87,10 @@ AdsGateway can access the following data from connected platforms:
     We use the latest OAuth standard for secure authorization
   </Card>
   <Card title="Read-Only" icon="eye">
-    AdsGateway cannot modify your campaigns or settings
+    Analytics tools cannot modify your campaigns or settings
   </Card>
-  <Card title="No Storage" icon="database">
-    We don't store your ad data - it's fetched fresh each time
+  <Card title="No Data Warehouse" icon="database">
+    We fetch ad performance data at request time and do not store full report payloads as a warehouse
   </Card>
   <Card title="Revocable" icon="ban">
     You can disconnect platforms anytime from your account settings
@@ -99,16 +99,16 @@ AdsGateway can access the following data from connected platforms:
 
 ## Platform Roadmap
 
-We're actively working on adding more platforms. Here's our roadmap:
+We're actively working on adding more platforms. For the most up-to-date status, see <a href="/feature-availability">Feature Availability</a>.
 
-| Platform | Status | Expected |
-|----------|--------|----------|
-| Meta | Available | Now |
-| Google | In Development | Q1 2026 |
-| TikTok | Planned | Q2 2026 |
-| LinkedIn | Planned | Q2 2026 |
-| Snapchat | Planned | Q3 2026 |
-| X/Twitter | Planned | Q3 2026 |
+| Platform | Status |
+|----------|--------|
+| Meta | Available |
+| Google | Coming Soon |
+| TikTok | Coming Soon |
+| LinkedIn | Coming Soon |
+| Snapchat | Coming Soon |
+| X/Twitter | Coming Soon |
 
 <Card title="Request a Platform" icon="plus" href="mailto:support@adsgateway.io">
   Want us to prioritize a specific platform? Let us know!

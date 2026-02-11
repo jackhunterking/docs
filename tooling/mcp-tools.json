@@ -1,0 +1,1251 @@
+{
+  "generated_at": "2026-02-10T21:51:48.242480+00:00",
+  "tool_count": 28,
+  "tools": [
+    {
+      "name": "ads_ad_report",
+      "category": "journey",
+      "module": "tools/ads.py",
+      "description": "Journey tool: one-call \"ad deep dive\" report (creative metadata + performance + comparison deltas).",
+      "docstring": "Journey tool: one-call \"ad deep dive\" report (creative metadata + performance + comparison deltas).\n\nPrefer this tool over low-level `meta_ad_get` + `meta_insights_get` when a user says:\n\"how is this ad performing\" or \"compare this period vs last period\".\n\nFor creative analysis (OCR, labels, colors, logos), use `meta_analyze_ad_creative`.\n\nNotes:\n- `since` and `until` are REQUIRED (YYYY-MM-DD).\n- Only `platform=\"meta\"` is supported today.",
+      "inputs": [
+        {
+          "name": "platform",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "ad_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "since",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "until",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "compare_since",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "compare_until",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "preset",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "time_increment",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "breakdowns",
+          "type": "Optional[List[str]]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "detail_level",
+          "type": "Optional[str]",
+          "required": false,
+          "default": "summary",
+          "enum": null
+        },
+        {
+          "name": "include_raw",
+          "type": "bool",
+          "required": false,
+          "default": false,
+          "enum": null
+        }
+      ],
+      "output_contract": {
+        "success": true,
+        "tool": "ads_ad_report",
+        "tool_version": "v1",
+        "platform": "meta",
+        "entity": {
+          "type": "ad",
+          "id": "string",
+          "name": "string",
+          "status": "string"
+        },
+        "creative": {
+          "type": "string",
+          "title": "string|null",
+          "body": "string|null"
+        },
+        "range": {
+          "since": "YYYY-MM-DD",
+          "until": "YYYY-MM-DD"
+        },
+        "performance": {
+          "kpis": "object",
+          "conversions": "object"
+        },
+        "comparison": "object (optional)",
+        "series": "object (optional)"
+      }
+    },
+    {
+      "name": "ads_adset_report",
+      "category": "journey",
+      "module": "tools/ads.py",
+      "description": "Journey tool: one-call ad set performance report for an explicit date range (optional comparison).",
+      "docstring": "Journey tool: one-call ad set performance report for an explicit date range (optional comparison).\n\nPrefer this tool when a user asks:\n\"How is this ad set performing?\" or \"Compare this ad set vs last period\".\n\nNotes:\n- `since` and `until` are REQUIRED (YYYY-MM-DD).\n- Only `platform=\"meta\"` is supported today.",
+      "inputs": [
+        {
+          "name": "platform",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "adset_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "since",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "until",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "compare_since",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "compare_until",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "preset",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "time_increment",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "breakdowns",
+          "type": "Optional[List[str]]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "detail_level",
+          "type": "Optional[str]",
+          "required": false,
+          "default": "summary",
+          "enum": null
+        },
+        {
+          "name": "include_raw",
+          "type": "bool",
+          "required": false,
+          "default": false,
+          "enum": null
+        }
+      ],
+      "output_contract": {
+        "success": true,
+        "tool": "ads_adset_report",
+        "tool_version": "v1",
+        "platform": "meta",
+        "entity": {
+          "type": "adset",
+          "id": "string",
+          "name": "string",
+          "status": "string"
+        },
+        "range": {
+          "since": "YYYY-MM-DD",
+          "until": "YYYY-MM-DD"
+        },
+        "performance": {
+          "kpis": "object",
+          "conversions": "object"
+        },
+        "comparison": "object (optional)",
+        "series": "object (optional)"
+      }
+    },
+    {
+      "name": "ads_campaign_report",
+      "category": "journey",
+      "module": "tools/ads.py",
+      "description": "Journey tool: one-call campaign performance report for an explicit date range (optional comparison).",
+      "docstring": "Journey tool: one-call campaign performance report for an explicit date range (optional comparison).\n\nPrefer this tool when a user asks:\n\"How is this campaign performing?\" or \"Compare this campaign vs last period\".\n\nNotes:\n- `since` and `until` are REQUIRED (YYYY-MM-DD).\n- Only `platform=\"meta\"` is supported today.",
+      "inputs": [
+        {
+          "name": "platform",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "campaign_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "since",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "until",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "compare_since",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "compare_until",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "preset",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "time_increment",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "breakdowns",
+          "type": "Optional[List[str]]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "detail_level",
+          "type": "Optional[str]",
+          "required": false,
+          "default": "summary",
+          "enum": null
+        },
+        {
+          "name": "include_raw",
+          "type": "bool",
+          "required": false,
+          "default": false,
+          "enum": null
+        }
+      ],
+      "output_contract": {
+        "success": true,
+        "tool": "ads_campaign_report",
+        "tool_version": "v1",
+        "platform": "meta",
+        "entity": {
+          "type": "campaign",
+          "id": "string",
+          "name": "string",
+          "status": "string"
+        },
+        "range": {
+          "since": "YYYY-MM-DD",
+          "until": "YYYY-MM-DD"
+        },
+        "performance": {
+          "kpis": "object",
+          "conversions": "object"
+        },
+        "comparison": "object (optional)",
+        "series": "object (optional)"
+      }
+    },
+    {
+      "name": "meta_accounts_list",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Advanced/raw: List Meta ad accounts accessible to the authenticated user.",
+      "docstring": "Advanced/raw: List Meta ad accounts accessible to the authenticated user.\n\nUse this for discovery/setup. For analysis workflows (\"analyze this ad\"),\nprefer journey tools like `ads_ad_report`.\n\nReturns accounts with their names, status, currency, and timezone.\nAfter listing, suggest which account to select for analysis.",
+      "inputs": [],
+      "output_contract": null
+    },
+    {
+      "name": "meta_accounts_select",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Advanced/raw: Select the active Meta ad account to work with.",
+      "docstring": "Advanced/raw: Select the active Meta ad account to work with.\n\nUse this for setup. For ad analysis, prefer journey tools like `ads_ad_report`\nwhich do not require a pre-selected account.\n\nArgs:\n    ad_account_id: The ad account ID to set as active (format: act_XXXXX)",
+      "inputs": [
+        {
+          "name": "ad_account_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_ad_get",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Advanced/raw: Get ad details + creative metadata (no OCR/analysis; optional embedded metrics).",
+      "docstring": "Advanced/raw: Get ad details + creative metadata (no OCR/analysis; optional embedded metrics).\n\nFor an ad performance report with date ranges and comparisons, prefer `ads_ad_report`.\nFor creative analysis (OCR, labels, colors, logos), use `meta_analyze_ad_creative`.\n\nArgs:\n    ad_id: The ID of the ad to retrieve\n    include_metrics: Whether to include performance metrics (default: true)",
+      "inputs": [
+        {
+          "name": "ad_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "include_metrics",
+          "type": "bool",
+          "required": false,
+          "default": true,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_ads_list",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Advanced/raw: List ads in the active ad account.",
+      "docstring": "Advanced/raw: List ads in the active ad account.\n\nUse this for exploration. For an ad deep-dive (creative + performance),\nprefer `ads_ad_report`.\n\nArgs:\n    adset_id: Filter by specific ad set ID\n    status: Filter by ad status\n    limit: Maximum number of ads to return (default: 25)\n    after: Cursor for pagination",
+      "inputs": [
+        {
+          "name": "adset_id",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "status",
+          "type": "Optional[Literal['ACTIVE', 'PAUSED', 'ARCHIVED', 'ALL']]",
+          "required": false,
+          "default": null,
+          "enum": [
+            "ACTIVE",
+            "PAUSED",
+            "ARCHIVED",
+            "ALL"
+          ]
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "required": false,
+          "default": 25,
+          "enum": null
+        },
+        {
+          "name": "after",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_adsets_list",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Advanced/raw: List ad sets in the active ad account.",
+      "docstring": "Advanced/raw: List ad sets in the active ad account.\n\nUse this for exploration. For performance questions, prefer journey tools\n(e.g. `ads_adset_report`, `ads_ad_report`) or `meta_insights_get`.\n\nArgs:\n    campaign_id: Filter by specific campaign ID\n    status: Filter by ad set status\n    limit: Maximum number of ad sets to return (default: 25)\n    after: Cursor for pagination",
+      "inputs": [
+        {
+          "name": "campaign_id",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "status",
+          "type": "Optional[Literal['ACTIVE', 'PAUSED', 'ARCHIVED', 'ALL']]",
+          "required": false,
+          "default": null,
+          "enum": [
+            "ACTIVE",
+            "PAUSED",
+            "ARCHIVED",
+            "ALL"
+          ]
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "required": false,
+          "default": 25,
+          "enum": null
+        },
+        {
+          "name": "after",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_analysis_anomalies",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Detect unusual patterns, spikes, or drops in performance using statistical analysis.",
+      "docstring": "Detect unusual patterns, spikes, or drops in performance using statistical analysis.\n\nArgs:\n    lookback_days: Number of days to analyze (default: 14, max: 90)\n    threshold: Sensitivity in standard deviations - lower = more sensitive (default: 2)\n    metrics: Metrics to analyze (default: spend, impressions, clicks, cpc, ctr)",
+      "inputs": [
+        {
+          "name": "lookback_days",
+          "type": "int",
+          "required": false,
+          "default": 14,
+          "enum": null
+        },
+        {
+          "name": "threshold",
+          "type": "float",
+          "required": false,
+          "default": 2.0,
+          "enum": null
+        },
+        {
+          "name": "metrics",
+          "type": "Optional[List[str]]",
+          "required": false,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_analysis_summary",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Generate a comprehensive account performance overview with key metrics and trends.",
+      "docstring": "Generate a comprehensive account performance overview with key metrics and trends.\n\nArgs:\n    date_preset: Time period for the summary (default: last_7d)",
+      "inputs": [
+        {
+          "name": "date_preset",
+          "type": "Optional[Literal['today', 'yesterday', 'this_week', 'last_week', 'this_month', 'last_month', 'last_7d', 'last_14d', 'last_30d']]",
+          "required": false,
+          "default": "last_7d",
+          "enum": [
+            "today",
+            "yesterday",
+            "this_week",
+            "last_week",
+            "this_month",
+            "last_month",
+            "last_7d",
+            "last_14d",
+            "last_30d"
+          ]
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_analysis_top_movers",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Identify campaigns with significant performance changes - gainers and losers.",
+      "docstring": "Identify campaigns with significant performance changes - gainers and losers.\n\nArgs:\n    metric: Metric to analyze (default: spend)\n    comparison_period: Compare vs previous day or week (default: week)\n    limit: Number of top movers per category (default: 5)",
+      "inputs": [
+        {
+          "name": "metric",
+          "type": "Optional[Literal['spend', 'impressions', 'clicks', 'cpc', 'cpm', 'ctr', 'reach', 'frequency', 'conversions', 'cost_per_conversion', 'purchase_roas']]",
+          "required": false,
+          "default": "spend",
+          "enum": [
+            "spend",
+            "impressions",
+            "clicks",
+            "cpc",
+            "cpm",
+            "ctr",
+            "reach",
+            "frequency",
+            "conversions",
+            "cost_per_conversion",
+            "purchase_roas"
+          ]
+        },
+        {
+          "name": "comparison_period",
+          "type": "Optional[Literal['day', 'week']]",
+          "required": false,
+          "default": "week",
+          "enum": [
+            "day",
+            "week"
+          ]
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "required": false,
+          "default": 5,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_analyze_ad_creative",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Analyze an ad's creative (image or carousel) and return facts-only JSON.",
+      "docstring": "Analyze an ad's creative (image or carousel) and return facts-only JSON.\n\nReturns only what is visible in the creative (e.g. text/OCR, labels, colors, logos).\nDoes not include performance metrics and does not generate recommendations.\n\nNote: Video creatives are not supported in v1.\n\nArgs:\n    ad_id: The Meta ad ID to analyze.\n    debug: When true, include diagnostics about the asset sources used for analysis.",
+      "inputs": [
+        {
+          "name": "ad_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "debug",
+          "type": "bool",
+          "required": false,
+          "default": false,
+          "enum": null
+        }
+      ],
+      "output_contract": {
+        "success": true,
+        "ad_id": "string",
+        "creative_type": "image|carousel",
+        "analysis_status": "string",
+        "provider": "string",
+        "analysis_version": "string",
+        "analyzed_at": "ISO-8601 timestamp",
+        "assets": "array",
+        "usage": "object (optional)",
+        "pricing": "object (optional)",
+        "estimated_cost_usd": "number|null"
+      }
+    },
+    {
+      "name": "meta_campaigns_list",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Advanced/raw: List campaigns in the active ad account.",
+      "docstring": "Advanced/raw: List campaigns in the active ad account.\n\nUse this for exploration. For performance questions, prefer journey tools\n(e.g. `ads_campaign_report`, `ads_ad_report`) or the high-level analysis tools.\n\nArgs:\n    status: Filter by campaign status (ACTIVE, PAUSED, ARCHIVED, ALL)\n    limit: Maximum number of campaigns to return (default: 25)\n    after: Cursor for pagination\n    ad_account_id: Optional ad account override (format: act_XXXXX)\n    time_range: Optional dict with {since, until} (YYYY-MM-DD)\n    since: Optional start date (YYYY-MM-DD) (overrides time_range.since)\n    until: Optional end date (YYYY-MM-DD) (overrides time_range.until)\n    date_preset: Optional Meta date_preset for insights (e.g. last_30d)\n    fields: Optional list of fields. Can include campaign fields (campaign_id, campaign_name, objective, status, ...)\n            and/or insights fields (spend, impressions, clicks, ctr, cpc, cpm, actions, action_values, ...).\n    level: Ignored (accepted for compatibility with some model calls)",
+      "inputs": [
+        {
+          "name": "status",
+          "type": "Optional[Literal['ACTIVE', 'PAUSED', 'ARCHIVED', 'ALL']]",
+          "required": false,
+          "default": null,
+          "enum": [
+            "ACTIVE",
+            "PAUSED",
+            "ARCHIVED",
+            "ALL"
+          ]
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "required": false,
+          "default": 25,
+          "enum": null
+        },
+        {
+          "name": "after",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "ad_account_id",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "time_range",
+          "type": "Optional[Dict[str, str]]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "since",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "until",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "date_preset",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "fields",
+          "type": "Optional[List[str]]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "level",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_context_get",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Advanced/raw: Check which Meta ad account is currently active.",
+      "docstring": "Advanced/raw: Check which Meta ad account is currently active.\n\nUse this for debugging context. Most users can skip this and go straight\nto journey tools like `ads_ad_report`.",
+      "inputs": [],
+      "output_contract": null
+    },
+    {
+      "name": "meta_insights_get",
+      "category": "advanced",
+      "module": "tools/meta.py",
+      "description": "Advanced/raw: Get performance insights (spend, impressions, clicks, conversions, ROAS).",
+      "docstring": "Advanced/raw: Get performance insights (spend, impressions, clicks, conversions, ROAS).\n\nFor journey reports with explicit date ranges and optional comparisons, prefer:\n- `ads_ad_report` (ad deep dive)\n- `ads_campaign_report` (campaign performance)\n- `ads_adset_report` (ad set performance)\n\nArgs:\n    level: The level to fetch insights for (account, campaign, adset, ad)\n    entity_id: The ID of the entity (required for campaign/adset/ad levels)\n    date_preset: Predefined date range (today, yesterday, last_7d, etc.)\n    since: Start date (YYYY-MM-DD) - use with 'until'\n    until: End date (YYYY-MM-DD) - use with 'since'\n    field_preset: Use a predefined set of fields (basic, conversions, video, engagement, ecommerce, quality, full)\n    fields: Specific metrics to return (overrides preset)\n    time_increment: Time breakdown (\"1\" for daily, \"7\" for weekly, etc.)\n    breakdowns: Segment data by dimensions (age, gender, country, etc.)",
+      "inputs": [
+        {
+          "name": "level",
+          "type": "Literal['account', 'campaign', 'adset', 'ad']",
+          "required": true,
+          "default": null,
+          "enum": [
+            "account",
+            "campaign",
+            "adset",
+            "ad"
+          ]
+        },
+        {
+          "name": "entity_id",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "date_preset",
+          "type": "Optional[Literal['today', 'yesterday', 'this_week', 'last_week', 'this_month', 'last_month', 'last_7d', 'last_14d', 'last_30d', 'last_90d']]",
+          "required": false,
+          "default": null,
+          "enum": [
+            "today",
+            "yesterday",
+            "this_week",
+            "last_week",
+            "this_month",
+            "last_month",
+            "last_7d",
+            "last_14d",
+            "last_30d",
+            "last_90d"
+          ]
+        },
+        {
+          "name": "since",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "until",
+          "type": "Optional[str]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "field_preset",
+          "type": "Optional[Literal['basic', 'conversions', 'video', 'engagement', 'ecommerce', 'quality', 'full']]",
+          "required": false,
+          "default": null,
+          "enum": [
+            "basic",
+            "conversions",
+            "video",
+            "engagement",
+            "ecommerce",
+            "quality",
+            "full"
+          ]
+        },
+        {
+          "name": "fields",
+          "type": "Optional[List[str]]",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "time_increment",
+          "type": "Optional[Literal['1', '7', '28', 'monthly', 'all_days']]",
+          "required": false,
+          "default": null,
+          "enum": [
+            "1",
+            "7",
+            "28",
+            "monthly",
+            "all_days"
+          ]
+        },
+        {
+          "name": "breakdowns",
+          "type": "Optional[List[str]]",
+          "required": false,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_events_list",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Read-only: list recent Tracking Events received by Ads Gateway (no PII).",
+      "docstring": "Read-only: list recent Tracking Events received by Ads Gateway (no PII).",
+      "inputs": [
+        {
+          "name": "site_id",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "required": false,
+          "default": 20,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_keys_list",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Read-only: list key metadata (never returns raw keys).",
+      "docstring": "Read-only: list key metadata (never returns raw keys).",
+      "inputs": [
+        {
+          "name": "site_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_keys_rotate",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Rotate keys for a site (raw keys returned once).",
+      "docstring": "Rotate keys for a site (raw keys returned once).",
+      "inputs": [
+        {
+          "name": "site_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "revoke_existing",
+          "type": "bool",
+          "required": false,
+          "default": true,
+          "enum": null
+        },
+        {
+          "name": "include_publishable",
+          "type": "bool",
+          "required": false,
+          "default": false,
+          "enum": null
+        },
+        {
+          "name": "confirm_rotate",
+          "type": "str",
+          "required": false,
+          "default": "",
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_pixel_create",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Create a Meta Pixel under the currently selected ad account for this setup session.",
+      "docstring": "Create a Meta Pixel under the currently selected ad account for this setup session.",
+      "inputs": [
+        {
+          "name": "setup_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "confirm_create",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_setup_finish",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Finalize setup: create tracking site, keys, and store encrypted token.",
+      "docstring": "Finalize setup: create tracking site, keys, and store encrypted token.\n\nconfirm_create_site:\n  - \"CREATE_SITE\" required to persist config + create keys\nconfirm_auto_provision_token:\n  - \"AUTO_PROVISION_TOKEN\" (optional) attempts to create a token via API if capi_token is not provided",
+      "inputs": [
+        {
+          "name": "setup_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "capi_token",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "confirm_create_site",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "confirm_auto_provision_token",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_setup_start",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Start a tracking setup session.",
+      "docstring": "Start a tracking setup session.\n\nReturns a setup_id and a next_action:\n- connect_meta\n- select_ad_account\n- select_pixel\n- create_site",
+      "inputs": [
+        {
+          "name": "site_url",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "pixel_name",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_setup_step",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Update selections for a setup session and get the next action.",
+      "docstring": "Update selections for a setup session and get the next action.",
+      "inputs": [
+        {
+          "name": "setup_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "ad_account_id",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "pixel_id",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "confirm_pixel",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "setup_pixel",
+          "type": "bool | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "setup_capi",
+          "type": "bool | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_site_set_manual_token",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Set or replace a site's CAPI token (stored encrypted).",
+      "docstring": "Set or replace a site's CAPI token (stored encrypted).",
+      "inputs": [
+        {
+          "name": "site_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "pixel_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "capi_token",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "confirm_store",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_sites_list",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Read-only: list tracking sites for the authenticated user.",
+      "docstring": "Read-only: list tracking sites for the authenticated user.",
+      "inputs": [],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_snippets_get",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Read-only: return integration snippets (never includes secret keys).",
+      "docstring": "Read-only: return integration snippets (never includes secret keys).",
+      "inputs": [
+        {
+          "name": "site_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_status",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Read-only: show Meta connection + existing tracking sites for the authenticated user.",
+      "docstring": "Read-only: show Meta connection + existing tracking sites for the authenticated user.",
+      "inputs": [],
+      "output_contract": null
+    },
+    {
+      "name": "meta_tracking_verify",
+      "category": "advanced",
+      "module": "tools/meta_tracking.py",
+      "description": "Send a test event through the Tracking Gateway (end-to-end verification).",
+      "docstring": "Send a test event through the Tracking Gateway (end-to-end verification).\n\nRequires the raw sk_ key (provided once on creation/rotation).",
+      "inputs": [
+        {
+          "name": "site_id",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "secret_key",
+          "type": "str",
+          "required": true,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "event_name",
+          "type": "str",
+          "required": false,
+          "default": "PageView",
+          "enum": null
+        },
+        {
+          "name": "confirm_send",
+          "type": "str",
+          "required": false,
+          "default": "",
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    },
+    {
+      "name": "setup_meta_tracking",
+      "category": "other",
+      "module": "tools/meta_tracking.py",
+      "description": "Journey tool: Step-by-step Meta Pixel + Conversions API setup (platform-agnostic).",
+      "docstring": "Journey tool: Step-by-step Meta Pixel + Conversions API setup (platform-agnostic).\n\nCall this tool repeatedly. Each call returns a `next_action` and only the\nminimum information required to continue.\n\nKey rules:\n- Pixel selection is never auto-resolved; it must be explicitly confirmed.\n- By default Ads Gateway provisions a single site secret key (sk_).",
+      "inputs": [
+        {
+          "name": "setup_id",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "site_url",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "ad_account_id",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "pixel_id",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "confirm_pixel",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "create_pixel_name",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "confirm_create_pixel",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "setup_pixel",
+          "type": "bool | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "setup_capi",
+          "type": "bool | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "confirm_create_site",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "confirm_send_test_event",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "site_id",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "secret_key",
+          "type": "str | None",
+          "required": false,
+          "default": null,
+          "enum": null
+        },
+        {
+          "name": "test_event_name",
+          "type": "str",
+          "required": false,
+          "default": "PageView",
+          "enum": null
+        }
+      ],
+      "output_contract": null
+    }
+  ]
+}

@@ -7,7 +7,7 @@ title: "Meta"
 Connect your Meta (Facebook & Instagram) advertising accounts to query performance data through your AI assistant.
 
 <Info>
-  Meta is fully supported with 11 tools for account management, campaign data, and AI-powered analysis.
+  Meta is supported for analytics, journey reports, creative analysis, and optional tracking (Pixel + Conversions API). Ad editing/updating and ad-writing features are **Coming Soon**.
 </Info>
 
 ## What You Can Access
@@ -76,9 +76,15 @@ Connect your Meta (Facebook & Instagram) advertising accounts to query performan
 
 ## Available Tools
 
-AdsGateway provides 11 tools for Meta:
+AdsGateway provides **28 tools** for Meta, grouped into analytics, journey reports, creative analysis, and tracking.
 
-### Account Management
+<Info>
+  Analytics tools are read-only: we cannot create, edit, pause, or delete campaigns/ads. See <a href="/feature-availability">Feature Availability</a> for what’s live vs coming soon.
+</Info>
+
+### Analytics (Read-Only)
+
+#### Account Management
 
 | Tool | Description | Example Prompt |
 |------|-------------|----------------|
@@ -86,7 +92,7 @@ AdsGateway provides 11 tools for Meta:
 | `meta_accounts_select` | Set the active account | "Select account act_123456789" |
 | `meta_context_get` | Check which account is active | "Which account am I using?" |
 
-### Campaign Data
+#### Campaign Data
 
 | Tool | Description | Example Prompt |
 |------|-------------|----------------|
@@ -96,13 +102,57 @@ AdsGateway provides 11 tools for Meta:
 | `meta_ad_get` | Get detailed ad info with creative | "Get details for ad 123456" |
 | `meta_insights_get` | Get performance metrics | "What was my spend last week?" |
 
-### AI Analysis
+#### AI Analysis
 
 | Tool | Description | Example Prompt |
 |------|-------------|----------------|
 | `meta_analysis_summary` | Account performance overview | "Give me an account summary" |
 | `meta_analysis_top_movers` | Campaigns with biggest changes | "Which campaigns improved most?" |
 | `meta_analysis_anomalies` | Detect unusual patterns | "Are there any anomalies?" |
+
+### Journey Reports
+
+These tools are designed to answer “how is this performing?” in **one call**, for a specific date range.
+
+| Tool | Description | Example Prompt |
+|------|-------------|----------------|
+| `ads_campaign_report` | Campaign report for a date range (optional comparison) | "Generate a campaign report for campaign 123 since 2026-02-01 until 2026-02-07" |
+| `ads_adset_report` | Ad set report for a date range (optional comparison) | "Generate an ad set report for ad set 456 since 2026-02-01 until 2026-02-07" |
+| `ads_ad_report` | Ad deep-dive report (creative metadata + performance) | "Generate an ad report for ad 789 since 2026-02-01 until 2026-02-07" |
+
+<Card title="Journey Reports Reference" icon="arrow-right" href="/tools/journey-reports">
+  See inputs, outputs, and edge cases for the journey tools
+</Card>
+
+### Creative Analysis
+
+| Tool | Description | Example Prompt |
+|------|-------------|----------------|
+| `meta_analyze_ad_creative` | Facts-only creative analysis (OCR, labels, colors, logos) | "Analyze the creative for ad 789123456" |
+
+<Card title="Creative Analysis Reference" icon="arrow-right" href="/tools/creative-analysis">
+  See how creative analysis works and what it returns
+</Card>
+
+### Tracking (Pixel + Conversions API)
+
+Tracking is optional. When enabled, AdsGateway can help set up Pixel/CAPI and send Conversions API events.
+
+| Tool | Description | Example Prompt |
+|------|-------------|----------------|
+| `setup_meta_tracking` | Step-by-step Pixel + CAPI setup wizard | "Set up Meta tracking for https://example.com" |
+| `meta_tracking_snippets_get` | Get integration snippets (never returns secret keys) | "Get tracking snippets for site_id abc" |
+| `meta_tracking_events_list` | List recent tracking events received (no raw PII) | "List recent tracking events" |
+| `meta_tracking_keys_rotate` | Rotate a site key (shown once) | "Rotate my tracking key for site_id abc" |
+
+<CardGroup cols={2}>
+  <Card title="Tracking Guide" icon="shield-check" href="/guides/tracking">
+    Keys, endpoint/payload, dedupe rules, verification, and security model.
+  </Card>
+  <Card title="Tracking Tools Reference" icon="wrench" href="/tools/tracking-setup">
+    Full reference for every tracking tool.
+  </Card>
+</CardGroup>
 
 ## Common Queries
 
@@ -179,18 +229,20 @@ AdsGateway can retrieve these Meta metrics:
 - **Shares** - Content shares
 - **Page Engagement** - Total engagement
 
-## Permissions Required
+## Permissions & Access
 
-When you authorize AdsGateway, we request these Facebook permissions:
+AdsGateway asks for the minimum permissions required for the features you enable.
 
-| Permission | Purpose |
-|------------|---------|
-| `ads_read` | Read ad account data and performance metrics |
-| `business_management` | Access Business Manager accounts |
-| `pages_read_engagement` | Read page insights for ad performance |
+### Analytics (Read-Only)
+
+For analytics, we request read permissions to access ad account structure and performance insights. We cannot create, edit, pause, or delete campaigns/ads.
+
+### Tracking Setup (Optional)
+
+If you enable Tracking (Pixel + Conversions API), Meta may request additional permissions needed to create/select Pixels and configure Conversions API.
 
 <Info>
-  AdsGateway only requests read permissions. We cannot create, edit, pause, or delete any of your ads or campaigns.
+  You will always see the exact permissions on Meta's authorization screen before approving.
 </Info>
 
 ## Troubleshooting
@@ -199,9 +251,9 @@ When you authorize AdsGateway, we request these Facebook permissions:
   <Accordion title="'Meta not connected' error">
     You need to authorize AdsGateway to access your Meta accounts:
     
-    1. Visit [adsgateway.io/connect](https://adsgateway.io/connect)
-    2. Click "Connect Meta"
-    3. Complete the Facebook authorization flow
+    1. Go to your Connections page: [adsgateway.io/dashboard/connections](https://adsgateway.io/dashboard/connections)
+    2. Click **Connect Meta**
+    3. Complete the Meta authorization flow
     4. Return to your AI assistant and try again
   </Accordion>
   

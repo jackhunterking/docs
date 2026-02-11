@@ -22,6 +22,7 @@
             "pages": [
               "introduction",
               "quickstart",
+              "feature-availability",
               "how-it-works"
             ]
           },
@@ -54,11 +55,32 @@
         "tab": "Tools Reference",
         "groups": [
           {
-            "group": "Meta Tools",
+            "group": "Analytics (Read-Only)",
             "pages": [
               "tools/account-management",
               "tools/campaign-insights",
               "tools/ai-analysis"
+            ]
+          },
+          {
+            "group": "Journey Reports",
+            "pages": [
+              "tools/journey-reports"
+            ]
+          },
+          {
+            "group": "Creative Analysis",
+            "pages": [
+              "tools/creative-analysis"
+            ]
+          },
+          {
+            "group": "Tracking (Pixel + CAPI)",
+            "pages": [
+              "tools/tracking-setup",
+              "tools/tracking-sites",
+              "tools/tracking-keys",
+              "tools/tracking-events"
             ]
           }
         ]
@@ -66,6 +88,12 @@
       {
         "tab": "Guides",
         "groups": [
+          {
+            "group": "Tracking",
+            "pages": [
+              "guides/tracking"
+            ]
+          },
           {
             "group": "Learn",
             "pages": [

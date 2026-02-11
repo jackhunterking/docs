@@ -1,0 +1,38 @@
+---
+title: "Feature Availability"
+description: "What AdsGateway supports today, what's coming soon, and what requires explicit enablement."
+---
+
+AdsGateway is evolving quickly. This page makes it explicit what is **available now** vs **coming soon**, so the docs, in-app copy, and tool behavior stay aligned.
+
+## Available Now
+
+<CardGroup cols={2}>
+  <Card title="Ad Analytics (Read-Only)" icon="chart-line" href="/ad-platforms/meta">
+    Query campaigns, ad sets, ads, and performance metrics. Analytics tools **cannot** create, edit, pause, or delete campaigns/ads.
+  </Card>
+  <Card title="Journey Reports" icon="route" href="/tools/journey-reports">
+    One-call reports for campaign/ad set/ad performance across a specific date range (optional comparisons).
+  </Card>
+  <Card title="Creative Analysis" icon="image" href="/tools/creative-analysis">
+    Facts-only analysis of ad creatives (OCR text, labels, colors, logos). No recommendations, no editing.
+  </Card>
+  <Card title="Tracking (Pixel + Conversions API)" icon="shield-check" href="/guides/tracking">
+    Optional tracking gateway and setup wizard. When enabled, AdsGateway can **create a Pixel** (with explicit confirmation) and send Conversions API events for your site.
+  </Card>
+</CardGroup>
+
+## Coming Soon
+
+<CardGroup cols={2}>
+  <Card title="Ad Editing / Updates" icon="pencil">
+    Editing and updating campaigns/ads is not supported yet (pause/unpause, budget changes, creative changes, etc.).
+  </Card>
+  <Card title="Ad Writing / Copywriting" icon="file-text">
+    Copywriting and “generate ad text” features are not supported yet.
+  </Card>
+</CardGroup>
+
+<Info>
+  If you see “edit/update ads” or “write ads” mentioned anywhere else, treat it as **Coming Soon** until this page says otherwise.
+</Info>

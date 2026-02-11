@@ -1,0 +1,69 @@
+---
+title: "Tracking Sites & Snippets"
+description: "List tracking sites, check tracking status, and fetch integration snippets."
+---
+
+These tools help you inspect your tracking configuration and pull safe integration snippets.
+
+<Info>
+  `meta_tracking_snippets_get` never returns secret keys. Keys are only shown once at creation/rotation time.
+</Info>
+
+## meta_tracking_status
+
+### What It Does
+
+Returns whether Meta is connected and a compact list of your existing tracking sites.
+
+### Output (Stable Fields)
+
+- `success`
+- `meta_connected`
+- `sites_count`
+- `sites[]`
+
+---
+
+## meta_tracking_sites_list
+
+### What It Does
+
+Lists all tracking sites owned by the authenticated user.
+
+### Output (Stable Fields)
+
+- `success`
+- `sites[]` (includes `id`, `site_url`, and hostname fields)
+
+---
+
+## meta_tracking_snippets_get
+
+### What It Does
+
+Returns integration snippets for a given `site_id`, including:
+
+- Browser Pixel example snippet (with dedupe `event_id`)
+- Server-side CAPI curl snippet (points to the Tracking Gateway endpoint)
+
+### Inputs
+
+| Parameter | Type | Required | Description |
+|----------|------|----------|-------------|
+| `site_id` | string | Yes | Tracking site id |
+
+### Output (Stable Fields)
+
+| Field | Type | Description |
+|------|------|-------------|
+| `success` | boolean | Whether the snippet fetch succeeded |
+| `site` | object | Site metadata (`site_url`, hostnames, etc.) |
+| `config` | object | Safe config fields (`pixel_id`, `allowed_origins`, `token_provenance`, `updated_at`) |
+| `gateway.endpoint` | string | Tracking Gateway endpoint URL |
+| `snippets` | object | Snippet bundle (`browser_pixel`, `server_capi`, etc.) |
+
+### Notes
+
+- Snippets intentionally contain placeholder key values like `sk_...`.
+- If you lost your secret key, rotate via `meta_tracking_keys_rotate` (keys are shown once).
+

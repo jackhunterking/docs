@@ -1,0 +1,72 @@
+---
+title: "Creative Analysis"
+description: "Facts-only analysis of Meta ad creatives (OCR text, labels, colors, logos)."
+---
+
+Creative Analysis lets you analyze what is *visibly present* in an ad creative, returning facts-only JSON (no recommendations, no edits).
+
+<Info>
+  This tool is read-only. Ad editing/updating and ad-writing features are <a href="/feature-availability">Coming Soon</a>.
+</Info>
+
+## meta_analyze_ad_creative
+
+### What It Does
+
+Analyzes a Meta ad’s creative (image or carousel) and returns facts-only output such as:
+
+- OCR / on-image text
+- Detected objects and labels
+- Dominant colors
+- Detected logos / brand marks (when possible)
+
+### When To Use It
+
+Use this when the user asks:
+
+- “What does this ad say?”
+- “Extract the headline/body/on-image text.”
+- “What’s in the image?”
+- “Does this creative mention a discount?”
+
+If the user wants performance metrics (spend, clicks, ROAS), use `meta_insights_get` or the `ads_*_report` journey tools instead.
+
+### Inputs
+
+| Parameter | Type | Required | Description |
+|----------|------|----------|-------------|
+| `ad_id` | string | Yes | Meta ad ID to analyze |
+| `debug` | boolean | No | When true, include diagnostics about which asset sources were used |
+
+### Output (Stable Fields)
+
+| Field | Type | Description |
+|------|------|-------------|
+| `success` | boolean | Whether analysis succeeded |
+| `ad_id` | string | The analyzed ad id |
+| `creative_type` | string | Creative type (e.g., image, carousel) |
+| `analysis_status` | string | Status indicator (e.g., completed) |
+| `provider` | string | Analysis provider identifier |
+| `analysis_version` | string | Version tag |
+| `analyzed_at` | string | Timestamp (ISO-8601) |
+| `assets` | array | Per-asset analysis results (field set may evolve) |
+| `warnings` | array | Non-fatal warnings (e.g., missing assets, low-quality inputs) |
+| `usage` | object | Token/usage metadata (may be omitted) |
+| `debug` | object | Diagnostics (only when `debug=true`) |
+
+### Example Prompts
+
+```text
+Analyze the creative for ad 789123456
+```
+
+```text
+Extract the on-image text from ad 789123456
+```
+
+### Notes & Edge Cases
+
+- Video creatives are not supported in v1.
+- If the ad’s media cannot be fetched (permissions, deleted creative, etc.), the tool will return an error or warnings.
+- `assets` is designed to evolve; treat it as a structured “facts bundle,” not a fixed schema.
+

@@ -15,6 +15,10 @@ Lovable is an AI-powered app builder that lets you create web applications using
   Lovable supports MCP through its **Connectors** feature. You can add AdsGateway as a custom MCP server to query your ad data directly from the Lovable chat.
 </Info>
 
+<Note>
+  AdsGateway analytics is read-only. Editing/updating campaigns/ads and ad-writing features are **Coming Soon**.
+</Note>
+
 ## Prerequisites
 
 - A [Lovable](https://lovable.dev) account with an active project
@@ -99,7 +103,24 @@ After setup, you can ask Lovable questions like:
     - "Which campaigns improved the most this week?"
     - "Are there any anomalies in my ad performance?"
   </Accordion>
+  <Accordion title="Journey Reports">
+    - "Generate an ad report for ad 123 since 2026-02-01 until 2026-02-07"
+    - "Generate a campaign report for campaign 456 since 2026-02-01 until 2026-02-07"
+  </Accordion>
+  <Accordion title="Creative Analysis">
+    - "Analyze the creative for ad 123"
+    - "Extract the on-image text from ad 123"
+  </Accordion>
 </AccordionGroup>
+
+## Common Mistakes
+
+<Warning>
+  - Pop-ups blocked: OAuth won’t open (enable pop-ups, then re-add the connector).
+  - Wrong URL: use `https://ads-gateway.onrender.com/mcp`.
+  - Meta not connected: connect Meta in your AdsGateway dashboard, then retry in Lovable.
+  - Expecting edits or copywriting: ad editing/updating and ad-writing are **Coming Soon**.
+</Warning>
 
 ## Troubleshooting
 

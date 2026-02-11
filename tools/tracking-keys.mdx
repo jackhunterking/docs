@@ -1,0 +1,57 @@
+---
+title: "Tracking Keys"
+description: "List key metadata and rotate site keys (keys are shown once)."
+---
+
+Tracking keys authenticate requests to the Tracking Gateway.
+
+<Warning>
+  Raw `sk_...` values are only shown once at creation/rotation time. Store them securely.
+</Warning>
+
+## meta_tracking_keys_list
+
+### What It Does
+
+Lists key metadata for a site (never returns raw keys).
+
+### Inputs
+
+| Parameter | Type | Required | Description |
+|----------|------|----------|-------------|
+| `site_id` | string | Yes | Tracking site id |
+
+### Output (Stable Fields)
+
+- `success`
+- `keys[]` (metadata only: key type, last4, created/revoked timestamps)
+
+---
+
+## meta_tracking_keys_rotate
+
+### What It Does
+
+Rotates keys for a site and returns new raw key values once.
+
+### Confirmation Required
+
+- `confirm_rotate="ROTATE_KEYS"`
+
+### Inputs
+
+| Parameter | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `site_id` | string | Yes | - | Tracking site id |
+| `revoke_existing` | boolean | No | true | Revoke existing keys |
+| `include_publishable` | boolean | No | false | Also generate a `pk_` key (optional) |
+| `confirm_rotate` | string | Yes | - | Must be `ROTATE_KEYS` |
+
+### Output (Stable Fields)
+
+- `success`
+- `site_id`
+- `keys.secret_key` (new `sk_...`)
+- `keys.publishable_key` (only if requested)
+- `keys.warning`
+

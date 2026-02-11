@@ -1,0 +1,156 @@
+---
+title: "Journey Reports"
+description: "One-call reports for campaigns, ad sets, and ads (date range + optional comparison)."
+---
+
+Journey tools are designed to answer questions like “How is this campaign performing?” in **one call**, without chaining multiple low-level tools.
+
+<Info>
+  Journey report tools are read-only. They do not create, edit, pause, or delete campaigns/ads. Editing and ad-writing features are <a href="/feature-availability">Coming Soon</a>.
+</Info>
+
+## Common Inputs
+
+All journey report tools accept:
+
+- A required date range: `since` and `until` (YYYY-MM-DD)
+- Optional comparison range: `compare_since` + `compare_until` (must be provided together)
+- Optional report shape controls:
+  - `preset` (metric preset)
+  - `time_increment` (daily/weekly, etc.)
+  - `breakdowns` (age, country, placement, etc.)
+  - `detail_level` (`summary` or `full`)
+  - `include_raw` (includes raw platform payloads; can be large)
+
+<Note>
+  Usage limits may apply. See <a href="https://adsgateway.io/pricing">Pricing</a>.
+</Note>
+
+## ads_campaign_report
+
+### What It Does
+
+Generates a campaign performance report for a specific date range (with optional comparison and deltas).
+
+### When To Use It
+
+Use this when the user asks:
+
+- “How is this campaign doing this week?”
+- “Compare this campaign to last week.”
+- “Break down campaign performance by day / country / placement.”
+
+### Inputs
+
+| Parameter | Type | Required | Description |
+|----------|------|----------|-------------|
+| `platform` | string | Yes | Currently only `meta` is supported |
+| `campaign_id` | string | Yes | Meta campaign ID |
+| `since` | string | Yes | Start date (YYYY-MM-DD) |
+| `until` | string | Yes | End date (YYYY-MM-DD) |
+| `compare_since` | string | No | Comparison start date (YYYY-MM-DD) |
+| `compare_until` | string | No | Comparison end date (YYYY-MM-DD) |
+| `preset` | string | No | Metric preset (defaults to a performance-oriented preset) |
+| `time_increment` | string | No | Time bucket size (e.g., daily) |
+| `breakdowns` | array | No | Segment by dimensions (e.g., `["country"]`) |
+| `detail_level` | string | No | `summary` or `full` |
+| `include_raw` | boolean | No | Include raw platform payloads (can be large) |
+
+### Output (Stable Fields)
+
+| Field | Type | Description |
+|------|------|-------------|
+| `success` | boolean | Whether the report was generated |
+| `tool` | string | Tool name (`ads_campaign_report`) |
+| `tool_version` | string | Version tag (e.g., `v1`) |
+| `platform` | string | Platform (`meta`) |
+| `entity` | object | Entity metadata (campaign id/name/status, budget fields when available) |
+| `range` | object | `{ since, until }` |
+| `performance` | object | KPI + conversion summaries + `record_count` |
+| `series` | object | Optional time series rows (when requested) |
+| `comparison` | object | Optional comparison range + deltas |
+
+### Example Prompts
+
+```text
+Generate a campaign report for campaign 123456789 since 2026-02-01 until 2026-02-07
+```
+
+```text
+Compare campaign 123456789 since 2026-02-01 until 2026-02-07 vs 2026-01-25 to 2026-01-31
+```
+
+### Notes & Edge Cases
+
+- `compare_since` and `compare_until` must be provided together.
+- If you request `time_increment` or `breakdowns`, the tool may return `series.rows` and may truncate long result sets.
+- `include_raw` is intended for debugging and can produce large outputs.
+
+---
+
+## ads_adset_report
+
+### What It Does
+
+Generates an ad set performance report for a specific date range (with optional comparison and deltas).
+
+### When To Use It
+
+Use this when the user asks:
+
+- “How is this ad set doing?”
+- “Which targeting segment is underperforming?”
+
+### Inputs
+
+Same as `ads_campaign_report`, but with `adset_id` instead of `campaign_id`.
+
+### Output (Stable Fields)
+
+Same envelope as `ads_campaign_report`, with `tool: "ads_adset_report"` and `entity.type: "adset"`.
+
+### Example Prompts
+
+```text
+Generate an ad set report for ad set 456789123 since 2026-02-01 until 2026-02-07
+```
+
+---
+
+## ads_ad_report
+
+### What It Does
+
+Generates an “ad deep dive” report that includes:
+
+- Creative metadata (headline/body/link/media URLs when available)
+- Performance KPIs and conversions
+- Optional comparison deltas and a series breakdown
+
+### When To Use It
+
+Use this when the user asks:
+
+- “How is this specific ad performing?”
+- “Compare this ad to last week.”
+- “Show performance by day/country and include the creative.”
+
+If the user wants OCR text, labels, colors, or logos from the creative, use `meta_analyze_ad_creative`.
+
+### Inputs
+
+Same as `ads_campaign_report`, but with `ad_id` instead of `campaign_id`.
+
+### Output (Stable Fields)
+
+In addition to the shared envelope fields, `ads_ad_report` includes:
+
+- `ad`: compact ad metadata
+- `creative`: compact creative metadata (may include media URLs)
+
+### Example Prompts
+
+```text
+Generate an ad report for ad 789123456 since 2026-02-01 until 2026-02-07
+```
+

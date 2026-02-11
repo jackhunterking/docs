@@ -1,0 +1,34 @@
+---
+title: "Tracking Events"
+description: "Inspect events received by the Tracking Gateway (no raw PII)."
+---
+
+These tools help you inspect the gateway’s event ingestion and Meta response metadata.
+
+## meta_tracking_events_list
+
+### What It Does
+
+Lists recent Tracking Gateway events received by AdsGateway.
+
+<Info>
+  This view is metadata-only and does not store raw PII fields (email/phone/name). It is intended for debugging delivery and dedupe behavior.
+</Info>
+
+### Inputs
+
+| Parameter | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `site_id` | string | No | - | Filter events by site |
+| `limit` | number | No | 20 | Max 200 |
+
+### Output (Stable Fields)
+
+- `success`
+- `events[]` objects with:
+  - `site_id`, `event_name`, `event_id`
+  - `processing_status` (`success`, `failed`, or `deduplicated`)
+  - `meta_events_received`, `fbtrace_id`
+  - `error_code`, `error_message`
+  - `created_at`
+
