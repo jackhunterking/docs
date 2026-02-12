@@ -134,6 +134,29 @@ To avoid non-deterministic dedupe in Meta Test Events:
 
 Expected result in Meta Test Events: browser + server entries for the same action should show matching Event ID values.
 
+## Pixel Visibility In AdsGateway Logs (Recommended)
+
+AdsGateway cannot see Pixel network calls directly (Pixel goes browser -> Meta), so for parity debugging we recommend embedding a small `browser_pixel` object in the **same CAPI request** you send to AdsGateway.
+
+Only do this in debug/testing mode (for example when `?ag_debug=1` or a `test_event_code` is present).
+
+Suggested payload shape:
+
+```json
+{
+  "browser_pixel": {
+    "fbq_loaded": true,
+    "tr_observed": true,
+    "tr_status": "sent",
+    "traffic_permission_warning": false
+  }
+}
+```
+
+AdsGateway Logs will display:
+- `Server (CAPI)` as the primary channel badge
+- `Pixel: sent/blocked/unknown` derived from `browser_pixel`
+
 ## Troubleshooting (Start Here)
 
 Start with:

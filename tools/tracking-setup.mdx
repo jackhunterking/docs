@@ -132,5 +132,6 @@ After setup creation succeeds:
 
 1. Retrieve snippets with `meta_tracking_snippets_get`.
 2. Ensure browser code uses one canonical PageView sender and remove standalone inline `fbq('track','PageView')`.
-3. Send test event with `setup_meta_tracking` verify step or `meta_tracking_verify`.
-4. Run `meta_tracking_setup_audit` to detect configuration gaps, event drift, and failures.
+3. (Recommended) In debug/test mode, embed a small `browser_pixel` object in the CAPI request payload so AdsGateway Logs can show `Pixel: sent/blocked/unknown`.
+4. Send test event with `setup_meta_tracking` verify step or `meta_tracking_verify`.
+5. Run `meta_tracking_setup_audit` to detect configuration gaps, event drift, and failures.
