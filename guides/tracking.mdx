@@ -116,6 +116,24 @@ The gateway accepts both `snake_case` and `camelCase`. Required fields:
 
 The gateway also deduplicates on `(site_id, event_name, event_id)`.
 
+## Lovable/AI Integration Guardrails (Important)
+
+To avoid non-deterministic dedupe in Meta Test Events:
+
+1. Keep **one** browser PageView path only.
+2. Keep Pixel base snippet init-only (`fbq('init', PIXEL_ID)`).
+3. Remove standalone inline `fbq('track','PageView')` from HTML/bootstrap snippets.
+4. Use one canonical event sender that:
+   - creates one shared `event_id`
+   - sends Pixel with `eventID`
+   - sends CAPI with matching `event_id`
+5. Add a short duplicate guard (1500-2000 ms) for same `event_name + URL`.
+6. Log both:
+   - `[BROWSER_PIXEL_PAYLOAD]` before server send
+   - `[AG_META_TEST]` after server response
+
+Expected result in Meta Test Events: browser + server entries for the same action should show matching Event ID values.
+
 ## Troubleshooting (Start Here)
 
 Start with:
