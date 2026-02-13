@@ -116,9 +116,10 @@ Requirements:
 3) Use one canonical sender that generates sharedEventId once.
 4) Send Pixel with { eventID: sharedEventId } and server CAPI with event_id: sharedEventId.
 5) Add a 1500-2000ms duplicate guard for same event_name + URL.
-6) In debug/test mode (when ?ag_debug=1 or test_event_code is present), include browser pixel debug in the CAPI request payload:
-   - browser_pixel: { fbq_loaded, tr_observed, tr_status, traffic_permission_warning }
-   This lets AdsGateway Logs show Pixel: sent/blocked/unknown next to the CAPI event.
+6) In debug/test mode (when ?ag_debug=1 or test_event_code is present), POST a Pixel debug ping to AdsGateway (pixel_debug_endpoint / evt-pixel):
+   - Body: { site_id, event_name, event_id, event_time, event_source_url, test_event_code?, browser_pixel? }
+   - browser_pixel (safe subset): { fbq_loaded, tr_observed, tr_status, traffic_permission_warning, pixel_id, page_url, event_id }
+   This lets AdsGateway Logs show Browser (Pixel) + Server (CAPI) connections under the same Event ID.
 7) Add console logs:
    - [BROWSER_PIXEL_PAYLOAD] (event_name, event_id, pixel_id, page_url, test_event_code)
    - [AG_META_TEST] (event_id, requestId, fbtrace_id, status)

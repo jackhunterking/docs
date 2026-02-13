@@ -136,26 +136,39 @@ Expected result in Meta Test Events: browser + server entries for the same actio
 
 ## Pixel Visibility In AdsGateway Logs (Recommended)
 
-AdsGateway cannot see Pixel network calls directly (Pixel goes browser -> Meta), so for parity debugging we recommend embedding a small `browser_pixel` object in the **same CAPI request** you send to AdsGateway.
+AdsGateway cannot see Pixel network calls directly (Pixel goes browser -> Meta). To make AdsGateway Logs look like Meta Test Events (Browser + Server connections under the same Event ID), use the **Pixel debug endpoint**.
 
-Only do this in debug/testing mode (for example when `?ag_debug=1` or a `test_event_code` is present).
+You get this URL from `setup_meta_tracking` / `meta_tracking_snippets_get` as `pixel_debug_endpoint` (defaults to `/functions/v1/evt-pixel`).
+
+Call it **only** in debug/testing mode (for example when `?ag_debug=1` or a `test_event_code` is present). It logs a **Browser (Pixel)** connection in AdsGateway and **does not** contact Meta.
 
 Suggested payload shape:
 
 ```json
 {
+  "site_id": "<site_id>",
+  "event_name": "PageView",
+  "event_id": "<same_event_id_as_pixel_and_capi>",
+  "event_time": 1700000000,
+  "event_source_url": "https://example.com/",
+  "test_event_code": "TEST1234",
   "browser_pixel": {
     "fbq_loaded": true,
     "tr_observed": true,
     "tr_status": "sent",
-    "traffic_permission_warning": false
+    "traffic_permission_warning": false,
+    "pixel_id": "123456",
+    "page_url": "https://example.com/"
   }
 }
 ```
 
 AdsGateway Logs will display:
 - `Server (CAPI)` as the primary channel badge
-- `Pixel: sent/blocked/unknown` derived from `browser_pixel`
+- `Browser (Pixel)` connection (from the debug ping)
+- `Pixel: sent/blocked/unknown` derived from `browser_pixel` (best-effort)
+
+Legacy compatibility: you can still embed `browser_pixel` inside the CAPI request payload, but the preferred approach is calling `pixel_debug_endpoint` so CAPI senders don’t need to carry Pixel debug metadata.
 
 ## Troubleshooting (Start Here)
 
