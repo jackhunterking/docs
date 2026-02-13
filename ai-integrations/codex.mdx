@@ -1,0 +1,197 @@
+---
+title: "Codex"
+---
+
+<img
+  src="/images/Codex.svg"
+  alt="Codex"
+  width="48"
+  style={{ display:"inline",verticalAlign:"middle",marginRight:"12px",width:"20%" }}
+/>
+
+Codex is OpenAI's coding agent (Desktop + CLI) with MCP support.
+
+AdsGateway connects to Codex via MCP (Streamable HTTP) and uses OAuth browser authentication.
+
+## Prerequisites
+
+- OpenAI Codex installed and signed in
+- An [AdsGateway account](https://adsgateway.io)
+- A connected Meta Ads account in AdsGateway for analytics and tracking workflows
+
+## Connect AdsGateway
+
+<Steps>
+  <Step title="Open MCP settings in Codex">
+    In Codex, go to **Settings** -> **MCP servers**.
+  </Step>
+
+  <Step title="Add AdsGateway MCP server">
+    Click **Add server** and choose **Streamable HTTP**.
+
+    Use:
+
+    - Name: `Ads Gateway`
+    - URL: `https://ads-gateway.onrender.com/mcp`
+  </Step>
+
+  <Step title="Restart MCP">
+    Click **Restart** in MCP settings (or fully quit Codex and reopen it).
+  </Step>
+
+  <Step title="Authenticate (OAuth)">
+    Click **Authenticate** and complete the browser login flow. Return to Codex and confirm the server shows as authenticated.
+  </Step>
+</Steps>
+
+### CLI setup (optional)
+
+```bash
+# Add the server (Streamable HTTP)
+codex mcp add ads_gateway --url https://ads-gateway.onrender.com/mcp
+
+# Authenticate (OAuth in browser)
+codex mcp login ads_gateway
+
+# Confirm status
+codex mcp list
+```
+
+### Manual config (advanced)
+
+Codex stores MCP servers in `config.toml`.
+
+Add this block to your Codex config **without removing any existing MCP servers**:
+
+```toml
+[mcp_servers.ads_gateway]
+name = "Ads Gateway"
+url = "https://ads-gateway.onrender.com/mcp"
+enabled = true
+```
+
+<Note>
+  Default config path is `~/.codex/config.toml` (macOS/Linux). On Windows, it’s typically `C:\\Users\\<you>\\.codex\\config.toml`. Codex also supports project-scoped config at `.codex/config.toml` inside a repo.
+</Note>
+
+Then restart Codex (or use the MCP **Restart** action).
+
+### Copy/Paste Agent Prompt (MCP Install)
+
+Use this prompt in Codex if you want the agent to configure MCP safely:
+
+```text
+Configure Ads Gateway MCP for Codex.
+
+Requirements:
+1) Edit my Codex config and safely MERGE this server entry:
+
+[mcp_servers.ads_gateway]
+name = "Ads Gateway"
+url = "https://ads-gateway.onrender.com/mcp"
+enabled = true
+
+2) Do not remove or overwrite existing MCP servers.
+3) Keep TOML valid. Do not create duplicate or nested mcp_servers tables.
+4) If config.toml does not exist, create it with valid TOML.
+5) Show me the final file diff and tell me how to restart/toggle MCP in Codex.
+```
+
+### Guardrails
+
+- Preserve existing MCP servers and unrelated Codex settings.
+- Use the canonical URL: `https://ads-gateway.onrender.com/mcp`.
+- Avoid duplicate server keys (prefer `mcp_servers.ads_gateway`).
+- After changes, restart MCP and verify authentication.
+
+## Use AdsGateway for Analytics
+
+Use this sequence:
+
+1. Connect AdsGateway MCP in Codex.
+2. Authenticate and connect Meta.
+3. Select the ad account you want to analyze.
+4. Run analytics/journey prompts.
+
+Prompt categories:
+
+- Account management
+  - `List my Meta ad accounts`
+  - `Which account am I currently using?`
+- Performance insights
+  - `Give me an account summary for the last 7 days`
+  - `Are there any anomalies in my ad performance?`
+- Journey reports
+  - `Generate an ad report for ad <id> since 2026-02-01 until 2026-02-07`
+- Creative analysis
+  - `Analyze the creative for ad <id>`
+
+## Use AdsGateway for Tracking (Pixel + CAPI)
+
+Use this sequence:
+
+1. Start: `setup_meta_tracking` with your `site_url`.
+2. Complete each `next_action`.
+3. Confirm required checkpoints:
+   - `confirm_pixel="CONFIRM_PIXEL"`
+   - `confirm_event_plan="CONFIRM_EVENT_PLAN"`
+   - `confirm_create_site="CREATE_SITE"`
+4. Save your one-time `sk_` key.
+5. Implement snippets/server forwarding from `meta_tracking_snippets_get`.
+6. Send test event using `confirm_send_test_event="SEND_TEST_EVENT"`.
+7. Run `meta_tracking_setup_audit` and follow `next_actions`.
+
+<Warning>
+  `sk_` keys are server-side only and shown once. If the key is lost, rotate keys and update your server/edge runtime variables.
+</Warning>
+
+## Verify Analytics
+
+Run:
+
+```text
+List my Meta ad accounts
+```
+
+Then:
+
+```text
+Give me my account performance summary for the last 7 days
+```
+
+## Verify Tracking
+
+Run both checks:
+
+1. Send a test event from the setup flow.
+2. Audit setup health:
+
+```text
+Audit tracking setup for site_id "<site_id>" over the last 24 hours and list next actions
+```
+
+## Troubleshooting
+
+- Codex shows “No custom MCP servers connected” after config edits:
+  - fully quit Codex and reopen it, then re-check MCP settings
+  - verify the server exists with: `codex mcp list`
+- Auth popup issues:
+  - allow popups and retry **Authenticate**
+  - re-auth with: `codex mcp logout ads_gateway` then `codex mcp login ads_gateway`
+- OAuth callback restrictions:
+  - Codex uses a local callback `http://127.0.0.1:<port>/callback`
+  - if your OAuth allow-list requires a fixed callback port, set `mcp_oauth_callback_port` in `config.toml`
+
+## Related Docs
+
+- [AI Integrations Overview](/ai-integrations/overview)
+- [Meta Ads Platform](/ad-platforms/meta)
+- [Tracking Guide](/guides/tracking)
+- [Account Management Tools](/tools/account-management)
+- [Journey Reports](/tools/journey-reports)
+- [Creative Analysis](/tools/creative-analysis)
+- [Tracking Setup Tools](/tools/tracking-setup)
+- [Tracking Audit](/tools/tracking-audit)
+- [Tracking Sites & Snippets](/tools/tracking-sites)
+- [Tracking Events](/tools/tracking-events)
+
