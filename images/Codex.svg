@@ -1,7 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Codex">
-  <rect x="2" y="2" width="60" height="60" rx="12" fill="#0A0A0A" stroke="#2A2A2A" stroke-width="2" />
-  <path d="M27 20 L16 32 L27 44" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-  <path d="M37 20 L48 32 L37 44" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-  <path d="M30 46 L34 18" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Codex">
+  <defs>
+    <linearGradient id="cloudGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B9AAFF" />
+      <stop offset="45%" stop-color="#6F84FF" />
+      <stop offset="100%" stop-color="#2347FF" />
+    </linearGradient>
 
+    <radialGradient id="cloudHighlight" cx="35%" cy="25%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55" />
+      <stop offset="55%" stop-color="#FFFFFF" stop-opacity="0.10" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </radialGradient>
+
+    <filter id="cloudShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity="0.28" />
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#7B8BFF" flood-opacity="0.28" />
+    </filter>
+
+    <filter id="promptGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#FFFFFF" flood-opacity="0.38" />
+    </filter>
+  </defs>
+
+  <!-- Cloud body -->
+  <g filter="url(#cloudShadow)">
+    <path
+      d="M78 196c-31 0-56-25-56-56 0-26 18-48 43-54 9-33 39-56 74-56 32 0 60 19 72 47 30 3 53 29 53 59 0 33-27 60-60 60H78z"
+      fill="url(#cloudGradient)"
+      stroke="#FFFFFF"
+      stroke-opacity="0.25"
+      stroke-width="6"
+      stroke-linejoin="round"
+    />
+
+    <!-- Soft top-left highlight -->
+    <path
+      d="M78 196c-31 0-56-25-56-56 0-26 18-48 43-54 9-33 39-56 74-56 32 0 60 19 72 47 30 3 53 29 53 59 0 33-27 60-60 60H78z"
+      fill="url(#cloudHighlight)"
+      opacity="0.35"
+    />
+  </g>
+
+  <!-- Prompt glyph -->
+  <g filter="url(#promptGlow)">
+    <path
+      d="M92 112 L122 128 L92 144"
+      fill="none"
+      stroke="#FFFFFF"
+      stroke-width="12"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      opacity="0.92"
+    />
+    <path
+      d="M136 146 H178"
+      fill="none"
+      stroke="#FFFFFF"
+      stroke-width="12"
+      stroke-linecap="round"
+      opacity="0.92"
+    />
+  </g>
+</svg>
