@@ -7,7 +7,7 @@ title: "Meta"
 Connect your Meta (Facebook & Instagram) advertising accounts to query performance data through your AI assistant.
 
 <Info>
-  Meta is supported for analytics, journey reports, creative analysis, and optional tracking (Pixel + Conversions API). Ad editing/updating and ad-writing features are **Coming Soon**.
+  Meta is supported for analytics, journey reports, and creative analysis. Ad editing/updating and ad-writing features are **Coming Soon**.
 </Info>
 
 ## What You Can Access
@@ -76,7 +76,7 @@ Connect your Meta (Facebook & Instagram) advertising accounts to query performan
 
 ## Available Tools
 
-AdsGateway provides **28 tools** for Meta, grouped into analytics, journey reports, creative analysis, and tracking.
+AdsGateway provides Meta tools grouped into analytics, journey reports, and creative analysis.
 
 <Info>
   Analytics tools are read-only: we cannot create, edit, pause, or delete campaigns/ads. See <a href="/feature-availability">Feature Availability</a> for what’s live vs coming soon.
@@ -133,26 +133,6 @@ These tools are designed to answer “how is this performing?” in **one call**
 <Card title="Creative Analysis Reference" icon="arrow-right" href="/tools/creative-analysis">
   See how creative analysis works and what it returns
 </Card>
-
-### Tracking (Pixel + Conversions API)
-
-Tracking is optional. When enabled, AdsGateway can help set up Pixel/CAPI and send Conversions API events.
-
-| Tool | Description | Example Prompt |
-|------|-------------|----------------|
-| `setup_meta_tracking` | Step-by-step Pixel + CAPI setup wizard | "Set up Meta tracking for https://example.com" |
-| `meta_tracking_snippets_get` | Get integration snippets (never returns secret keys) | "Get tracking snippets for site_id abc" |
-| `meta_tracking_events_list` | List recent tracking events received (no raw PII) | "List recent tracking events" |
-| `meta_tracking_keys_rotate` | Rotate a site key (shown once) | "Rotate my tracking key for site_id abc" |
-
-<CardGroup cols={2}>
-  <Card title="Tracking Guide" icon="shield-check" href="/guides/tracking">
-    Keys, endpoint/payload, dedupe rules, verification, and security model.
-  </Card>
-  <Card title="Tracking Tools Reference" icon="wrench" href="/tools/tracking-setup">
-    Full reference for every tracking tool.
-  </Card>
-</CardGroup>
 
 ## Common Queries
 
@@ -236,10 +216,6 @@ AdsGateway asks for the minimum permissions required for the features you enable
 ### Analytics (Read-Only)
 
 For analytics, we request read permissions to access ad account structure and performance insights. We cannot create, edit, pause, or delete campaigns/ads.
-
-### Tracking Setup (Optional)
-
-If you enable Tracking (Pixel + Conversions API), Meta may request additional permissions needed to create/select Pixels and configure Conversions API.
 
 <Info>
   You will always see the exact permissions on Meta's authorization screen before approving.

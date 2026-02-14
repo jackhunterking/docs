@@ -2,7 +2,7 @@
 title: "Quickstart"
 ---
 
-Follow these steps to connect your AI assistant and start with either analytics or tracking.
+Follow these steps to connect your AI assistant and start querying ad performance.
 
 <Steps>
   <Step title="Create an AdsGateway account">
@@ -38,33 +38,12 @@ Follow these steps to connect your AI assistant and start with either analytics 
   </Step>
 
   <Step title="Connect Meta in AdsGateway">
-    Authenticate and authorize Meta so your assistant can run analytics and tracking tools.
-  </Step>
-
-  <Step title="Choose your workflow">
-    **Option A — Analytics**
-
-    - List/select account
-    - Run read-only analysis and reports
-
-    **Option B — Tracking (Pixel + CAPI)**
-
-    - Run `setup_meta_tracking` with `site_url`
-    - Complete confirmations and create site + key
-    - Verify with test event and setup audit
+    Authenticate and authorize Meta so your assistant can run analytics tools.
   </Step>
 
   <Step title="Verify success">
-    Analytics verification:
-
     ```text
     List my Meta ad accounts
-    ```
-
-    Tracking verification:
-
-    ```text
-    Audit tracking setup for site_id "<site_id>" over the last 24 hours
     ```
   </Step>
 </Steps>
@@ -78,8 +57,5 @@ Follow these steps to connect your AI assistant and start with either analytics 
 <CardGroup cols={2}>
   <Card title="Analytics References" icon="chart-line" href="/tools/account-management">
     Tools and prompts for analysis workflows.
-  </Card>
-  <Card title="Tracking References" icon="shield-check" href="/guides/tracking">
-    Full setup, snippets, verification, and audit docs.
   </Card>
 </CardGroup>

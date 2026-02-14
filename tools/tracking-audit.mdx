@@ -1,75 +1,11 @@
 ---
 title: "Tracking Audit"
-description: "Audit tracking setup health and get deterministic remediation guidance."
+description: "Customer tracking audit (Meta Pixel + Conversions API)."
 ---
 
-`meta_tracking_setup_audit` is a read-only troubleshooting tool for post-setup validation and incident response.
+<Warning>
+  Tracking (Meta Pixel + Conversions API) is currently disabled while we focus on the core analytics workflow.
+</Warning>
 
-<Info>
-  This tool does not mutate setup state. It inspects configuration, key health, event processing signals, and drift.
-</Info>
+See <a href="/feature-availability">Feature Availability</a>.
 
-## meta_tracking_setup_audit
-
-### What It Does
-
-Runs a setup health audit and returns:
-
-- Overall health status (`healthy`, `needs_attention`, `needs_fix`)
-- Deterministic checks (`checks[]`) and prioritized issues (`issues[]`)
-- Event-level coverage/failure signals (`event_level_health`)
-- Plan drift signals (`drift_checks`)
-- Recommended next tool calls (`next_actions`)
-- AI-ready remediation prompts (`ai_fix`)
-
-### Inputs
-
-| Parameter | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `site_id` | string | Conditionally | - | Site to audit (required if `site_url` is not provided) |
-| `site_url` | string | Conditionally | - | Site URL to resolve and audit (required if `site_id` is not provided) |
-| `lookback_hours` | number | No | 24 | Log analysis window (bounded) |
-| `logs_limit` | number | No | 20 | Number of recent logs included in response |
-
-### Output (Key Fields)
-
-| Field | Type | Description |
-|------|------|-------------|
-| `success` | boolean | Whether the audit call succeeded |
-| `overall_status` | string | `healthy`, `needs_attention`, or `needs_fix` |
-| `checks` | array | Deterministic configuration/health checks |
-| `issues` | array | Actionable warnings/failures with remediation hints |
-| `summary` | object | Status counts, top errors, and event-plan rollups |
-| `event_level_health` | array | Per-event seen/failed/deduped health in lookback window |
-| `drift_checks` | object | Configured-not-seen and observed-not-selected event drift |
-| `next_actions` | array | Suggested follow-up tool calls with example args |
-| `ai_fix` | object | AI remediation `prompt_text` + `prompt_template` |
-| `recent_logs` | array | Metadata-only recent processing logs |
-
-### Recommended Usage
-
-<Steps>
-  <Step title="Run audit first">
-    Call `meta_tracking_setup_audit` with `site_id` (or `site_url`) after setup completion or when tracking degrades.
-  </Step>
-  <Step title="Execute deterministic follow-ups">
-    Use `next_actions` to run the specific tools needed (for example snippets lookup, key rotation, event inspection, or test event verification).
-  </Step>
-  <Step title="Re-run audit to confirm">
-    Re-run the audit and confirm `overall_status` and check statuses improved.
-  </Step>
-</Steps>
-
-### Example Prompt
-
-```text
-Audit tracking setup for site_id "<your-site-id>" over the last 24 hours and list exact next actions.
-```
-
-### Related Tools
-
-- `setup_meta_tracking`
-- `meta_tracking_events_list`
-- `meta_tracking_snippets_get`
-- `meta_tracking_keys_rotate`
-- `meta_tracking_verify`

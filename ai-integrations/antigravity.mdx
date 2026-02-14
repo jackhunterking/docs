@@ -15,7 +15,7 @@ AntiGravity is supported now via Streamable HTTPS MCP transport.
 
 - An [AdsGateway account](https://adsgateway.io)
 - AntiGravity access with MCP server configuration enabled
-- A connected Meta Ads account in AdsGateway for analytics and tracking workflows
+- A connected Meta Ads account in AdsGateway for analytics workflows
 
 ## Connect AdsGateway
 
@@ -92,25 +92,6 @@ Prompt categories:
 - Creative analysis
   - `Analyze the creative for ad <id>`
 
-## Use AdsGateway for Tracking (Pixel + CAPI)
-
-Use this sequence:
-
-1. Start: `setup_meta_tracking` with your `site_url`.
-2. Follow each `next_action`.
-3. Confirm required checkpoints:
-   - `confirm_pixel="CONFIRM_PIXEL"`
-   - `confirm_event_plan="CONFIRM_EVENT_PLAN"`
-   - `confirm_create_site="CREATE_SITE"`
-4. Save your one-time `sk_` key.
-5. Implement snippets/server forwarding from `meta_tracking_snippets_get`.
-6. Send test event with `confirm_send_test_event="SEND_TEST_EVENT"`.
-7. Run `meta_tracking_setup_audit`.
-
-<Warning>
-  Keep `sk_` server-side only. Keys are shown once at creation/rotation. If lost, rotate keys and update your server environment.
-</Warning>
-
 ## Verify Analytics
 
 Run:
@@ -125,35 +106,15 @@ Then:
 Give me my account performance summary for the last 7 days
 ```
 
-## Verify Tracking
-
-Run both checks:
-
-1. Send a test event through setup verify.
-2. Run audit:
-
-```text
-Audit tracking setup for site_id "<site_id>" over the last 24 hours and list next actions
-```
-
 ## Troubleshooting
 
 - `invalid_token` or repeated auth prompts:
   - disable server, remove entry, clear cookies for `ads-gateway.onrender.com` and `adsgateway.io`, re-add config, reconnect
-- Tracking reconnect required:
-  - reconnect Meta when tracking flow reports token is not tracking-ready
-- Pixel permission recovery:
-  - if setup returns `authorization_url`, open it, grant permission, continue setup
 
 ## Related Docs
 
 - [AI Integrations Overview](/ai-integrations/overview)
 - [Meta Ads Platform](/ad-platforms/meta)
-- [Tracking Guide](/guides/tracking)
 - [Account Management Tools](/tools/account-management)
 - [Journey Reports](/tools/journey-reports)
 - [Creative Analysis](/tools/creative-analysis)
-- [Tracking Setup Tools](/tools/tracking-setup)
-- [Tracking Audit](/tools/tracking-audit)
-- [Tracking Sites & Snippets](/tools/tracking-sites)
-- [Tracking Events](/tools/tracking-events)
