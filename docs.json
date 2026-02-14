@@ -74,28 +74,12 @@
             "pages": [
               "tools/creative-analysis"
             ]
-          },
-          {
-            "group": "Tracking (Pixel + CAPI)",
-            "pages": [
-              "tools/tracking-setup",
-              "tools/tracking-audit",
-              "tools/tracking-sites",
-              "tools/tracking-keys",
-              "tools/tracking-events"
-            ]
           }
         ]
       },
       {
         "tab": "Guides",
         "groups": [
-          {
-            "group": "Tracking",
-            "pages": [
-              "guides/tracking"
-            ]
-          },
           {
             "group": "Learn",
             "pages": [

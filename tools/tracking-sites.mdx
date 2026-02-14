@@ -1,77 +1,11 @@
 ---
 title: "Tracking Sites & Snippets"
-description: "Inspect tracking sites, setup status, and integration snippets with verification guidance."
+description: "Customer tracking sites/snippets (Meta Pixel + Conversions API)."
 ---
 
-These tools help you inspect tracking configuration and fetch implementation snippets safely.
+<Warning>
+  Tracking (Meta Pixel + Conversions API) is currently disabled while we focus on the core analytics workflow.
+</Warning>
 
-<Info>
-  `meta_tracking_snippets_get` never returns raw secret keys. Keys are only shown once at creation/rotation time.
-</Info>
+See <a href="/feature-availability">Feature Availability</a>.
 
-## meta_tracking_status
-
-### What It Does
-
-Returns Meta connection state and a compact list of tracking sites for the authenticated user.
-
-### Output (Stable Fields)
-
-- `success`
-- `meta_connected`
-- `sites_count`
-- `sites[]`
-
----
-
-## meta_tracking_sites_list
-
-### What It Does
-
-Lists all tracking sites owned by the authenticated user.
-
-### Output (Stable Fields)
-
-- `success`
-- `sites[]` (includes `id`, `site_url`, hostname fields)
-
----
-
-## meta_tracking_snippets_get
-
-### What It Does
-
-Returns a site's integration bundle, including:
-
-- Browser Pixel snippet (dedupe-aware)
-- Server-side CAPI request template
-- Event-plan and verification guidance
-
-### Inputs
-
-| Parameter | Type | Required | Description |
-|----------|------|----------|-------------|
-| `site_id` | string | Yes | Tracking site id |
-
-### Output (Key Fields)
-
-| Field | Type | Description |
-|------|------|-------------|
-| `success` | boolean | Whether snippet fetch succeeded |
-| `site` | object | Site metadata |
-| `config` | object | Safe config (`pixel_id`, `allowed_origins`, `token_provenance`, `tracking_objective`, `selected_event_plan`, `event_catalog_version`, `updated_at`) |
-| `event_catalog` | object | Catalog used for event selection guidance |
-| `website_supported_events` | array/object | Website-executable event references |
-| `event_plan_summary` | object | Event rollups and names |
-| `verification_matrix` | array | Event verification expectations |
-| `custom_conversion_results` | object | Provisioning statuses for custom conversions |
-| `gateway.endpoint` | string | Tracking Gateway endpoint |
-| `snippets` | object | Browser/server snippet bundle |
-| `copy_blocks` | object | Copy-ready install + AI prompt text blocks |
-| `verification_tools` | array | Suggested follow-up verification tools |
-
-### Notes
-
-- Snippets intentionally use placeholders such as `sk_...`.
-- If the key is lost, rotate with `meta_tracking_keys_rotate`.
-- For health/troubleshooting, run `meta_tracking_setup_audit` after implementation.

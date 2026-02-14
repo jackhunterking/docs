@@ -15,7 +15,7 @@ Cursor is an AI-powered code editor with built-in MCP support.
 
 - [Cursor](https://cursor.sh) installed
 - An [AdsGateway account](https://adsgateway.io)
-- A connected Meta Ads account in AdsGateway for analytics and tracking workflows
+- A connected Meta Ads account in AdsGateway for analytics workflows
 
 ## Connect AdsGateway
 
@@ -96,25 +96,6 @@ Prompt categories:
 - Creative analysis
   - `Analyze the creative for ad <id>`
 
-## Use AdsGateway for Tracking (Pixel + CAPI)
-
-Use this sequence:
-
-1. Start: `setup_meta_tracking` with your `site_url`.
-2. Complete each `next_action`.
-3. Confirm required checkpoints:
-   - `confirm_pixel="CONFIRM_PIXEL"`
-   - `confirm_event_plan="CONFIRM_EVENT_PLAN"`
-   - `confirm_create_site="CREATE_SITE"`
-4. Save your one-time `sk_` key.
-5. Implement snippets/server forwarding from `meta_tracking_snippets_get`.
-6. Send test event using `confirm_send_test_event="SEND_TEST_EVENT"`.
-7. Run `meta_tracking_setup_audit` and follow `next_actions`.
-
-<Warning>
-  `sk_` keys are server-side only and shown once. If the key is lost, rotate keys and update your server/edge runtime variables.
-</Warning>
-
 ## Verify Analytics
 
 Run:
@@ -129,37 +110,17 @@ Then:
 Give me my account performance summary for the last 7 days
 ```
 
-## Verify Tracking
-
-Run both checks:
-
-1. Send a test event from the setup flow.
-2. Audit setup health:
-
-```text
-Audit tracking setup for site_id "<site_id>" over the last 24 hours and list next actions
-```
-
 ## Troubleshooting
 
 - Cursor config errors (`Must have either a command ... or url ...`):
   - ensure one top-level `mcpServers` object and valid JSON
 - Auth popup issues:
   - allow popups and re-toggle server
-- Tracking reconnect required:
-  - reconnect Meta when setup reports non-tracking-ready token
-- Pixel permission recovery:
-  - open returned `authorization_url`, grant permission, continue setup
 
 ## Related Docs
 
 - [AI Integrations Overview](/ai-integrations/overview)
 - [Meta Ads Platform](/ad-platforms/meta)
-- [Tracking Guide](/guides/tracking)
 - [Account Management Tools](/tools/account-management)
 - [Journey Reports](/tools/journey-reports)
 - [Creative Analysis](/tools/creative-analysis)
-- [Tracking Setup Tools](/tools/tracking-setup)
-- [Tracking Audit](/tools/tracking-audit)
-- [Tracking Sites & Snippets](/tools/tracking-sites)
-- [Tracking Events](/tools/tracking-events)

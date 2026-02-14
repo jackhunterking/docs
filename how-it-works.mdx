@@ -19,7 +19,7 @@ AdsGateway acts as a secure bridge between your AI assistants and advertising pl
     When you connect an ad platform like Meta, you authorize AdsGateway to read your advertising data. We use OAuth, the industry standard for secure authorization.
     
     <Info>
-      AdsGateway analytics tools are read-only. We cannot create, modify, pause, or delete your ads or campaigns. Optional tracking features (Pixel + Conversions API) require explicit enablement and confirmations.
+      AdsGateway analytics tools are read-only. We cannot create, modify, pause, or delete your ads or campaigns.
     </Info>
   </Step>
   
@@ -45,14 +45,11 @@ AdsGateway acts as a secure bridge between your AI assistants and advertising pl
   <Card title="Analytics Are Read-Only" icon="eye">
     Analytics tools only read advertising data. Editing/updating campaigns or ads (budgets, status, creative changes) is **not supported yet**.
   </Card>
-  <Card title="Tracking Is Explicit" icon="bolt">
-    If you enable Tracking, AdsGateway can create a Pixel and send Conversions API events. These actions require explicit confirmations and are isolated from analytics workflows.
-  </Card>
   <Card title="Encrypted Connections" icon="lock">
     All data is transmitted over HTTPS with TLS 1.3 encryption. Your data is never exposed in transit.
   </Card>
   <Card title="No Data Warehouse" icon="database">
-    We fetch ad performance data at request time and do not store full report payloads as a data warehouse. We do keep limited connection metadata and logs (and tracking stores event metadata, not raw PII).
+    We fetch ad performance data at request time and do not store full report payloads as a data warehouse. We do keep limited connection metadata and logs.
   </Card>
 </CardGroup>
 
@@ -72,14 +69,13 @@ MCP (Model Context Protocol) is an open standard developed by Anthropic that all
 
 ## Available Tools
 
-AdsGateway currently exposes **28 tools** for Meta, grouped into:
+AdsGateway exposes tools for Meta, grouped into:
 
 | Category | Tools | Description |
 |----------|-------|-------------|
 | **Analytics (Read-Only)** | `meta_accounts_list`, `meta_accounts_select`, `meta_context_get`, `meta_campaigns_list`, `meta_adsets_list`, `meta_ads_list`, `meta_ad_get`, `meta_insights_get`, `meta_analysis_summary`, `meta_analysis_top_movers`, `meta_analysis_anomalies` | Explore account structure and performance metrics. |
 | **Journey Reports** | `ads_campaign_report`, `ads_adset_report`, `ads_ad_report` | One-call reports for specific date ranges (optional comparisons). |
 | **Creative Analysis** | `meta_analyze_ad_creative` | Facts-only creative analysis (OCR, labels, colors, logos). |
-| **Tracking (Pixel + CAPI)** | `setup_meta_tracking`, `meta_tracking_setup_start`, `meta_tracking_setup_step`, `meta_tracking_setup_finish`, `meta_tracking_pixel_create`, `meta_tracking_snippets_get`, `meta_tracking_status`, `meta_tracking_sites_list`, `meta_tracking_events_list`, `meta_tracking_verify`, `meta_tracking_keys_list`, `meta_tracking_keys_rotate`, `meta_tracking_site_set_manual_token` | Optional setup wizard + tracking gateway utilities. |
 
 <Card title="Explore All Tools" icon="arrow-right" href="/tools/account-management">
   See detailed documentation for each tool

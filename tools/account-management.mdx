@@ -191,6 +191,33 @@ Check my active account
 
 ---
 
+## meta_admin_diagnose_user
+
+Diagnose a user's Meta connection and account discovery.
+
+<Warning>
+  Admin-only tool. Most users will never need this.
+</Warning>
+
+### Description
+
+This is intended for internal debugging/support. It never returns raw tokens.
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `auth_user_id` | string | No | Supabase auth user id to diagnose |
+| `email` | string | No | Email to diagnose |
+
+### Example Prompts
+
+```
+Diagnose the Meta connection for user owner@example.com
+```
+
+---
+
 ## Typical Workflow
 
 Here's a typical flow when starting a session:
